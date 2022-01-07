@@ -1,28 +1,32 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
-</template>
+    <div :is="layout">
 
+    </div>
+</template>
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+let layouts = require.context('./layouts/', true, /\.vue$/i)
+
+layouts = layouts.keys().reduce(
+  (temp_layouts, key) => {
+    temp_layouts[key.split('/').pop().split('.')[0]] = layouts(key).default
+    return temp_layouts
+  },
+  {}
+)
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+  components: layouts,
+  computed: {
+    'layout': function() {
+      const component_layout = this.$route.meta.layout
+      return (component_layout || 'Default')
+    }
+  },
 }
 </script>
-
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  /* @import './assets/sass/fonts.scss'; */
+  /* @import './assets/sass/icons.scss'; */
+  /* @import './assets/sass/global.scss'; */
+  @import './assets/sass/main.scss';
 </style>
