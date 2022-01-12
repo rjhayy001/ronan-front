@@ -11,28 +11,125 @@
             <v-tab class="subtabs" to="/employès">Employès</v-tab>
         </div>
         <v-spacer></v-spacer>
-        <div style="display:flex; gap:10px; padding-right: 10px">
-            <v-btn style="padding: 0; background-color:#038bdd; border-radius: 50%; min-width: 50px!important; text-align: center; margin:auto; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+        <div style="margin: auto 0">
+            <v-btn
+                class="mx-2"
+                fab
+                dark
+                small
+                color="primary"
+            >
                 <v-icon
-                    large
                     color="white"
-                    style="font-size: 25px"
                 >
                     mdi-bell
                 </v-icon>          
             </v-btn>
-            <v-btn style="padding: 0; background-color:#038bdd; border-radius: 50%; min-width: 50px!important; text-align: center; margin:auto; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+            <!-- <v-btn                 
+                class="mx-2"
+                fab
+                dark
+                small
+                color="primary"
+            >
                 <v-icon
-                    large
                     color="white"
-                    style="font-size: 25px"
                 >
                     mdi-account
                 </v-icon>          
-            </v-btn>
+            </v-btn> -->
+            <v-menu
+                bottom
+                left
+                offset-y
+            >
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn                 
+                        class="mx-2"
+                        fab
+                        dark
+                        small
+                        color="primary"
+                        v-bind="attrs"
+                        v-on="on"
+                    >
+                        <v-icon
+                            color="white"
+                        >
+                            mdi-account
+                        </v-icon>          
+                    </v-btn>
+                </template>
+                <v-list
+                    dense
+                    class="clicker"
+                >
+                    <v-list-item
+                        dense
+                        class="text-capitalize"
+                        style="gap:10px"
+                        link
+                        @click.prevent="profile"
+                    >
+                        <v-icon>
+                            mdi-account
+                        </v-icon> 
+                        Profile
+                    </v-list-item>
+                    <v-list-item
+                        dense
+                        class="text-capitalize"
+                        style="gap:10px"
+                        link
+                    >
+                        <v-icon>
+                            mdi-settings
+                        </v-icon> 
+                        Les paramètres
+                    </v-list-item>
+                    <v-list-item
+                        dense
+                        class="text-capitalize"
+                        style="gap:10px; color:red"
+                        link
+                    >
+                        <v-icon color="red">
+                            mdi-logout-variant
+                        </v-icon> 
+                        Désconnecter
+                    </v-list-item>
+                </v-list>
+            </v-menu>
+        <profileDialog
+            :dialog="dialog"
+            @close="dialog=false"
+        ></profileDialog>
         </div>
     </v-tabs>
 </template>
+
+<script>
+import profileDialog from '@/components/Profile/profile.vue'
+export default {
+        components : {
+        profileDialog,
+    },
+
+    data(){
+        return{
+            dialog:false,
+        }
+    },
+    methods: {
+        profile(){
+            // this.selected_item = item
+                this.dialog = true
+            // alert(this.dialog)
+        },
+    }
+}
+</script>
+
 <style scoped>
 .main_tabs {
     flex:0
@@ -44,6 +141,7 @@
     margin:auto 0; 
     text-align:center;
 }
+
 .main_tabs .tabs_img .logo_img {
      size:60px;
 }
@@ -63,9 +161,4 @@
     font-size: 18px;
     text-transform:capitalize;
 }
-
-.tabs .subtabs:active {
-    color: red !important;
-    /* background-color: #ffff !important; */
-    }
 </style>

@@ -28,3 +28,29 @@
     display: none;
   }
 
+  table>thead.v-data-table-header>tr>th,
+thead .v-data-table__checkbox>.v-icon {
+    background-color: #0086c2 !important;
+    color: #fff !important;
+    text-transform: capitalize !important;
+    font-size: 20px;
+}
+
+
+tbody tr:nth-of-type(odd) {
+    background-color: #eeeeee;
+}
+
+tbody tr:nth-of-type(even) {
+    background-color: #accde1;
+}
+.v-overlay__scrim {
+    opacity: 0!important;
+}
+
+.v-dialog__content .v-dialog {
+    background-color: white !important;
+    height: 100vh!important;
+    margin: 0!important;
+    max-height: 100%!important;
+}
