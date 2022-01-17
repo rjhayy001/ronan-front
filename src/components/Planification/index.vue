@@ -13,7 +13,10 @@
               color="gray"
             >mdi-less-than</v-icon>
           </v-btn>
-          <div flat solo class="date-field" readonly min="0.00"><p class="displaymonth">{{displayMonth}}</p><p>{{year}}</p></div>
+          <div flat solo class="date-field" readonly min="0.00">
+            <p class="displaymonth">{{displayMonth}}</p>
+            <p>{{year}}</p>
+          </div>
           <v-btn
             class="arrow-btn"
             icon
