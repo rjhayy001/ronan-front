@@ -1,0 +1,32 @@
+<template>
+    <v-card>
+        <v-form>
+            <v-container>
+                <v-row class="row">
+                    <v-col
+                        cols="12"
+                    >
+                        <v-text-field
+                            label="Nom"
+                            placeholder="Nom"
+                            outlined
+                            dense
+                            prepend-inner-icon="mdi-rename-box"
+                        ></v-text-field>
+                    </v-col>
+                    <v-col
+                        cols="12"
+                    >
+                        <v-text-field
+                            label="Rue"
+                            placeholder="Rue"
+                            outlined
+                            dense
+                            prepend-inner-icon="mdi-google-street-view"
+                        ></v-text-field>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-form>
+    </v-card>
+</template>
