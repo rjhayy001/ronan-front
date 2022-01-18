@@ -47,7 +47,7 @@ httpClient.interceptors.response.use((response) => {
     //       }
     //     })
     //   })
-    console.log(messages)
+    alert(messages)
 });
 
 export default httpClient;

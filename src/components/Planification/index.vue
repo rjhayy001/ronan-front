@@ -118,7 +118,7 @@
         </div>
       </div>
     </v-subheader>
-    <div class="table_scroll">
+    <div class="table_scroll" v-if="!is_loading">
       <div class="css_table css_table2" style="    position: sticky;
     top: 0;">
         <div class="css_th"></div>
@@ -169,19 +169,12 @@
               </div>
             </div>
           </div>
-          <div class="css_tr">
-            <div class="css_sd content_sd width_sd">
-              Arnaud LARUE
-            </div>
-            <div class="css_td" v-for="date in date" :key="date.number">
-              <div v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
-                <p style="color:rgb(97 97 97); margin:0; visibility:hidden; ">.</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
+    <template v-else>
+      sad
+    </template>
     <v-navigation-drawer
       v-model="drawer"
       absolute
@@ -261,10 +254,11 @@
 </template>
 <script>
   import moment from 'moment' 
+  import { GetAllRegions } from "@/repositories/region.api"
   export default {
       data() {
         return {
-          counts: 10,
+          counts: 2,
           month: moment().format('MMM YYYY'),
           drawer: null,
           monthIndex : this.month - 1,
@@ -282,13 +276,26 @@
             { title: 'Semaine' },
             { title: 'Mois' },
           ],
+          is_loading: false
       };
     },
     mounted() {
-      this.getMonthyear();
-      this.getmonthly();
+      this.initialize()
+
     },
     methods: {
+      initialize(){
+        this.getMonthyear();
+        this.getmonthly();
+        this.getData()
+      },
+      getData(){
+        this.is_loading = true
+        GetAllRegions().then(({data}) => {
+          console.log(data, 'regions')
+          this.is_loading = false
+        })
+      },
       getMonthyear(){
         this.month;
         this.year;
@@ -312,9 +319,7 @@
       },
       getmonthly() { 
         var monthDate = moment(moment(this.year+'-'+this.month_digit), 'YYYY-MM'); 
-        console.log(monthDate,'sad')
         var daysInMonth = monthDate.daysInMonth() ; 
-        console.log(daysInMonth, 'test')
         var arrDays = []; 
         while(daysInMonth) {  
           var current = moment(this.month).date(daysInMonth); 
@@ -325,7 +330,6 @@
           daysInMonth--; 
         } 
         this.date = arrDays.reverse();
-        console.log(this.date,"date");
       }
     },
   };
