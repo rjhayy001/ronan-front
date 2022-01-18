@@ -315,7 +315,6 @@
           daysInMonth--; 
         } 
         this.date = arrDays.reverse();
-
         console.log(this.date,"date");
       }
     },
