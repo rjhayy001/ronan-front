@@ -54,7 +54,7 @@ export default {
             console.log(data, 'login')
              this.$store.commit('login', data)
             localStorage.setItem('token', data.access_token)
-            this.$router.push({ name: "dashboard"})
+            this.$router.push({ name: "Planification"})
         })
     },
   },

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-subheader class="subheader">
+    <v-subheader class="subheader" style="border-bottom:1px solid gray">
       <div class="sub-container">
         <div class="date-container">
           <v-btn
@@ -43,7 +43,7 @@
                       v-on="on"
                       elevation="0"
                       width="200px"
-                      height="48px"
+                      height="47px"
                     >
                       Jours
                       <v-icon 
@@ -68,10 +68,9 @@
               <v-row>
                 <v-btn
                   class="sub-filter_btn"
-                  
                   elevation="0"
                   width="200px"
-                  height="48px"
+                  height="47px"
                   @click.stop="drawer = !drawer"
                 >
                   <v-icon 
@@ -119,25 +118,26 @@
         </div>
       </div>
     </v-subheader>
-    <div class="table_scroll">
-      <div class="css_table css_table2">
-          <div></div>
-          <div class="css_thead">
-            <div class="css_tr">
-              <div></div>
-              <div v-for="date in date" :key="date.text + date.number"  class="css_th">{{date.text}}</div>
-            </div>
+    <div class="table_scroll" v-if="!is_loading">
+      <div class="css_table css_table2" style="    position: sticky;
+    top: 0;">
+        <div class="css_th"></div>
+        <div class="css_thead">
+          <div class="css_tr">
+            <div></div>
+            <div v-for="date in date" :key="date.text + date.number"  class="css_th">{{date.text}}</div>
           </div>
-          <div class="css_thead">
-            <div class="css_tr">
-              <div class="css_th sub_th"></div>
-                <div  v-for="date in date" :key="date.number" class="css_th sub_th">
-                  <div :class="[date.text=='Sun' ? 'sunday': '']">
-                    {{ date.number }}
-                  </div>
+        </div>
+        <div class="css_thead">
+          <div class="css_tr">
+            <div class="css_th sub_th"></div>
+              <div  v-for="date in date" :key="date.number" class="css_th sub_th">
+                <div :class="[date.text=='Sun' ? 'sunday': '']">
+                  {{ date.number }}
                 </div>
-            </div>
+              </div>
           </div>
+        </div>
         <div class="css_tbody" v-for="i in counts" :key="i">
           <div class="css_tr">
             <div class="css_sd header_sd width_sd">
@@ -172,6 +172,9 @@
         </div>
       </div>
     </div>
+    <template v-else>
+      sad
+    </template>
     <v-navigation-drawer
       v-model="drawer"
       absolute
@@ -251,6 +254,7 @@
 </template>
 <script>
   import moment from 'moment' 
+  import { GetAllRegions } from "@/repositories/region.api"
   export default {
       data() {
         return {
@@ -272,13 +276,26 @@
             { title: 'Semaine' },
             { title: 'Mois' },
           ],
+          is_loading: false
       };
     },
     mounted() {
-      this.getMonthyear();
-      this.getmonthly();
+      this.initialize()
+
     },
     methods: {
+      initialize(){
+        this.getMonthyear();
+        this.getmonthly();
+        this.getData()
+      },
+      getData(){
+        this.is_loading = true
+        GetAllRegions().then(({data}) => {
+          console.log(data, 'regions')
+          this.is_loading = false
+        })
+      },
       getMonthyear(){
         this.month;
         this.year;
@@ -302,9 +319,7 @@
       },
       getmonthly() { 
         var monthDate = moment(moment(this.year+'-'+this.month_digit), 'YYYY-MM'); 
-        console.log(monthDate,'sad')
         var daysInMonth = monthDate.daysInMonth() ; 
-        console.log(daysInMonth, 'test')
         var arrDays = []; 
         while(daysInMonth) {  
           var current = moment(this.month).date(daysInMonth); 
@@ -315,7 +330,6 @@
           daysInMonth--; 
         } 
         this.date = arrDays.reverse();
-        console.log(this.date,"date");
       }
     },
   };
