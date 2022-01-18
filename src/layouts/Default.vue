@@ -1,19 +1,16 @@
 <template>
     <v-app>
         <app-head></app-head>
-        <app-side></app-side>
-        <v-main>
+        <v-main class="mt-6">
             <router-view></router-view>
         </v-main>
     </v-app>
 </template>
 <script>
-import appHead from './includes/header.vue'
-import appSide from './includes/sidebar.vue'
+import appHead from './includes/Appheader.vue'
 export default {
     components:{
         appHead,
-        appSide
     }
 }
 </script>
