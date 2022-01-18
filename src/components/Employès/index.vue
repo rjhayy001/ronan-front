@@ -1,51 +1,54 @@
 <template>
   <div>
-       <v-subheader class="">
-            <p class="sub_title">Employees</p>
-            <v-spacer></v-spacer>
-            <v-btn depressed>
-                <v-icon
-                    color="black"
-                >
-                    mdi-magnify
-                </v-icon>          
-            </v-btn>
-            <v-btn depressed @click="view_list=!view_list">
-                <v-icon
-                
-                    color="black"
-                >
-                   {{view_list ? 'mdi-format-list-bulleted' : 'mdi-view-compact'}}
-                </v-icon>          
-            </v-btn>
-            <v-btn depressed  @click="dialog = true">
-                <v-icon
-                    color="black"
-                >
-                    mdi-plus
-                </v-icon>          
-            </v-btn>
-        </v-subheader>
-        <v-data-table
-            v-if="view_list"
-            class="elevation-1 mx-4"
-            :headers="headers"
-            :items="employees"
-            :items-per-page="50"
-            :loading="loading"
-            @click:row="view($event)"
-        >
-            <template v-slot:item.logo="{ item }">
-                 <v-avatar class="logo_img">
-                    <img :src="item.image" alt="">
-                </v-avatar>
-            </template>
-            <template v-slot:item.is_active="{ item }">
-                 <v-icon :color="item.isActive == 1 ? 'success' : 'error'">
-                     mdi-moon-full
-                 </v-icon>
-            </template>
-        </v-data-table>
+        <template v-if="!loading">
+            <v-subheader class="">
+                <p class="sub_title">Employees</p>
+                <v-spacer></v-spacer>
+                <v-btn depressed>
+                    <v-icon
+                        color="black"
+                    >
+                        mdi-magnify
+                    </v-icon>          
+                </v-btn>
+                <v-btn depressed @click="view_list=!view_list">
+                    <v-icon
+                    
+                        color="black"
+                    >
+                    {{view_list ? 'mdi-format-list-bulleted' : 'mdi-view-compact'}}
+                    </v-icon>          
+                </v-btn>
+                <v-btn depressed  @click="dialog = true">
+                    <v-icon
+                        color="black"
+                    >
+                        mdi-plus
+                    </v-icon>          
+                </v-btn>
+            </v-subheader>
+            <v-data-table
+                v-if="view_list"
+                class="elevation-1 mx-4"
+                :headers="headers"
+                :items="employees"
+                :items-per-page="50"
+                :loading="loading"
+                @click:row="view($event)"
+            >
+                <template v-slot:item.logo="{ item }">
+                    <v-avatar class="logo_img">
+                        <img :src="item.image" alt="">
+                    </v-avatar>
+                </template>
+                <template v-slot:item.is_active="{ item }">
+                    <v-icon :color="item.isActive == 1 ? 'success' : 'error'">
+                        mdi-moon-full
+                    </v-icon>
+                </template>
+            </v-data-table>
+        </template>
+        <table-loader v-else></table-loader>
   </div>
 </template>
 <script>

@@ -224,6 +224,7 @@ tbody tr:nth-of-type(even) {
   
   .css_tr {
     display: table-row;
+    width: 250px !important;
   }
   
   .css_tr:nth-child(even) .css_td {
@@ -320,7 +321,7 @@ tbody tr:nth-of-type(even) {
   }
 
   .width_sd {
-    width:15%!important
+    width:20%!important
   }
 .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
     background: #ffd993 !important;
