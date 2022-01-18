@@ -7,7 +7,7 @@
     </v-app>
 </template>
 <script>
-import appHead from './includes/header.vue'
+import appHead from './includes/Appheader.vue'
 export default {
     components:{
         appHead,
