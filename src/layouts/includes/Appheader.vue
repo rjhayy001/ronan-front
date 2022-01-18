@@ -8,7 +8,7 @@
         <div class="tabs">
             <v-tab class="subtabs" to="/">Planification</v-tab>
             <v-tab class="subtabs" to="/centres">Centres</v-tab>
-            <v-tab class="subtabs" to="/employès">Employès</v-tab>
+            <v-tab class="subtabs" to="/employees">Employees</v-tab>
         </div>
         <v-spacer></v-spacer>
         <div style="margin: auto 0">

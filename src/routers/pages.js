@@ -18,7 +18,7 @@ export default [{
         component: Centres
     },
     {
-        path: '/employès',
+        path: '/employees',
         name: 'Employès',
         component: Employès
     },
