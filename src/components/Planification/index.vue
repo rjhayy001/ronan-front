@@ -145,7 +145,7 @@
             </div>
             <div class="css_td" v-for="date in date" :key="date.number">
               <div v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
-                <p style="color:rgb(97 97 97); margin:0 ">.</p>
+                <p style="color:rgb(97 97 97); margin:0; visibility:hidden;">.</p>
               </div>
             </div>
           </div>
@@ -155,7 +155,7 @@
             </div>
             <div class="css_td" v-for="date in date" :key="date.number">
               <div v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
-                <p style="color:rgb(97 97 97); margin:0 ">.</p>
+                <p style="color:rgb(97 97 97); margin:0; visibility:hidden; ">.</p>
               </div>
             </div>
           </div>
@@ -165,7 +165,7 @@
             </div>
             <div class="css_td" v-for="date in date" :key="date.number">
               <div v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
-                <p style="color:rgb(97 97 97); margin:0 ">.</p>
+                <p style="color:rgb(97 97 97); margin:0; visibility:hidden; ">.</p>
               </div>
             </div>
           </div>
@@ -254,7 +254,7 @@
   export default {
       data() {
         return {
-          counts: 10,
+          counts: 2,
           month: moment().format('MMM YYYY'),
           drawer: null,
           monthIndex : this.month - 1,
