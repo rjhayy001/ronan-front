@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-subheader class="subheader">
+    <v-subheader class="subheader" style="border-bottom:1px solid gray">
       <div class="sub-container">
         <div class="date-container">
           <v-btn
@@ -43,7 +43,7 @@
                       v-on="on"
                       elevation="0"
                       width="200px"
-                      height="48px"
+                      height="47px"
                     >
                       Jours
                       <v-icon 
@@ -68,10 +68,9 @@
               <v-row>
                 <v-btn
                   class="sub-filter_btn"
-                  
                   elevation="0"
                   width="200px"
-                  height="48px"
+                  height="47px"
                   @click.stop="drawer = !drawer"
                 >
                   <v-icon 
@@ -120,24 +119,25 @@
       </div>
     </v-subheader>
     <div class="table_scroll">
-      <div class="css_table css_table2">
-          <div></div>
-          <div class="css_thead">
-            <div class="css_tr">
-              <div></div>
-              <div v-for="date in date" :key="date.text + date.number"  class="css_th">{{date.text}}</div>
-            </div>
+      <div class="css_table css_table2" style="    position: sticky;
+    top: 0;">
+        <div class="css_th"></div>
+        <div class="css_thead">
+          <div class="css_tr">
+            <div></div>
+            <div v-for="date in date" :key="date.text + date.number"  class="css_th">{{date.text}}</div>
           </div>
-          <div class="css_thead">
-            <div class="css_tr">
-              <div class="css_th sub_th"></div>
-                <div  v-for="date in date" :key="date.number" class="css_th sub_th">
-                  <div :class="[date.text=='Sun' ? 'sunday': '']">
-                    {{ date.number }}
-                  </div>
+        </div>
+        <div class="css_thead">
+          <div class="css_tr">
+            <div class="css_th sub_th"></div>
+              <div  v-for="date in date" :key="date.number" class="css_th sub_th">
+                <div :class="[date.text=='Sun' ? 'sunday': '']">
+                  {{ date.number }}
                 </div>
-            </div>
+              </div>
           </div>
+        </div>
         <div class="css_tbody" v-for="i in counts" :key="i">
           <div class="css_tr">
             <div class="css_sd header_sd width_sd">
@@ -152,6 +152,16 @@
           <div class="css_tr">
             <div class="css_sd subheader_sd width_sd">
               MORLAIX JARLOT
+            </div>
+            <div class="css_td" v-for="date in date" :key="date.number">
+              <div v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
+                <p style="color:rgb(97 97 97); margin:0; visibility:hidden; ">.</p>
+              </div>
+            </div>
+          </div>
+          <div class="css_tr">
+            <div class="css_sd content_sd width_sd">
+              Arnaud LARUE
             </div>
             <div class="css_td" v-for="date in date" :key="date.number">
               <div v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
@@ -254,7 +264,7 @@
   export default {
       data() {
         return {
-          counts: 2,
+          counts: 10,
           month: moment().format('MMM YYYY'),
           drawer: null,
           monthIndex : this.month - 1,
