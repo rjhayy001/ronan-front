@@ -71,7 +71,7 @@
                   elevation="0"
                   width="200px"
                   height="47px"
-                  @click.stop="drawer = !drawer"
+                  @click.stop="drawer=true"
                 >
                   <v-icon 
                     class="filter-icon"
@@ -119,9 +119,8 @@
       </div>
     </v-subheader>
     <div class="table_scroll">
-      <div class="css_table css_table2" style="    position: sticky;
-    top: 0;">
-        <div class="css_th"></div>
+      <div class="css_table css_table2">
+        <div class="css_th"  style="border-bottom:none!important;"></div>
         <div class="css_thead">
           <div class="css_tr">
             <div></div>
@@ -129,9 +128,9 @@
           </div>
         </div>
         <div class="css_thead">
-          <div class="css_tr">
-            <div class="css_th sub_th"></div>
-              <div  v-for="date in date" :key="date.number" class="css_th sub_th">
+          <div class="css_tr ">
+            <div class="css_th sub_th border_table"></div>
+              <div  v-for="date in date" :key="date.number" class="css_th sub_th" style="background-color:white;">
                 <div :class="[date.text=='Sun' ? 'sunday': '']">
                   {{ date.number }}
                 </div>
@@ -140,22 +139,28 @@
         </div>
         <div class="css_tbody" v-for="i in counts" :key="i">
           <div class="css_tr">
-            <div class="css_sd header_sd width_sd">
+            <div class="css_sd header_sd width_sd border_table">
               Secteur Nord
             </div>
             <div class="css_td" v-for="date in date" :key="date.number">
-              <div v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
+              <div v-if="date.text=='Sun'" style="background-color:rgb(97 97 97); ">
                 <p style="color:rgb(97 97 97); margin:0; visibility:hidden;">.</p>
+              </div>
+              <div v-else style="background-color:white; ;">
+                <p style="color:white; margin:0; visibility:hidden;">.</p>
               </div>
             </div>
           </div>
           <div class="css_tr">
-            <div class="css_sd subheader_sd width_sd">
+            <div class="css_sd subheader_sd width_sd border_table">
               MORLAIX JARLOT
             </div>
             <div class="css_td" v-for="date in date" :key="date.number">
-              <div v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
+              <div id="data"  v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
                 <p style="color:rgb(97 97 97); margin:0; visibility:hidden; ">.</p>
+              </div>
+              <div id="data"  v-else style="background-color:white;;">
+                <p style="color:white; margin:0; visibility:hidden;">.</p>
               </div>
             </div>
           </div>
@@ -164,109 +169,36 @@
               Arnaud LARUE
             </div>
             <div class="css_td" v-for="date in date" :key="date.number">
-              <div v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
+              <div id="data" @click="click(date.number)" v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
                 <p style="color:rgb(97 97 97); margin:0; visibility:hidden; ">.</p>
               </div>
-            </div>
-          </div>
-          <div class="css_tr">
-            <div class="css_sd content_sd width_sd">
-              Arnaud LARUE
-            </div>
-            <div class="css_td" v-for="date in date" :key="date.number">
-              <div v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
-                <p style="color:rgb(97 97 97); margin:0; visibility:hidden; ">.</p>
+              <div id="data" @click="click(date.number)" v-else style="background-color:white;">
+                <p style="color:white; margin:0; visibility:hidden;">.</p>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <v-navigation-drawer
-      v-model="drawer"
-      absolute
-      temporary
-      right
-      width="300px"
-      class="right-drawer"
-    >
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title>Filter:</v-list-item-title>
-        </v-list-item-content>
-        <v-list-item-content class="right">
-          <v-list-item-title class="text1">Réinitialiser</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-      <v-divider></v-divider>
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title>Région:</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-      <v-divider></v-divider>
-      <v-list dense>
-        <v-list-item class="drawer-list">
-          <v-col class="list-list">
-            <v-checkbox
-              label="Secteur Nord"
-              color="#005075"
-              value="Secteur Nord"
-              hide-details
-            ></v-checkbox>
-          </v-col>
-          <v-col class="list-list">
-            <v-checkbox
-              label="Secteur Sud"
-              color="#005075"
-              value="Secteur Sud"
-              hide-details
-            ></v-checkbox>
-          </v-col>
-          <v-col class="list-list">
-            <v-checkbox
-              label="Autonome"
-              color="#005075"
-              value="Autonome"
-              hide-details
-            ></v-checkbox>
-          </v-col>
-          <v-col class="list-list">
-            <v-checkbox
-              label="Normandie"
-              color="#005075"
-              value="Normandie"
-              hide-details
-            ></v-checkbox>
-          </v-col>
-        </v-list-item>
-      </v-list>
-      <v-divider></v-divider>
-      <v-list dense>
-        <v-list-item class="drawer-list">
-          <v-col class="list-list list1">
-            <v-list-item-content>
-              <v-list-item-title class="list1-text">Vue des employés:</v-list-item-title>
-            </v-list-item-content>
-            <v-checkbox
-              color="#005075"
-              value="Secteur Nord"
-              hide-details
-            ></v-checkbox>
-          </v-col>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
+    <FilterPlanning :drawer="drawer" @close="drawer = false"/>
+    <CreatePlan :dialog="dialog2" @close="closeDialog"></CreatePlan>
   </div>
 </template>
 <script>
+import FilterPlanning from './includes/filter.vue';
+import CreatePlan from './create.vue';
   import moment from 'moment' 
   export default {
+    components:{
+      FilterPlanning,
+      CreatePlan
+    },
       data() {
         return {
-          counts: 10,
+          counts: 20,
           month: moment().format('MMM YYYY'),
-          drawer: null,
+          drawer: false,
+          dialog2: false,
           monthIndex : this.month - 1,
           year: moment(this.month).format('YYYY'),
           monthly: moment(this.month).format('MMM'),
@@ -326,7 +258,21 @@
         } 
         this.date = arrDays.reverse();
         console.log(this.date,"date");
+      },
+      click(){
+        // alert(date);
+        this.dialog2 = true
+      },
+      closeDialog(){
+        this.dialog2 = false
       }
     },
   };
+   
 </script>
+
+<style scoped>
+#data2{
+  background-color: red;
+}
+</style>

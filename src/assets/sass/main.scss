@@ -61,9 +61,7 @@ tbody tr:nth-of-type(even) {
 
 .v-dialog__content .v-dialog {
     background-color: white !important;
-    height: 100vh!important;
     margin: 0!important;
-    max-height: 100%!important;
 }
 
 .v-menu__content{
@@ -210,7 +208,6 @@ tbody tr:nth-of-type(even) {
   .right-drawer {
     right:0; 
     padding: 20px; 
-    margin-top: 20px;
   }
   .right{
     margin-left: 60px;
@@ -273,9 +270,8 @@ tbody tr:nth-of-type(even) {
   .css_th,
   .css_sd{
     display: table-cell;
-    white-space:nowrap; 
-    border-bottom: 0.2px solid #fff;
-    border-right: 0.2px solid #fff;
+    border-bottom: 1px solid gray;
+    border-left: 1px solid gray;
   }
   
   .css_thead {
@@ -362,6 +358,14 @@ tbody tr:nth-of-type(even) {
     background: #ffd993 !important;
 }
 
+.border_table {
+  display: table-cell;
+  border-style: revert;
+  border-color: #e6dada !important;
+  white-space: nowrap;
+  border-bottom: 0.2px solid #fff;
+  border-right: 0.2px solid #fff;
+}
 
 
 
