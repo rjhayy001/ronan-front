@@ -59,7 +59,16 @@
                                 </div>
                             </div>
                             <div style="width: 50%;">
-                                    
+                                <div style="line-height:1">
+                                    <span>
+                                        Date de début
+                                    </span>
+                                    <div style="padding-left:10px">
+                                    <v-btn class="sad" flat solo style="box-shadow:none; height: 100%">
+                                        {{date}}
+                                    </v-btn>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div>
@@ -73,10 +82,12 @@
 </template>
 
 <script>
+  import moment from 'moment' 
 export default {
     data(){
         return {
-            regions: []
+            regions: [],
+            date: moment().format('MMM. DD YYYY')
         }
     },
     methods:{
@@ -86,3 +97,8 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+
+
+</style>

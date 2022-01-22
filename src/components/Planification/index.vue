@@ -180,18 +180,21 @@
         </div>
       </div>
     </div>
-    <FilterPlanning :drawer="drawer" @close="drawer = false"/>
-    <CreatePlan :dialog="dialog2" @close="closeDialog"></CreatePlan>
+    <filter-planning :drawer="drawer" @close="drawer = false"/>
+    <create-plan :dialog="dialog2" @close="closeDialog"/>
+    <menu-button v-if="menu"/>
   </div>
 </template>
 <script>
-import FilterPlanning from './includes/filter.vue';
-import CreatePlan from './create.vue';
+import filterPlanning from './includes/filter.vue';
+import menuButton from './includes/menu.vue';
+import createPlan from './create.vue';
   import moment from 'moment' 
   export default {
     components:{
-      FilterPlanning,
-      CreatePlan
+      filterPlanning,
+      createPlan,
+      menuButton
     },
       data() {
         return {
@@ -199,6 +202,8 @@ import CreatePlan from './create.vue';
           month: moment().format('MMM YYYY'),
           drawer: false,
           dialog2: false,
+          dialog3: false,
+          menu: true,
           monthIndex : this.month - 1,
           year: moment(this.month).format('YYYY'),
           monthly: moment(this.month).format('MMM'),
@@ -265,6 +270,9 @@ import CreatePlan from './create.vue';
       },
       closeDialog(){
         this.dialog2 = false
+      },
+      showPendingApplication(){
+        this.dialog3=true
       }
     },
   };
