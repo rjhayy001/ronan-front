@@ -30,6 +30,7 @@
                 small
                 color="#005075"
                 style="z-index: 7; bottom: 170px; right: 70px;"
+                @click.prevent="requestRTT()"
             >
                 <v-icon>
                     mdi-umbrella
@@ -47,25 +48,33 @@
                 </v-icon>
             </v-btn>
         </div>
-        <pending-application :dialog="pending_dialog"/>
+        <pending-application :dialog="pending_dialog" @close="pending_dialog=false"/>
+        <request-rtt :dialog="requestRtt_dialog" @close="requestRTTclose()"/>
     </div>
 </template>
 
 <script>
 import pendingApplication from './dialogs/pendingApplication.vue';
+import requestRtt from './dialogs/requestRTT.vue';
 export default {
     components:{
-        pendingApplication
+        pendingApplication,
+        requestRtt,
     },
       data() {
         return {
             pending_dialog:false,
+            requestRtt_dialog:false,
             dialog: false,
             button: false,
             view_list: false,
       };
     },
     methods: {
+        reset(){
+            this.button=false;
+            this.view_list=false
+        },
         click(){
             if(this.button==false){
                 this.button=true;
@@ -75,8 +84,17 @@ export default {
         },
         pendingApplication(){
             this.pending_dialog=true
-      },
+            this.reset()
+        },
+        requestRTT(){
+            this.requestRtt_dialog=true
+            this.reset()
+        },
+        requestRTTclose(){
+            console.log("clopse")
+            this.requestRtt_dialog=false
+        },
     },
-  };
+};
    
 </script>

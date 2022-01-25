@@ -19,6 +19,7 @@
                         solo
                         style="padding:10px; color:#005075"
                         medium
+                        @click="close()"
                     >
                         mdi-arrow-left
                     </v-icon>
@@ -45,41 +46,30 @@
                     <v-icon>mdi-timer-sand</v-icon>
                 </v-tab>
             </v-tabs>
-            <v-tabs-items v-model="tab">
+            <v-tabs-items v-model="tab" style="height: 100%!important">
                 <v-tab-item :key="1" value="congés">
-                    <v-card>
-                        <v-card-text>
-                            <div>
-                                
-                                <span>
-                                    sad
-                                </span>
-                                <br>
-                                <span>
-                                    sad
-                                </span>
-                                <br>
-                                <span>
-                                    sad
-                                </span>
-                                <span>
-                                    sad
-                                </span>
-                            </div>
-                        </v-card-text>
-                    </v-card>
+                    <div style="margin: 20px 0">
+                        <table-leave></table-leave>
+                    </div>
                 </v-tab-item>
                 <v-tab-item :key="2" value="rtt">
-                    <v-card>
-                        <v-card-text>rtt</v-card-text>
-                    </v-card>
+                    <div style="margin: 20px 0">
+                        <table-rtt></table-rtt>
+                    </div>
                 </v-tab-item>
             </v-tabs-items>
         </v-card>
     </v-dialog>
 </template>
 <script>
+import tableLeave from '../tableLeave.vue';
+import tableRtt from '../tableRTT.vue';
+
 export default {
+    components:{
+        tableLeave,
+        tableRtt
+    },
     props:{
         dialog:{
             type:Boolean,
@@ -97,7 +87,9 @@ export default {
       };
     },
     methods: {
-        
+            close(){
+                this.$emit('close')
+            }
         },
   };
    

@@ -356,3 +356,25 @@ tbody tr:nth-of-type(even) {
 .v-tabs-slider-wrapper {
     color: #005075;
 }
+
+.v-window .v-item-group .theme--light .v-tabs-items{
+    height: 100%;
+}
+
+.area .v-input__control .v-input__slot .v-input__prepend-inner {
+  margin:auto 0;
+}
+
+.v-input .area .v-textarea .v-textarea--auto-grow .v-textarea--no-resize .theme--light .v-text-field .v-text-field--is-booted .v-text-field--enclosed .v-text-field--outlined .v-text-field--placeholder {
+  margin: auto 0!important;
+  align-items: center;
+}
+
+.area label {
+  position: absolute;
+  transform: translateY(27px);
+}
+
+.button-date .v-btn__content {
+  justify-content: flex-start!important;
+}
