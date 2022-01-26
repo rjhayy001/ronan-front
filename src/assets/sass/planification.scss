@@ -250,9 +250,10 @@ tbody tr:nth-of-type(even) {
   z-index:1;
     height: 100%;
     width:50%; 
-    position:relative; 
     display:flex;
     align-items: center;
+    position: sticky;
+    top: 12.6%;
   }
   
   .subheader .tags .tags-container {
@@ -342,7 +343,7 @@ tbody tr:nth-of-type(even) {
   /*Limit Height & Resize*/
   .table_scroll {
     min-height: 300px;
-    overflow: auto;
+    overflow: inherit;
     margin: auto;
     resize: vertical;
     width: 100%;
@@ -382,7 +383,7 @@ tbody tr:nth-of-type(even) {
     display: table-header-group;
     font-weight: bold;
     z-index:1;
-    
+    background-color: #fff;
   }
   
   .css_tfoot {
