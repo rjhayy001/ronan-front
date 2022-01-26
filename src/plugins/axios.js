@@ -47,8 +47,7 @@ httpClient.interceptors.response.use((response) => {
     //       }
     //     })
     //   })
-    alert(messages)
-    return Promise.reject( error );
+    this.$toast.error(messages);
 });
 
 export default httpClient;

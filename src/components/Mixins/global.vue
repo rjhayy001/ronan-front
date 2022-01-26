@@ -12,6 +12,17 @@ export default {
         },
         $defaultDate(date){
             return moment(date).format('DD-MM-YYYY');
+        },
+
+        // date
+        $isBetween(date1, date2, calendarDate){
+            let today = moment(calendarDate)
+            let day1 = moment(date1)
+            let day2 = moment(date2)
+            return today.isBetween(day1, day2, undefined, [])
+        },
+        $isSameDate(date1, date2){
+            return moment(date1).isSame(moment(date2))
         }
     }
 

@@ -172,20 +172,51 @@
               <div class="css_sd content_sd width_sd">
                 {{user.first_name}}, {{user.last_name}}
               </div>
-              <div class="css_td" v-for="date in date" :key="date.number">
-                <div id="data" v-if="date.number==currentDay" class="currentDay">
+              <div class="css_td position-relative" v-for="date in date" :key="date.number">
+                <div id="data"  v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
                   <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                 </div>
-                <div id="data" v-else-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
-                  <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                </div>
-                <div id="data" @click="click()" v-else-if="date.text!='Sun' && date.number!=currentDay">
-                  <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                </div>
-                <template v-else>
-                  <div v-if="user.attendance">
-                  </div>
-                  <p class="date-hidden">.</p>
+                <!-- for planning -->
+                <template v-if="user.planning && date.text !='Sun'">
+                  <template v-for="(planning, plann_index) in user.planning">
+                    <div 
+                      v-if="$isBetween(
+                        planning.start_date, 
+                        planning.end_date, 
+                        date.date
+                      )" 
+                      :key="plann_index + 'asdplann'" 
+                      :class="['work-full', $checkWorkFullDate(planning, date)]"
+                    >
+                      <p class="date-hidden" >.</p>
+                    </div>
+                  </template>
+                </template>
+                <template v-if="user.holidays && date.text !='Sun'">
+                  <template v-for="(holiday, holi_index) in user.holidays">
+                    <div 
+                      v-if="$isBetween(
+                        holiday.start_date, 
+                        holiday.end_date, 
+                        date.date
+                      ) && holiday.status == 1" 
+                      :key="holi_index + 'holiasd'" 
+                      :class="['holiday-full',$checkHolidayFullDate(holiday, date) ]"
+                    >
+                      <p class="date-hidden" >.</p>
+                    </div>
+                  </template>
+                </template>
+                <template v-if="user.rtts && date.text !='Sun'">
+                  <template v-for="(rtt, rtt_index) in user.rtts">
+                    <div 
+                      v-if="$isSameDate(date.date, rtt.date)&& rtt.status == 1" 
+                      :key="rtt_index + 'rttasd'" 
+                      :class="['rtt-full']"
+                    >
+                      <p class="date-hidden" >.</p>
+                    </div>
+                  </template>
                 </template>
               </div>
             </div>
@@ -285,12 +316,12 @@ import createPlan from './create.vue';
           var current = moment(this.month).date(daysInMonth); 
           arrDays.push({
             number: current.format('DD'),
-            text: current.format('ddd')
+            text: current.format('ddd'),
+            date: current.format('YYYY-MM-DD')
           }); 
           daysInMonth--; 
         } 
         this.date = arrDays.reverse();
-        console.log(this.date,"date");
       },
       click(){
         alert("click");

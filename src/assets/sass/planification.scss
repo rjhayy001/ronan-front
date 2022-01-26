@@ -248,8 +248,188 @@ tbody tr:nth-of-type(even) {
   display: table-header-group;
   font-weight: bold;
   z-index:1;
+    height: 100%;
+    width:50%; 
+    position:relative; 
+    display:flex;
+    align-items: center;
+  }
   
-}
+  .subheader .tags .tags-container {
+    position:absolute; 
+    right:10px; 
+    display:flex; 
+    align-items:center;
+  }
+  
+  .subheader .tags .tags-container .container{
+    display:flex;
+    align-items: center; 
+    width: 7.6em;
+    padding:0;
+  }
+  
+  .subheader .tags .tags-container .container .tags-color{
+    width:15px; 
+    height:8px; 
+    border-radius: 10px
+  }
+  
+  .subheader .tags .tags-container .container .tags-name{
+    padding-left:5px;
+    pointer-events: none;
+  }
+  
+  .subheader .tags .tags-container .container .travaille{
+    background-color: #2196f3; 
+  }
+  
+  .subheader .tags .tags-container .container .absence{
+    background-color: #f44336; 
+  }
+  
+  .subheader .tags .tags-container .container .conflit{
+    background-color: #6a1b9a; 
+  }
+  
+  .subheader .tags .tags-container .container .vacances{
+    background-color: #4caf50; 
+  }
+  
+  .subheader .tags .tags-container .container .rtt{
+    background-color: #ffeb3a; 
+  }
+  
+  .subheader .tags .tags-container .container .dimanche{
+    background-color: #757575; 
+  }
+  
+  .subheader .tags .tags-container .container .jour{
+    background-color: #ff9801; 
+  }
+
+  .right-drawer {
+    right:0; 
+    padding: 20px; 
+  }
+  .right{
+    margin-left: 60px;
+  }
+  .right .text1{
+    color:#2196f3;
+  }
+  
+  .right-drawer .drawer-list {
+    display:flex;
+    flex-direction: column;
+  }
+  .right-drawer .drawer-list .list-list{
+    padding:0!important;
+  }
+  
+  .right-drawer .drawer-list .list1 {
+    display: flex;
+  }
+  
+  .right-drawer .drawer-list .list1 .list1-text {
+    font-size:16px
+  }
+  
+  .v-menu__content{
+      min-width: 110px!important;
+  }
+  
+  /*Limit Height & Resize*/
+  .table_scroll {
+    min-height: 300px;
+    overflow: auto;
+    margin: auto;
+    resize: vertical;
+    width: 100%;
+    margin-top: 45px;
+    /* box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 ); */
+  }
+  
+  /*Div Table Setting*/
+  .css_table {
+    display: table;
+    position: relative;
+    width:100%;
+  }
+  
+  .css_tr {
+    display: table-row;
+    width: 250px !important;
+  }
+  
+  .css_tr:nth-child(even) .css_td {
+    background: #fafafa;
+  }
+  
+  .css_tr:nth-child(odd) .css_td {
+    background: #fafafa;
+  }
+  
+  .css_td,
+  .css_th,
+  .css_sd{
+    display: table-cell;
+    border-bottom: 1px solid #d4d1d1;
+    border-left: 1px solid #d4d1d1;
+  }
+  
+  .css_thead {
+    display: table-header-group;
+    font-weight: bold;
+    z-index:1;
+    
+  }
+  
+  .css_tfoot {
+    background-color: #eee;
+    display: table-footer-group;
+    font-weight: bold;
+  }
+  
+  .css_tbody {
+    display: table-row-group;
+  }
+  
+  /*Table Header Fixed */
+  .css_th, .css_sd{
+    position: sticky;
+    background-color: #005075;
+    color: #fff;
+  }
+  
+  .css_th{
+    top: 0;
+    width: 40px;
+  }
+  
+  .css_sd{
+    left: 0;
+  }
+  
+  .css_thead div.css_th:first-child,
+  .css_tfoot div.css_th:first-child{
+    left:0;
+  }
+  
+  .css_tfoot .css_th{
+    bottom:0
+  }
+  
+  .sub_th {
+      background-color: white;
+      color: black;
+  }
+  
+  .v-input--selection-controls {
+    margin:auto!important;
+  }
+  
+
 
 .css_tfoot {
   background-color: #eee;
