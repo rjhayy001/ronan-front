@@ -184,7 +184,6 @@
                 </div>
                 <template v-else>
                   <div v-if="user.attendance">
-
                   </div>
                   <p class="date-hidden">.</p>
                 </template>
