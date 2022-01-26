@@ -126,12 +126,10 @@
             <div></div>
             <div v-for="date in date" :key="date.text + date.number"  class="css_th">{{date.text}}</div>
           </div>
-        </div>
-        <div class="css_thead">
           <div class="css_tr ">
             <div class="css_th sub_th border_table"></div>
               <div  v-for="date in date" :key="date.number" class="css_th sub_th" style="background-color:white;">
-                <div v-if="date.number==currentDay" class="currentDay">
+                <div v-if="$isSameDate(date.date,currentDay)" class="currentDay">
                   {{ date.number }}
                 </div>
                 <div v-else :class="[date.text=='Sun' ? 'sunday': '']">
@@ -146,7 +144,7 @@
               {{region.name}}
             </div>
             <div class="css_td" v-for="date in date" :key="date.number">
-              <div id="data" v-if="date.number==currentDay" class="currentDay">
+              <div id="data" v-if="$isSameDate(date.date,currentDay)" class="currentDay">
                 <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
               </div>
               <div id="data" v-else-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
@@ -160,7 +158,7 @@
                 {{center.name}}
               </div>
               <div class="css_td" v-for="date in date" :key="date.number">
-                <div id="data"  v-if="date.number==currentDay" class="currentDay">
+                <div id="data"  v-if="$isSameDate(date.date,currentDay)" class="currentDay">
                   <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                 </div>
                 <div id="data"  v-else-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
@@ -174,6 +172,9 @@
               </div>
               <div class="css_td position-relative" v-for="date in date" :key="date.number">
                 <div id="data"  v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
+                  <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                </div>
+                <div id="data" v-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed">
                   <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                 </div>
                 <!-- for planning -->
@@ -244,7 +245,7 @@ import createPlan from './create.vue';
     },
       data() {
         return {
-          currentDay: moment().format('D'),
+          currentDay: moment().format('YYYY-MM-DD'),
           month: moment().format('MMM YYYY'),
           drawer: false,
           dialog2: false,
