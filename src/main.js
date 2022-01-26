@@ -7,11 +7,13 @@ import store from './store'
 import axios from '@/plugins/axios'
 import tableLoader from '@/components/Loader/tableLoader'
 import global_mixin from '@/components/Mixins/global';
+import styling_mixin from '@/components/Mixins/styling';
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
 const options = {
-  timeout: 3000
+  timeout: 3000,
+  showCloseButtonOnHover: true,
 };
 
 
@@ -25,6 +27,7 @@ Vue.component('app-confirm', require('@/components/Alert/confirm.vue').default)
 Vue.component('app-success', require('@/components/Alert/success.vue').default)
 
 Vue.mixin(global_mixin)
+Vue.mixin(styling_mixin)
 
 new Vue({
   vuetify,

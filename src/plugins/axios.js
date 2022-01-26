@@ -1,7 +1,7 @@
 import axios from "axios";
 import router from '@/routers'
-// const baseDomain = "https://ronan.checkmy.dev";
-const baseDomain = "http://127.0.0.1:8111";
+const baseDomain = "https://ronan.checkmy.dev";
+// const baseDomain = "http://127.0.0.1:8111";
 const baseURL = `${baseDomain}/api`; // Incase of /api/v1;
 
 const httpClient = axios.create({
@@ -47,8 +47,7 @@ httpClient.interceptors.response.use((response) => {
     //       }
     //     })
     //   })
-    alert(messages)
-    return Promise.reject( error );
+    this.$toast.error(messages);
 });
 
 export default httpClient;
