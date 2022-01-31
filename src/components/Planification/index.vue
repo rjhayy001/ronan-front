@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-subheader class="subheader" style="border-bottom:1px solid gray">
+    <v-subheader class="subheader" style="border-bottom:1px solid gray; z-index:999;">
       <div class="sub-container">
         <div class="date-container">
           <v-btn
@@ -171,10 +171,13 @@
                 {{user.first_name}}, {{user.last_name}}
               </div>
               <div class="css_td position-relative" v-for="date in date" :key="date.number">
-                <div id="data"  v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
+                <div id="data"  v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)" >
                   <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                 </div>
-                <div id="data" v-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed">
+                <div id="data" v-else-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed">
+                  <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                </div>
+                <div v-else class="empty-day position-absolute-fixed" @click="addWork(user,center,date.date)">
                   <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                 </div>
                 <!-- for planning -->
@@ -187,12 +190,15 @@
                         date.date
                       )" 
                       :key="plann_index + 'asdplann'" 
-                      :class="['work-full', $checkWorkFullDate(planning, date)]"
+                      :class="['work-full pointer', $checkWorkFullDate(planning, date)]"
+                      :style="planning.is_conflict == 1 ? 'background:#6a1b9a !important' : ''"
+                      @click="editWork(user, center, planning)"
                     >
                       <p class="date-hidden" >.</p>
                     </div>
                   </template>
                 </template>
+                <!-- for holidays -->
                 <template v-if="user.holidays && date.text !='Sun'">
                   <template v-for="(holiday, holi_index) in user.holidays">
                     <div 
@@ -208,6 +214,7 @@
                     </div>
                   </template>
                 </template>
+                <!-- for rtts -->
                 <template v-if="user.rtts && date.text !='Sun'">
                   <template v-for="(rtt, rtt_index) in user.rtts">
                     <div 
@@ -227,7 +234,12 @@
     </div>
     <table-loader v-else></table-loader>
     <filter-planning :drawer="drawer" @close="drawer = false"/>
-    <create-plan :dialog="dialog2" @close="closeDialog"/>
+    <create-plan 
+      v-if="dialog2" 
+      :dialog="dialog2" 
+      @close="closeDialog"
+      :data="create_data"
+    />
     <menu-button v-if="menu"/>
   </div>
 </template>
@@ -245,6 +257,11 @@ import createPlan from './create.vue';
     },
       data() {
         return {
+          create_data:{
+            date:'',
+            employee:{},
+            center:{}
+          },
           currentDay: moment().format('YYYY-MM-DD'),
           month: moment().format('MMM YYYY'),
           drawer: false,
@@ -324,9 +341,18 @@ import createPlan from './create.vue';
         } 
         this.date = arrDays.reverse();
       },
-      click(){
-        alert("click");
-        this.dialog2 = true
+      editWork(employee, center, planning) {
+        console.log(employee, center, planning)
+      },
+      addWork(employee, center, date){
+        this.create_data = {
+          center:center,
+          employee:employee,
+          date:date
+        }
+        this.$nextTick(function () {
+          this.dialog2 = true
+        })
       },
       closeDialog(){
         this.dialog2 = false

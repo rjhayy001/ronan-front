@@ -5,29 +5,54 @@
 
 
 .work-half-morning{
+    z-index:10 !important;
+    position: relative;
     background: 
         linear-gradient(to top right, #2196f3 49%, #ffffff 51%) !important;
 }
 
+.pointer{
+    cursor: pointer;
+}
+
 .work-half-afternoon{
+    z-index:10 !important;
+    position: relative;
     background: 
         linear-gradient(to bottom left, #2196f3 49%, #ffffff 51%) !important;
 }
 
 .work-full{
     background-color: #2196f3;
+    z-index:10 !important;
+    position: relative;
 }
 
 .holiday-full{
+    position: relative;
     background-color: #4caf50;
+    z-index:10 !important;
+}
+.empty-day {
+    background-color: white;
+    color:white;
+    z-index: 1;
+    cursor: pointer;
+  }
+.empty-day:hover {
+    background-color: #d1cbc0;
 }
 
 .holiday-half-morning{
+    z-index:10 !important;
+    position: relative;
     background: 
         linear-gradient(to top right, #4caf50 49%, #ffffff 51%) !important;
 }
 
 .holiday-half-afternoon{
+    z-index:10 !important;
+    position: relative;
     background: 
         linear-gradient(to bottom left, #4caf50 49%, #ffffff 51%) !important;
 }
@@ -36,6 +61,7 @@
     background-color: #ffeb3a;
     position: absolute;
     top: 0;
+    z-index: 10;
     right: 0;
     left: 0;
 }
@@ -51,4 +77,12 @@
 .position-relative{
     position: relative!important;
 }
+
+.currentDay {
+    background-color: #7db5d0;
+    opacity:0.8;
+    color:white;
+  }
+
+
 

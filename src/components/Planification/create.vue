@@ -1,6 +1,6 @@
 <template>
-    <v-dialog v-model="dialog" width="600" @click:outside="close">
-        <Plan @close="close"></Plan>
+    <v-dialog v-model="dialog" width="700" @click:outside="close">
+        <Plan @close="close" :data="data" :dialog="dialog"></Plan>
     </v-dialog>
 </template>
 <script>
@@ -13,6 +13,10 @@ export default {
         dialog: {
             type: Boolean,
             required: true,
+        },
+        data:{
+            required: true,
+            type: Object,
         }
     },
     methods: {
