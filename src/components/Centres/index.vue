@@ -30,7 +30,7 @@
             </v-subheader>
                 <v-data-table
                     v-if="view_list"
-                    class="elevation-1 mx-4"
+                    class="elevation-1 mx-4 index-table"
                     :headers="headers"
                     :items="centers"
                     :items-per-page="50"
