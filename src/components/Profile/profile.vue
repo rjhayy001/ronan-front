@@ -1,25 +1,34 @@
 <template>
-    <v-dialog v-model="dialog" class="dialog" style="height: 100vh!important" persistent >
-        romel
-        <v-text-field>
-
-        </v-text-field>
+    <v-dialog fullscreen v-model="dialog" class="dialogProfile" >
+        <header-dialog @close="close"/>
+        <content-profile style="z-index:10"/>
     </v-dialog>
 </template>
 
 <script>
+import headerDialog from './include/headerdialog.vue';
+import contentProfile from './include/contentProfile.vue';
 export default {
+    components:{
+        headerDialog,
+        contentProfile
+    },
     data(){
-        return{
+        return  {
 
         }
     },
     props: {
-        'dialog':{
-            default: false,
-            type: Boolean
-        },
+        dialog: { 
+            type: Boolean, 
+            default: false 
+        }
     },
+    methods:{
+        close(){
+            this.$emit('close')
+        }
+    } 
 }
 </script>
 

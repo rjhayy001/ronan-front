@@ -1,0 +1,54 @@
+.date-hidden {
+    margin:0 !important; 
+    visibility:hidden !important; 
+}
+
+
+.work-half-morning{
+    background: 
+        linear-gradient(to top right, #2196f3 49%, #ffffff 51%) !important;
+}
+
+.work-half-afternoon{
+    background: 
+        linear-gradient(to bottom left, #2196f3 49%, #ffffff 51%) !important;
+}
+
+.work-full{
+    background-color: #2196f3;
+}
+
+.holiday-full{
+    background-color: #4caf50;
+}
+
+.holiday-half-morning{
+    background: 
+        linear-gradient(to top right, #4caf50 49%, #ffffff 51%) !important;
+}
+
+.holiday-half-afternoon{
+    background: 
+        linear-gradient(to bottom left, #4caf50 49%, #ffffff 51%) !important;
+}
+
+.rtt-full{
+    background-color: #ffeb3a;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+
+.position-absolute-fixed{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    color: white !important;
+}
+
+.position-relative{
+    position: relative!important;
+}
+

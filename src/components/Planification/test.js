@@ -118,114 +118,41 @@
         </div>
       </div>
     </v-subheader>
-    <div class="table_scroll" v-if="!loading">
+    <div class="table_scroll">
       <div class="css_table css_table2">
         <div class="css_th"  style="border-bottom:none!important;"></div>
         <div class="css_thead">
-          <div class="css_tr">
-            <div></div>
-            <div v-for="date in date" :key="date.text + date.number"  class="css_th">{{date.text}}</div>
-          </div>
           <div class="css_tr ">
             <div class="css_th sub_th border_table"></div>
               <div  v-for="date in date" :key="date.number" class="css_th sub_th" style="background-color:white;">
-                <div v-if="$isSameDate(date.date,currentDay)" class="currentDay">
-                  {{ date.number }}
-                </div>
-                <div v-else :class="[date.text=='Sun' ? 'sunday': '']">
+                <div class="css_th">{{date.text}}</div>
+                <div :class="[date.text=='Sun' ? 'sunday': '']">
                   {{ date.number }}
                 </div>
               </div>
           </div>
         </div>
-        <div class="css_tbody" v-for="(region, index) in regions" :key="index + region.id">
-          <div class="css_tr">
-            <div class="css_sd header_sd width_sd">
-              {{region.name}}
-            </div>
-            <div class="css_td" v-for="date in date" :key="date.number">
-              <div id="data" v-if="$isSameDate(date.date,currentDay)" class="currentDay">
-                <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+        <div css_tbody>
+          <div class="position-relative">
+            <div>
+              <div v-for="(region, index) in regions" :key="index + region.id">
+                <div class="row position-relative project-name-row">
+                  <div class="headcolcompare task-category-head task-main-collapse">
+                    asd
+                  </div>
+                  <div  v-for="date in date" :key="date.number" class="" style="background-color:white;">
+                    <div class="css_th">{{date.text}}</div>
+                    <div :class="[date.text=='Sun' ? 'sunday': '']">
+                      {{ date.number }}
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div id="data" v-else-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
-                <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-              </div>
-            </div>
           </div>
-          <template v-for="(center, center_index) in region.centers">
-            <div class="css_tr"  :key="'center' + center_index">
-              <div class="css_sd subheader_sd width_sd">
-                {{center.name}}
-              </div>
-              <div class="css_td" v-for="date in date" :key="date.number">
-                <div id="data"  v-if="$isSameDate(date.date,currentDay)" class="currentDay">
-                  <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                </div>
-                <div id="data"  v-else-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
-                  <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                </div>
-              </div>
-            </div>
-            <div class="css_tr" v-for="(user, user_index) in center.users" :key="user.id+user_index+center.name+user_index+center.id">
-              <div class="css_sd content_sd width_sd">
-                {{user.first_name}}, {{user.last_name}}
-              </div>
-              <div class="css_td position-relative" v-for="date in date" :key="date.number">
-                <div id="data"  v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
-                  <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                </div>
-                <div id="data" v-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed">
-                  <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                </div>
-                <!-- for planning -->
-                <template v-if="user.planning && date.text !='Sun'">
-                  <template v-for="(planning, plann_index) in user.planning">
-                    <div 
-                      v-if="$isBetween(
-                        planning.start_date, 
-                        planning.end_date, 
-                        date.date
-                      )" 
-                      :key="plann_index + 'asdplann'" 
-                      :class="['work-full', $checkWorkFullDate(planning, date)]"
-                    >
-                      <p class="date-hidden" >.</p>
-                    </div>
-                  </template>
-                </template>
-                <template v-if="user.holidays && date.text !='Sun'">
-                  <template v-for="(holiday, holi_index) in user.holidays">
-                    <div 
-                      v-if="$isBetween(
-                        holiday.start_date, 
-                        holiday.end_date, 
-                        date.date
-                      ) && holiday.status == 1" 
-                      :key="holi_index + 'holiasd'" 
-                      :class="['holiday-full',$checkHolidayFullDate(holiday, date) ]"
-                    >
-                      <p class="date-hidden" >.</p>
-                    </div>
-                  </template>
-                </template>
-                <template v-if="user.rtts && date.text !='Sun'">
-                  <template v-for="(rtt, rtt_index) in user.rtts">
-                    <div 
-                      v-if="$isSameDate(date.date, rtt.date)&& rtt.status == 1" 
-                      :key="rtt_index + 'rttasd'" 
-                      :class="['rtt-full']"
-                    >
-                      <p class="date-hidden" >.</p>
-                    </div>
-                  </template>
-                </template>
-              </div>
-            </div>
-          </template>
+          </div>
         </div>
       </div>
     </div>
-    <table-loader v-else></table-loader>
     <filter-planning :drawer="drawer" @close="drawer = false"/>
     <create-plan :dialog="dialog2" @close="closeDialog"/>
     <menu-button v-if="menu"/>
@@ -245,7 +172,7 @@ import createPlan from './create.vue';
     },
       data() {
         return {
-          currentDay: moment().format('YYYY-MM-DD'),
+          counts: 20,
           month: moment().format('MMM YYYY'),
           drawer: false,
           dialog2: false,
@@ -266,8 +193,22 @@ import createPlan from './create.vue';
             { title: 'Semaine' },
             { title: 'Mois' },
           ],
-          regions:[],
-          loading: false
+          regions:[
+            {
+              name:'test',
+              centers:[
+                { 
+                  name:'center',
+                  users:[
+                    { 
+                      first_name: 'sad'
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          is_loading: false
       };
     },
     mounted() {
@@ -278,14 +219,14 @@ import createPlan from './create.vue';
       initialize(){
         this.getMonthyear();
         this.getmonthly();
-        this.getData()
+        // this.getData()
       },
       getData(){
-        this.loading = true
+        this.is_loading = true
         GetAllRegions().then(({data}) => {
           console.log(data, 'regions')
           this.regions = data
-          this.loading = false
+          this.is_loading = false
         })
       },
       getMonthyear(){
@@ -317,15 +258,15 @@ import createPlan from './create.vue';
           var current = moment(this.month).date(daysInMonth); 
           arrDays.push({
             number: current.format('DD'),
-            text: current.format('ddd'),
-            date: current.format('YYYY-MM-DD')
+            text: current.format('ddd')
           }); 
           daysInMonth--; 
         } 
         this.date = arrDays.reverse();
+        console.log(this.date,"date");
       },
       click(){
-        alert("click");
+        // alert(date);
         this.dialog2 = true
       },
       closeDialog(){
