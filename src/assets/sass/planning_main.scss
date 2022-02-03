@@ -81,8 +81,15 @@
 .currentDay {
     background-color: #7db5d0;
     opacity:0.8;
+    z-index: 998;
     color:white;
   }
 
+.card-radius{
+    border-radius: 30px !important;
+}
 
 
+.v-dialog:not(.v-dialog--fullscreen) {
+    border-radius: 30px !important;
+}
