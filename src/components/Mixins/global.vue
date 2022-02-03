@@ -13,6 +13,9 @@ export default {
         $defaultDate(date){
             return moment(date).format('DD-MM-YYYY');
         },
+        $datePickerDate(date){
+            return moment(date).format('YYYY-MM-DD');
+        },
 
         // date
         $isBetween(date1, date2, calendarDate){

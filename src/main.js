@@ -1,4 +1,5 @@
-import Vue from 'vue'
+3
+
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import router from './routers'
@@ -10,7 +11,7 @@ import global_mixin from '@/components/Mixins/global';
 import styling_mixin from '@/components/Mixins/styling';
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
-import * as VeeValidate from 'vee-validate';
+import { ValidationProvider } from 'vee-validate';
 
 const options = {
   timeout: 3000,
@@ -19,10 +20,12 @@ const options = {
 
 
 Vue.use(Toast, options);
-Vue.use(VeeValidate);
+
 
 Vue.prototype.moment = moment
 Vue.config.productionTip = false
+
+Vue.component('ValidationProvider', ValidationProvider);
 
 Vue.component('table-loader',tableLoader)
 Vue.component('app-confirm', require('@/components/Alert/confirm.vue').default)
