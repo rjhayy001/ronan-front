@@ -204,15 +204,15 @@ export default {
             start_menu:false,
             end_menu:false,
             holiday:{
-                startDate_isHalf_day:1,
+                startDate_isHalf_day:0,
                 start_date: this.$datePickerDate(moment()),
                 end_date: this.$datePickerDate(moment()),
-                endDate_isHalf_day:1,
+                endDate_isHalf_day:0,
             },
             items: [
-                {value: 1, text:'whole day'},
-                {value: 2, text:'half day morning'},
-                {value: 3, text:'half day afternoon'},
+                {value: 0, text:'whole day'},
+                {value: 1, text:'half day morning'},
+                {value: 2, text:'half day afternoon'},
             ],
             employees:[],
         };
@@ -232,8 +232,11 @@ export default {
             })
         },
         save(){
-            createHoliday(this.holiday).then(({data}) => {
-                console.log(data)
+            console.log(this.holiday)
+            createHoliday(this.holiday).then(() => {
+                this.$toast.success('successfully added holiday') 
+                this.$emit('success')
+                this.$emit('close')
             }).catch(({ response }) => { 
                 this.$toast.error(response.data.message) 
             })

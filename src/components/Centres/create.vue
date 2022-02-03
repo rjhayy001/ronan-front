@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="dialog" width="600" @click:outside="close">
+    <v-dialog v-model="dialog" width="700" @click:outside="close">
         <center-form @close="close"></center-form>
     </v-dialog>
 </template>
