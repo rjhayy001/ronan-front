@@ -9,7 +9,7 @@
         <v-card 
         >
             <v-form>
-                <v-container>
+                <v-container style="height: 60vh">
                     <v-row style="padding: 30px">
                         <div style="display:flex">
                             <div>
@@ -160,26 +160,36 @@
                                 class="text-capitalize"
                             ></v-autocomplete>
                         </v-col>
-                        <v-btn 
-                            @click="closeDialog" 
-                            height="50px" 
-                             
-                            color="rgb(238 238 238)"
-                            width="47%" 
-                            class="ma-2 btn-dialog"
-                        >
-                            ANNULER
-                        </v-btn>
-                        <v-btn
-                            width="47%"
-                            dark
-                            height="50px"
-                            color="#005075!important"
-                            class="btn-dialog ma-2"
-                            @click="save"
-                        >
-                            VALIDER
-                        </v-btn>
+                        <v-col v-if="error" style="position: absolute; bottom: 4em;     width: 20em;">
+                            <v-icon color="red">
+                                mdi-alert-circle
+                            </v-icon>
+                            <span style="color:red;">
+                                Please dont leave empty fields.
+                            </span>
+                        </v-col>
+                        <v-col style="position:absolute; bottom:0;width: 750px">
+                            <v-btn 
+                                @click="closeDialog" 
+                                height="50px" 
+                                
+                                color="rgb(238 238 238)"
+                                width="47%" 
+                                class="ma-2 btn-dialog"
+                            >
+                                ANNULER
+                            </v-btn>
+                            <v-btn
+                                width="47%"
+                                dark
+                                height="50px"
+                                color="#005075!important"
+                                class="btn-dialog ma-2"
+                                @click="save"
+                            >
+                                VALIDER
+                            </v-btn>
+                        </v-col>
                     </v-row>
                 </v-container>
             </v-form>
@@ -200,6 +210,7 @@ export default {
     },
     data() {
         return {
+            error:false,
             is_loading:true,
             start_menu:false,
             end_menu:false,
@@ -232,11 +243,18 @@ export default {
             })
         },
         save(){
-            createHoliday(this.holiday).then(({data}) => {
-                console.log(data)
+            this.erorr=false;
+            if(this.holiday.request_name=="" || this.holiday.request_name==null || this.holiday.reason=="" ||this.holiday.reason==null){
+                this.error=true
+            }else{
+
+                
+                createHoliday(this.holiday).then(({data}) => {
+                    console.log(data)
             }).catch(({ response }) => { 
                 this.$toast.error(response.data.message) 
             })
+                }
             
         }
     }
