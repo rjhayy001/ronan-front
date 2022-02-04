@@ -14,11 +14,11 @@ tbody tr {
   cursor: pointer !important;
 }
 
-tbody tr:nth-of-type(odd) {
+.index-table tbody tr:nth-of-type(odd) {
   background-color: #eeeeee;
 }
 
-tbody tr:nth-of-type(even) {
+.index-table tbody tr:nth-of-type(even) {
   background-color: #accde1;
 }
 
@@ -245,15 +245,15 @@ tbody tr:nth-of-type(even) {
 }
 
 .css_thead {
-  display: table-header-group;
-  font-weight: bold;
-  z-index:1;
+    display: table-header-group;
+    font-weight: bold;
+    z-index:999 !important;
     height: 100%;
     width:50%; 
     display:flex;
     align-items: center;
     position: sticky;
-    top: 12.6%;
+    top: 13.5%;
   }
   
   .subheader .tags .tags-container {
@@ -481,11 +481,6 @@ tbody tr:nth-of-type(even) {
   color:white;
 }
 
-.currentDay {
-  background-color: #7db5d0;
-  opacity:0.8;
-  color:white;
-}
 
 .sunday1 {
   background-color:black; 
