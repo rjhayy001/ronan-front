@@ -1,5 +1,5 @@
 <template>
-    <div style="position: fixed; z-index: 7; bottom: 10px; right: 10px;">
+    <div style="position: fixed; z-index: 999; bottom: 10px; right: 10px;">
         <v-btn class="mx-2" 
             fab
             dark
@@ -30,7 +30,7 @@
                 small
                 color="#005075"
                 style="z-index: 7; bottom: 170px; right: 70px;"
-                @click.prevent="requestRTT()"
+                @click.prevent="requestHoliday()"
             >
                 <v-icon>
                     mdi-umbrella
@@ -48,21 +48,31 @@
                 </v-icon>
             </v-btn>
         </div>
-        <pending-application :dialog="pending_dialog" @close="pending_dialog=false"/>
-        <request-rtt :dialog="requestRtt_dialog" @close="requestRTTclose()"/>
+        <pending-application v-if="pending_dialog" :dialog="pending_dialog" @close="pending_dialog=false"/>
+        <request-rtt v-if="requestRtt_dialog" :dialog="requestRtt_dialog" @close="requestRTTclose()"/>
+        <add-holiday
+            v-if="holiday_dialog"
+            :dialog="holiday_dialog"
+            @close="holiday_dialog=false"
+            @success="$emit('success')"
+
+        />
     </div>
 </template>
 
 <script>
 import pendingApplication from './dialogs/pendingApplication.vue';
 import requestRtt from './dialogs/requestRTT.vue';
+import addHoliday from './holiday/addHoliday.vue'
 export default {
     components:{
         pendingApplication,
         requestRtt,
+        addHoliday
     },
       data() {
         return {
+            holiday_dialog: false,
             pending_dialog:false,
             requestRtt_dialog:false,
             dialog: false,
@@ -84,6 +94,10 @@ export default {
         },
         pendingApplication(){
             this.pending_dialog=true
+            this.reset()
+        },
+        requestHoliday(){
+            this.holiday_dialog=true
             this.reset()
         },
         requestRTT(){

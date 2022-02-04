@@ -202,13 +202,14 @@
                 <template v-if="user.holidays && date.text !='Sun'">
                   <template v-for="(holiday, holi_index) in user.holidays">
                     <div 
+                      @click="editHoliday(holiday, user)"
                       v-if="$isBetween(
                         holiday.start_date, 
                         holiday.end_date, 
                         date.date
                       ) && holiday.status == 1" 
                       :key="holi_index + 'holiasd'" 
-                      :class="['holiday-full',$checkHolidayFullDate(holiday, date) ]"
+                      :class="['holiday-full pointer',$checkHolidayFullDate(holiday, date) ]"
                     >
                       <p class="date-hidden" >.</p>
                     </div>
@@ -218,9 +219,10 @@
                 <template v-if="user.rtts && date.text !='Sun'">
                   <template v-for="(rtt, rtt_index) in user.rtts">
                     <div 
+                      @click="editRtt(rtt, user)"
                       v-if="$isSameDate(date.date, rtt.date)&& rtt.status == 1" 
                       :key="rtt_index + 'rttasd'" 
-                      :class="['rtt-full']"
+                      :class="['rtt-full','pointer']"
                     >
                       <p class="date-hidden" >.</p>
                     </div>
@@ -234,29 +236,62 @@
     </div>
     <table-loader v-else></table-loader>
     <filter-planning :drawer="drawer" @close="drawer = false"/>
+    <!-- plan or work -->
     <create-plan 
       v-if="dialog2" 
       :dialog="dialog2" 
       @close="closeDialog"
       :data="create_data"
     />
-    <menu-button v-if="menu"/>
+    <edit-plan
+      v-if="edit_plan_dialog"
+      :dialog="edit_plan_dialog"
+      @close="edit_plan_dialog=false"
+      :data="edit_data"
+    />
+    <!-- rtt -->
+    <edit-rtt
+      v-if="edit_rtt_dialog"
+      :dialog="edit_rtt_dialog"
+      @close="edit_rtt_dialog=false"
+      :data="edit_rtt_data"
+    />
+    <!-- holiday -->
+    <edit-holiday
+      v-if="edit_holiday_dialog"
+      :dialog="edit_holiday_dialog"
+      @close="edit_holiday_dialog=false"
+      :data="edit_holiday_data"
+    />
+    <menu-button v-if="menu" @success="forceReload"/>
   </div>
 </template>
 <script>
 import filterPlanning from './includes/filter.vue';
 import menuButton from './includes/menu.vue';
 import createPlan from './create.vue';
+import editPlan from './edit.vue';
+import editRtt from './includes/rtt/editRtt.vue'
+import editHoliday from './includes/holiday/editHoliday.vue'
   import moment from 'moment' 
   import { GetAllRegions } from "@/repositories/region.api"
   export default {
     components:{
       filterPlanning,
       createPlan,
-      menuButton
+      menuButton,
+      editPlan,
+      editRtt,
+      editHoliday
     },
       data() {
         return {
+          edit_holiday_dialog: false,
+          edit_holiday_data:{},
+          edit_rtt_dialog: false,
+          edit_rtt_data:{},
+          edit_plan_dialog:false,
+          edit_data: {},
           create_data:{
             date:'',
             employee:{},
@@ -297,10 +332,14 @@ import createPlan from './create.vue';
         this.getmonthly();
         this.getData()
       },
+      forceReload(){
+        GetAllRegions().then(({data}) => {
+          this.regions = data
+        })
+      },
       getData(){
         this.loading = true
         GetAllRegions().then(({data}) => {
-          console.log(data, 'regions')
           this.regions = data
           this.loading = false
         })
@@ -343,6 +382,14 @@ import createPlan from './create.vue';
       },
       editWork(employee, center, planning) {
         console.log(employee, center, planning)
+        this.edit_data = {
+          employee: employee,
+          center: center,
+          planning: planning
+        }
+        this.$nextTick(function () {
+          this.edit_plan_dialog = true
+        })
       },
       addWork(employee, center, date){
         this.create_data = {
@@ -352,6 +399,24 @@ import createPlan from './create.vue';
         }
         this.$nextTick(function () {
           this.dialog2 = true
+        })
+      },
+      editRtt(rtt, employee){
+        this.edit_rtt_data = {
+          rtt:rtt,
+          employee:employee
+        }
+        this.$nextTick(function () {
+          this.edit_rtt_dialog = true
+        })
+      },
+      editHoliday(holiday, employee){
+        this.edit_holiday_data = {
+          holiday:holiday,
+          employee:employee
+        }
+        this.$nextTick(function () {
+          this.edit_holiday_dialog = true
         })
       },
       closeDialog(){

@@ -4,7 +4,7 @@
     </v-dialog>
 </template>
 <script>
-import Plan from './includes/createPlan.vue'
+import Plan from './includes/editPlan.vue'
 export default {
     components: {
         Plan

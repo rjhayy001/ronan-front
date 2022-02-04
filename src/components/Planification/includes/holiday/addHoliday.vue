@@ -6,7 +6,8 @@
         width="800px"
         @click:outside="$emit('close')"
     >
-        <v-card >
+        <v-card 
+        >
             <v-form>
                 <v-container>
                     <v-row style="padding: 30px">
@@ -29,6 +30,7 @@
                             <v-text-field
                                 placeholder="Nom de la demande"
                                 dense
+                                v-model="holiday.request_name"
                                 solo
                                 prepend-inner-icon="mdi-pencil-outline"
                             ></v-text-field>
@@ -41,6 +43,7 @@
                                 solo
                                 rows="1"
                                 auto-grow
+                                v-model="holiday.reason"
                                 row-height="100"
                                 prepend-inner-icon="mdi-note-edit-outline"
                             ></v-textarea>
@@ -50,7 +53,7 @@
                                 ref="start_date"
                                 v-model="start_menu"
                                 :close-on-content-click="false"
-                                :return-value.sync="rtt.start_date"
+                                :return-value.sync="holiday.start_date"
                                 transition="scale-transition"
                                 offset-y
                                 min-width="auto"
@@ -58,11 +61,11 @@
                                 <template v-slot:activator="{ on, attrs }">
                                    <v-btn v-on="on" v-bind="attrs" width="100%" style="color:#909090; justify-content: initial;">
                                        <v-icon class="mr-2">mdi-calendar-outline</v-icon>
-                                       {{rtt.start_date ? rtt.start_date : 'choose start date'}}
+                                       {{holiday.start_date ? holiday.start_date : 'choose start date'}}
                                    </v-btn>
                                 </template>
                                 <v-date-picker
-                                    v-model="rtt.start_date"
+                                    v-model="holiday.start_date"
                                     no-title
                                     scrollable
                                 >
@@ -77,7 +80,7 @@
                                 <v-btn
                                     text
                                     color="primary"
-                                    @click="$refs.start_date.save(rtt.start_date)"
+                                    @click="$refs.start_date.save(holiday.start_date)"
                                 >
                                     OK
                                 </v-btn>
@@ -89,7 +92,7 @@
                                 dense
                                 :items="items"
                                 solo
-                                v-model="rtt.start_date_type"
+                                v-model="holiday.startDate_isHalf_day"
                                 item-text="text"
                                 item-value="value"
                                 class="text-capitalize"
@@ -100,7 +103,7 @@
                                 ref="end_date"
                                 v-model="end_menu"
                                 :close-on-content-click="false"
-                                :return-value.sync="rtt.end_date"
+                                :return-value.sync="holiday.end_date"
                                 transition="scale-transition"
                                 offset-y
                                 min-width="auto"
@@ -108,12 +111,13 @@
                                 <template v-slot:activator="{ on, attrs }">
                                    <v-btn v-on="on" v-bind="attrs" width="100%" style="color:#909090; justify-content: initial;">
                                        <v-icon class="mr-2">mdi-calendar-outline</v-icon>
-                                       {{rtt.end_date ? rtt.end_date : 'choose end date'}}
+                                       {{holiday.end_date ? holiday.end_date : 'choose end date'}}
                                    </v-btn>
                                 </template>
                                 <v-date-picker
-                                    v-model="rtt.end_date"
+                                    v-model="holiday.end_date"
                                     no-title
+                                    :min="holiday.start_date"
                                     scrollable
                                 >
                                 <v-spacer></v-spacer>
@@ -127,7 +131,7 @@
                                 <v-btn
                                     text
                                     color="primary"
-                                    @click="$refs.end_date.save(rtt.end_date)"
+                                    @click="$refs.end_date.save(holiday.end_date)"
                                 >
                                     OK
                                 </v-btn>
@@ -139,22 +143,22 @@
                                 dense
                                 :items="items"
                                 solo
-                                v-model="rtt.end_date_type"
+                                v-model="holiday.endDate_isHalf_day"
                                 item-text="text"
                                 item-value="value"
                                 class="text-capitalize"
                             ></v-select>
                         </v-col>
                         <v-col cols="12">
-                            <v-select
+                            <v-autocomplete
                                 dense
                                 :items="employees"
                                 solo
-                                v-model="rtt.user_id"
+                                v-model="holiday.user_id"
                                 item-text="full_name"
                                 item-value="id"
                                 class="text-capitalize"
-                            ></v-select>
+                            ></v-autocomplete>
                         </v-col>
                         <v-btn 
                             @click="closeDialog" 
@@ -172,6 +176,7 @@
                             height="50px"
                             color="#005075!important"
                             class="btn-dialog ma-2"
+                            @click="save"
                         >
                             VALIDER
                         </v-btn>
@@ -183,8 +188,9 @@
 </template>
 
 <script>
-// import moment from 'moment'
+import moment from 'moment'
 import { GetAllEmployees } from "@/repositories/employee.api";
+import { createHoliday } from "@/repositories/planning.api";
 export default {
     props:{
         dialog:{
@@ -194,16 +200,19 @@ export default {
     },
     data() {
         return {
+            is_loading:true,
             start_menu:false,
             end_menu:false,
-            rtt:{
-                start_date_type:1,
-                end_date_type:1,
+            holiday:{
+                startDate_isHalf_day:0,
+                start_date: this.$datePickerDate(moment()),
+                end_date: this.$datePickerDate(moment()),
+                endDate_isHalf_day:0,
             },
             items: [
-                {value: 1, text:'whole day'},
-                {value: 2, text:'half day morning'},
-                {value: 3, text:'half day afternoon'},
+                {value: 0, text:'whole day'},
+                {value: 1, text:'half day morning'},
+                {value: 2, text:'half day afternoon'},
             ],
             employees:[],
         };
@@ -219,7 +228,19 @@ export default {
             GetAllEmployees().then(({data}) => {
                 console.log(data)
                 this.employees = data
+                this.holiday.user_id = this.employees[0].id
             })
+        },
+        save(){
+            console.log(this.holiday)
+            createHoliday(this.holiday).then(() => {
+                this.$toast.success('successfully added holiday') 
+                this.$emit('success')
+                this.$emit('close')
+            }).catch(({ response }) => { 
+                this.$toast.error(response.data.message) 
+            })
+            
         }
     }
 }

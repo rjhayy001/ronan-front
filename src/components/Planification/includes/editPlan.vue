@@ -1,7 +1,7 @@
 <template>
     <v-card rounded>
         <v-toolbar dense flat class="py-4">
-            <v-toolbar-title>Create Planification</v-toolbar-title>
+            <v-toolbar-title>{{planning.title}}</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-icon @click="$emit('close')">mdi-close</v-icon>
         </v-toolbar>
@@ -48,24 +48,25 @@
                             ref="start_date"
                             v-model="start_menu"
                             :close-on-content-click="false"
-                            :return-value.sync="payload.start_date"
+                            :return-value.sync="planning.start_date"
                             transition="scale-transition"
                             offset-y
                             min-width="auto"
                         >
                             <template v-slot:activator="{ on, attrs }">
                             <v-text-field
-                                v-model="payload.start_date"
+                                v-model="start_date"
                                 dense
                                 solo
                                 prepend-inner-icon="mdi-calendar"
                                 readonly
                                 v-bind="attrs"
+                                :disabled="!editing"
                                 v-on="on"
                             ></v-text-field>
                             </template>
                             <v-date-picker
-                            v-model="payload.start_date"
+                            v-model="planning.start_date"
                             no-title
                             scrollable
                             >
@@ -80,25 +81,12 @@
                             <v-btn
                                 text
                                 color="primary"
-                                @click="$refs.start_date.save(payload.start_date)"
+                                @click="$refs.start_date.save(planning.start_date)"
                             >
                                 OK
                             </v-btn>
                             </v-date-picker>
                         </v-menu>
-                    </div>
-                    <div>
-                        <p class="text-label">taper</p>
-                        <v-select
-                            dense
-                            :items="items"
-                            label="Solo field"
-                            solo
-                             v-model="payload.start_date_Type"
-                            item-text="text"
-                            item-value="value"
-                            class="text-capitalize"
-                        ></v-select>
                     </div>
                      <div>
                         <p class="text-label">end date</p>
@@ -106,27 +94,28 @@
                             ref="end_date"
                             v-model="end_menu"
                             :close-on-content-click="false"
-                            :return-value.sync="payload.end_date"
+                            :return-value.sync="planning.end_date"
                             transition="scale-transition"
                             offset-y
                             min-width="auto"
                         >
                             <template v-slot:activator="{ on, attrs }">
                             <v-text-field
-                                v-model="payload.end_date"
+                                v-model="end_date"
                                 dense
                                 solo
                                 prepend-inner-icon="mdi-calendar"
                                 readonly
+                                :disabled="!editing"
                                 v-bind="attrs"
                                 v-on="on"
                             ></v-text-field>
                             </template>
                             <v-date-picker
-                            v-model="payload.end_date"
+                            v-model="planning.end_date"
                             no-title
                             scrollable
-                            :min="payload.start_date"
+                            :min="planning.start_date"
                             >
                             <v-spacer></v-spacer>
                             <v-btn
@@ -139,34 +128,37 @@
                             <v-btn
                                 text
                                 color="primary"
-                                @click="$refs.end_date.save(payload.end_date)"
+                                @click="$refs.end_date.save(planning.end_date)"
                             >
                                 OK
                             </v-btn>
                             </v-date-picker>
                         </v-menu>
                     </div>
-                    <div>
-                        <p class="text-label">taper</p>
-                        <v-select
-                            dense
-                            :items="items"
-                            label="Roles"
-                            solo
-                            v-model="payload.end_Date_Type"
-                            item-text="text"
-                            item-value="value"
-                            class="text-capitalize"
-                        ></v-select>
-                    </div>
-                    <div>
+                    <div class="mt-8">
                         <v-btn 
                             class="float-right mt-4" 
-                            small color="primary" 
-                            dark 
-                            @click="save"
+                            @click="destroy"
+                            icon
                         >
-                            valider
+                            <v-icon>mdi-delete-outline</v-icon>
+                        </v-btn>
+                        <v-btn 
+                            class="float-right mt-4 mr-2" 
+                            v-if="!editing"
+                            @click="editing=true"
+                            icon
+                        >
+                            <v-icon>mdi-pencil-outline</v-icon>
+                        </v-btn>
+                         <v-btn 
+                            class="float-right mt-4 mr-2" 
+                            color="success"
+                            v-else
+                            @click="save"
+                            icon
+                        >
+                            <v-icon>mdi-download-outline</v-icon>
                         </v-btn>
                     </div>
                 </v-form>
@@ -176,7 +168,7 @@
     </v-card>
 </template>
 <script>
-import { Insert } from "@/repositories/planning.api";
+import { Delete, Update } from "@/repositories/planning.api";
 export default {
     props:{
         data:{
@@ -184,58 +176,51 @@ export default {
             type: Object,
         },
     },
-   
-    created(){
-        this.initialize()
-    },
     data(){
         return {
+            editing:false,
             start_menu:false,
             end_menu:false,
             employee:{},
-            center:{},
-            payload:{
-                start_date:'',
-                end_date:'',
-                start_date_Type:1,
-                end_Date_Type:1,
-                center_id:'',
-                user_id: '',
-
-            },
-            items: [
-                {value: 1, text:'whole day'},
-                {value: 2, text:'half day morning'},
-                {value: 3, text:'half day afternoon'},
-            ],
+            planning:{},
+            center:{}
         }
     },
-    methods:{
+    computed: {
+        start_date() {
+            return this.$datePickerDate(this.planning.start_date)
+        },
+        end_date() {
+            return this.$datePickerDate(this.planning.end_date)
+        }
+    },
+    created(){
+        console.log(this.data,'data')
+        this.initialize()
+    },
+    methods: {
         initialize(){
-            console.log(this.data)
-            this.payload.start_date = this.data.date
-            this.payload.end_date = this.data.date
+            this.planning = JSON.parse(JSON.stringify(this.data.planning))
             this.employee = this.data.employee
             this.center = this.data.center
-            this.payload.center_id = this.center.id
-            this.payload.user_id = this.employee.id
+
+            this.planning.start_date = this.$datePickerDate(this.planning.start_date)
+            this.planning.end_date = this.$datePickerDate(this.planning.end_date)
         },
         save(){
-            if(!this.checkForm()){
-                Insert(this.payload).then(({data}) =>{
-                    this.$arrayupdater(data.data, this.employee.planning)
-                    this.$toast.success(data.message)
-                    this.$emit('close')
-                    console.log(data.data)
-                })
-            }
+            Update(this.planning).then(({data}) => {
+                this.$arraysplicer(this.data.planning, this.employee.planning)
+                this.$arrayupdater(this.planning, this.employee.planning)
+                this.$toast.success(data.message)
+                this.$emit('close')
+            })
         },
-        checkForm(){
-            if (this.payload.start_date == '' || this.payload.end_date == '' ){
-                this.$toast.error('all fields are required')
-                return true
-            }
-            return false
+        destroy(){
+            Delete(this.planning.id).then(({data}) =>{
+                this.$arraysplicer(this.planning, this.employee.planning)
+                this.$toast.success(data.message)
+                this.$emit('close')
+            })
         }
     }
 }
