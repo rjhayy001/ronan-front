@@ -160,14 +160,14 @@
                                 class="text-capitalize"
                             ></v-autocomplete>
                         </v-col>
-                        <!-- <v-col v-if="error" style="position: absolute; bottom: 4em;     width: 20em;">
+                        <v-col v-if="error" style="position: absolute; bottom: 4em;     width: 20em;">
                             <v-icon color="red">
                                 mdi-alert-circle
                             </v-icon>
                             <span style="color:red;">
                                 Please dont leave empty fields.
                             </span>
-                        </v-col> -->
+                        </v-col>
                         <v-col style="position:absolute; bottom:0;width: 750px">
                             <v-btn 
                                 @click="closeDialog" 

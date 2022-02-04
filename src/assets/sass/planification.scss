@@ -241,13 +241,13 @@ tbody tr {
 .css_thead {
     display: table-header-group;
     font-weight: bold;
-    z-index:999 !important;
+    z-index:2 !important;
     height: 100%;
     width:50%; 
     display:flex;
     align-items: center;
     position: sticky;
-    top: 13.5%;
+    top: 12.4%;
   }
   
   .subheader .tags .tags-container {
