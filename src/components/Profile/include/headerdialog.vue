@@ -1,8 +1,8 @@
 <template>
-    <v-tabs>
-        <div style="margin:auto 0; padding-left: 20px; display:flex;">
+    <header style="display:flex; height: 70px" >
+        <div style="margin:auto 0; padding-left: 7px; display:flex;">
             <v-btn large icon>
-                <v-avatar class="logo_img" @click="clickHome()">
+                <v-avatar class="logo_img" style="height: 48px;min-width: 48px;width: 48px;">
                     <img src="@/assets/images/logo-securauto-150.png" alt="">
                 </v-avatar>
             </v-btn>
@@ -17,11 +17,11 @@
         <div style="margin: auto 0">
             <v-btn  icon>
                 <v-icon color="#005075">
-                    mdi-settings
+                    mdi-cog
                 </v-icon>
             </v-btn>
         </div>
-    </v-tabs>
+    </header>
 </template>
 
 <script>
@@ -32,9 +32,7 @@ export default {
         }
     },
     methods: {
-        clickHome() {
-            this.$emit('close')
-        }
+
     }
 }
 </script>

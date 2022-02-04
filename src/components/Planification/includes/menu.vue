@@ -54,6 +54,8 @@
             v-if="holiday_dialog"
             :dialog="holiday_dialog"
             @close="holiday_dialog=false"
+            @success="$emit('success')"
+
         />
     </div>
 </template>

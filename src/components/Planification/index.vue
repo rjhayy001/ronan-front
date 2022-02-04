@@ -263,7 +263,7 @@
       @close="edit_holiday_dialog=false"
       :data="edit_holiday_data"
     />
-    <menu-button v-if="menu"/>
+    <menu-button v-if="menu" @success="forceReload"/>
   </div>
 </template>
 <script>
@@ -332,10 +332,14 @@ import editHoliday from './includes/holiday/editHoliday.vue'
         this.getmonthly();
         this.getData()
       },
+      forceReload(){
+        GetAllRegions().then(({data}) => {
+          this.regions = data
+        })
+      },
       getData(){
         this.loading = true
         GetAllRegions().then(({data}) => {
-          console.log(data, 'regions')
           this.regions = data
           this.loading = false
         })
