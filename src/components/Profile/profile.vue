@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import headerDialog from './include/headerdialog.vue';
+import headerDialog from './include/parameter/include/headerParameter.vue';
 import contentProfile from './include/contentProfile.vue';
 export default {
     components:{

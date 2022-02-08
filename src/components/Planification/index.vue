@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-subheader class="subheader" style="border-bottom:1px solid gray; z-index:999;">
+    <v-subheader class="subheader" style="border-bottom:1px solid gray; z-index:2;">
       <div class="sub-container">
         <div class="date-container">
           <v-btn

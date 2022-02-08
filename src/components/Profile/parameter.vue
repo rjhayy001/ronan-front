@@ -1,16 +1,16 @@
 <template>
     <div class="dialogProfile" >
-        <header-dialog @close="close"/>
+        <header-parameter @close="close"/>
         <content-parameter style="z-index:10"/>
     </div>
 </template>
 
 <script>
-import headerDialog from './include/headerdialog.vue';
-import contentParameter from './include/contentParameter.vue';
+import headerParameter from './include/parameter/include/headerParameter.vue';
+import contentParameter from './include/parameter/contentParameter.vue';
 export default {
     components:{
-        headerDialog,
+        headerParameter,
         contentParameter
     },
     data(){
@@ -31,10 +31,3 @@ export default {
     } 
 }
 </script>
-
-<style scoped>
-v-dialog{
-    width: 100%;
-    height: 100vh!important;
-}
-</style>
