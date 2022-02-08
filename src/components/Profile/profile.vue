@@ -1,14 +1,14 @@
 <template>
     <v-dialog fullscreen v-model="dialog" class="dialogProfile" >
-        <div class="content">
+        <div class="content" style="display:flex">
             <v-btn @click="close" large icon>
                 <v-avatar class="logo_img">
                     <img src="@/assets/images/logo-securauto-150.png" alt="">
                 </v-avatar>
             </v-btn>
             <div class="header_title">
-                <h2>
-                    RÉGLAGES
+                <h2 style="font-weight: 400">
+                    Mes Profil
                 </h2>
             </div>
         </div>

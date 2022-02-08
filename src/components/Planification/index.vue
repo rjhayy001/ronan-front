@@ -174,7 +174,7 @@
                 <div id="data"  v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)" >
                   <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                 </div>
-                <div id="data" v-else-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed">
+                <div id="data" v-else-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed" @click="addWork(user,center,date.date)">
                   <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                 </div>
                 <div v-else class="empty-day position-absolute-fixed" @click="addWork(user,center,date.date)">
