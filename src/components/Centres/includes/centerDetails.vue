@@ -122,12 +122,26 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title class="item-title">{{center.region.name}}</v-list-item-title>
-          <v-list-item-subtitle>Region</v-list-item-subtitle>
+          <template v-if="!editing_region">
+            <v-list-item-title class="item-title">{{center.region.name}}</v-list-item-title>
+            <v-list-item-subtitle>Region</v-list-item-subtitle>
+          </template>
+          <template v-else>
+            <v-select
+              dense
+              item-text="name"
+              item-value="id"
+              :items="regions"
+              v-model="current_region"
+              return-object
+              solo
+            ></v-select>
+          </template>
         </v-list-item-content>
 
         <v-list-item-action>
-          <v-icon color="primary">mdi-pencil</v-icon>
+          <v-icon color="primary" v-if="!editing_region" @click="editing_region=true">mdi-pencil</v-icon>
+          <v-icon color="primary" v-if="editing_region" @click="saveRegion">mdi-download</v-icon>
         </v-list-item-action>
       </v-list-item>
 
@@ -136,12 +150,16 @@
       <v-list-item class="my-1">
 
         <v-list-item-content>
-          <v-list-item-title class="item-title">{{center.manager ? center.manager.name : 'Non'}}</v-list-item-title>
-          <v-list-item-subtitle>Manager</v-list-item-subtitle>
+          <template v-if="!editing_manager">
+            <v-list-item-title class="item-title">{{center.manager ? center.manager.name : 'Non'}}</v-list-item-title>
+            <v-list-item-subtitle>Manager</v-list-item-subtitle>
+          </template>
         </v-list-item-content>
 
         <v-list-item-action>
-          <v-icon color="primary">mdi-pencil</v-icon>
+          <v-btn icon>
+            <v-icon color="primary" @click="editManager">mdi-pencil</v-icon>
+          </v-btn>
         </v-list-item-action>
       </v-list-item>
 
@@ -149,11 +167,48 @@
   </v-card>
 </template>
 <script>
+import { GetAllRegions } from "@/repositories/region.api"
+import { updateCenterRegion } from "@/repositories/center.api"
 export default {
+  data(){
+    return {
+      editing_region: false,
+      editing_manager: false,
+      regions: [],
+      current_region:{}
+    }
+  },
   props: {
     center: {
       type: Object,
       required: true,
+    },
+  },
+  created(){
+    this.initialize()
+  },
+  methods:{
+    initialize(){
+      GetAllRegions().then(({data}) => {
+        this.regions = data
+      })
+      this.current_region = this.center.region
+    },
+    saveRegion(){
+      let payload = {
+        region_id: this.current_region.id
+      }
+
+      this.center.region = this.current_region
+      this.$nextTick(function () {
+        updateCenterRegion(this.center.id, payload).then(({data}) => {
+          this.$toast.success(data.message)
+        })
+        this.editing_region = false
+      })
+    },
+    editManager(){
+      alert('manager')
     }
   }
 }

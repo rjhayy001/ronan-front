@@ -3,6 +3,8 @@
 @import 'planification.scss';
 @import 'loader.scss';
 @import 'planning_main.scss';
+@import 'profile.scss';
+
 
 
 .main_tabs .v-item-group .v-slide-group__wrapper .tabs .theme--light.v-tabs>.v-tabs-bar .v-tab--disabled, .theme--light.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active), .theme--light.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active)>.v-btn, .theme--light.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active)>.v-icon{
@@ -19,7 +21,7 @@
 	height: 70px;
 	background-color: #cccccc;
 	text-align : center;
-  z-index: 999;
+  z-index: 2;
 }
 
 .v-item-group{

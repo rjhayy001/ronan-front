@@ -81,6 +81,7 @@
                         class="text-capitalize"
                         style="gap:10px"
                         link
+                        to="/parameter/general"
                     >
                         <v-icon>
                             mdi-settings
@@ -101,9 +102,13 @@
                 </v-list>
             </v-menu>
         <profileDialog
-            :dialog="dialog"
-            @close="dialog=false"
+            :dialog="Profile"
+            @close="Profile=false"
         ></profileDialog>
+        <!-- <parameterDialog
+            :dialog="Parameter"
+            @close="Parameter=false"
+        ></parameterDialog> -->
         </div>
     </v-tabs>
 </template>
@@ -111,20 +116,18 @@
 <script>
 import profileDialog from '@/components/Profile/profile.vue'
 export default {
-        components : {
+    components : {
         profileDialog,
     },
 
     data(){
         return{
-            dialog:false,
+            Profile:false,
         }
     },
     methods: {
         profile(){
-            // this.selected_item = item
-                this.dialog = true
-            // alert(this.dialog)
+            this.Profile = true
         },
     }
 }

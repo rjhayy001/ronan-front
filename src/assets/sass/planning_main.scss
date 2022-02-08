@@ -31,7 +31,7 @@
 .holiday-full{
     position: relative;
     background-color: #4caf50;
-    z-index:10 !important;
+    z-index:1 !important;
 }
 .empty-day {
     background-color: white;
@@ -44,14 +44,14 @@
 }
 
 .holiday-half-morning{
-    z-index:10 !important;
+    z-index:1 !important;
     position: relative;
     background: 
         linear-gradient(to top right, #4caf50 49%, #ffffff 51%) !important;
 }
 
 .holiday-half-afternoon{
-    z-index:10 !important;
+    z-index:1 !important;
     position: relative;
     background: 
         linear-gradient(to bottom left, #4caf50 49%, #ffffff 51%) !important;
@@ -81,7 +81,7 @@
 .currentDay {
     background-color: #7db5d0;
     opacity:0.8;
-    z-index: 998;
+    z-index: 1;
     color:white;
   }
 
