@@ -40,6 +40,7 @@
                 fab
                 dark
                 small
+                @click.prevent="requestRTT()"
                 color="#005075"
                 style="z-index: 7; bottom: 250px; right: -5px;"
             >
@@ -49,7 +50,6 @@
             </v-btn>
         </div>
         <pending-application v-if="pending_dialog" :dialog="pending_dialog" @close="pending_dialog=false"/>
-        <request-rtt v-if="requestRtt_dialog" :dialog="requestRtt_dialog" @close="requestRTTclose()"/>
         <add-holiday
             v-if="holiday_dialog"
             :dialog="holiday_dialog"
@@ -57,21 +57,29 @@
             @success="$emit('success')"
 
         />
+
+        <add-rtt
+            v-if="rtt_dialog"
+            :dialog="rtt_dialog"
+            @close="rtt_dialog=false"
+            @success="$emit('success')"
+        />
     </div>
 </template>
 
 <script>
 import pendingApplication from './dialogs/pendingApplication.vue';
-import requestRtt from './dialogs/requestRTT.vue';
 import addHoliday from './holiday/addHoliday.vue'
+import addRtt from './rtt/addRtt.vue'
 export default {
     components:{
         pendingApplication,
-        requestRtt,
-        addHoliday
+        addHoliday,
+        addRtt
     },
       data() {
         return {
+            rtt_dialog: false,
             holiday_dialog: false,
             pending_dialog:false,
             requestRtt_dialog:false,
@@ -101,7 +109,7 @@ export default {
             this.reset()
         },
         requestRTT(){
-            this.requestRtt_dialog=true
+            this.rtt_dialog=true
             this.reset()
         },
         requestRTTclose(){

@@ -81,7 +81,7 @@
                         class="text-capitalize"
                         style="gap:10px"
                         link
-                        href="/parameter/general"
+                        to="/parameter/general"
                     >
                         <v-icon>
                             mdi-settings

@@ -1,7 +1,7 @@
 <template>
     <header class="header_profile">
         <div class="content">
-            <v-btn href="/" large icon>
+            <v-btn to="/" large icon>
                 <v-avatar class="logo_img">
                     <img src="@/assets/images/logo-securauto-150.png" alt="">
                 </v-avatar>
