@@ -6,7 +6,7 @@
                     <img src="@/assets/images/logo-securauto-150.png" alt="">
                 </v-avatar>
             </v-btn>
-            <div class="header_title">
+            <div class="header_title" style="margin: auto 0;padding-left: 10px;">
                 <h2 style="font-weight: 400">
                     Mes Profil
                 </h2>
@@ -44,8 +44,3 @@ export default {
 </script>
 
 <style scoped>
-v-dialog{
-    width: 100%;
-    height: 100vh!important;
-}
-</style>

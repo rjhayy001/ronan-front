@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div> 
-                <v-btn :ripple="false" id="no-background-hover" text solo type="button" style="color: #005075; box-shadow: none;">
+                <v-btn to="parameter/general" :ripple="false" id="no-background-hover" text solo type="button" style="color: #005075; box-shadow: none;">
                     <h4 style="font-weight: 400">Editer</h4>
                 </v-btn>
             </div>

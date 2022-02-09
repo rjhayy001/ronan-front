@@ -167,7 +167,7 @@
   </v-card>
 </template>
 <script>
-import { GetAllRegions } from "@/repositories/region.api"
+import { GetRawRegions } from "@/repositories/region.api"
 import { updateCenterRegion } from "@/repositories/center.api"
 export default {
   data(){
@@ -189,7 +189,7 @@ export default {
   },
   methods:{
     initialize(){
-      GetAllRegions().then(({data}) => {
+      GetRawRegions().then(({data}) => {
         this.regions = data
       })
       this.current_region = this.center.region

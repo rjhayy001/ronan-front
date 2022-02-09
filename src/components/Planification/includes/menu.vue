@@ -1,5 +1,5 @@
 <template>
-    <div style="position: fixed; z-index: 999; bottom: 10px; right: 10px;">
+    <div style="position: fixed; z-index: 2; bottom: 10px; right: 10px;">
         <v-btn class="mx-2" 
             fab
             dark
