@@ -11,15 +11,16 @@ export default {
         return{
             headers: [
           {
-            text: 'Repartition',
+            text: 'Commentaire',
             align: 'start',
             sortable: false,
             value: 'name',
           },
-          { text: 'Solde actuel(jours)', value: 'calories' },
-          { text: 'Demande', value: 'fat' },
-          { text: 'Jours poses', value: 'carbs' },
-          { text: 'Jours restants', value: 'protein' },
+          { text: 'Date', value: 'calories' },
+          { text: 'Heure de debut', value: 'fat' },
+          { text: 'Heure de fin', value: 'carbs' },
+          { text: "Nombre d'heures", value: 'protein' },
+          { text: 'Statut', value: 'carbs' },
         ],
         desserts: [
           {

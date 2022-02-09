@@ -61,6 +61,14 @@
     font-size: 33px !important;
 }
 
+.theme--light.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active){
+    color: grey !important;
+}
+
+body .theme--light.v-tabs>.v-tabs-bar .v-tab.v-tab--active{
+    color: #444343 !important;
+}
+
 table>thead.v-data-table-header>tr>th,
 thead .v-data-table__checkbox>.v-icon {
     background-color: #FF5722 !important;
