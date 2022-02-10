@@ -141,7 +141,7 @@
 
         <v-list-item-action>
           <v-icon color="primary" v-if="!editing_region" @click="editing_region=true">mdi-pencil</v-icon>
-          <v-icon color="primary" v-if="editing_region" @click="saveRegion">mdi-download</v-icon>
+          <v-icon color="primary" v-else @click="saveRegion">mdi-download</v-icon>
         </v-list-item-action>
       </v-list-item>
 
@@ -151,14 +151,26 @@
 
         <v-list-item-content>
           <template v-if="!editing_manager">
-            <v-list-item-title class="item-title">{{center.manager ? center.manager.name : 'Non'}}</v-list-item-title>
+            <v-list-item-title class="item-title">{{center.manager ? center.manager.full_name : 'Non'}}</v-list-item-title>
             <v-list-item-subtitle>Manager</v-list-item-subtitle>
+          </template>
+          <template v-else>
+            <v-select
+              dense
+              item-text="full_name"
+              item-value="id"
+              :items="employees"
+              v-model="current_manager"
+              return-object
+              solo
+            ></v-select>
           </template>
         </v-list-item-content>
 
         <v-list-item-action>
           <v-btn icon>
-            <v-icon color="primary" @click="editManager">mdi-pencil</v-icon>
+          <v-icon color="primary" v-if="!editing_manager" @click="editing_manager=true">mdi-pencil</v-icon>
+          <v-icon color="primary" v-else @click="editManager">mdi-download</v-icon>
           </v-btn>
         </v-list-item-action>
       </v-list-item>
@@ -169,13 +181,16 @@
 <script>
 import { GetRawRegions } from "@/repositories/region.api"
 import { updateCenterRegion } from "@/repositories/center.api"
+import { GetAllEmployees } from "@/repositories/employee.api";
 export default {
   data(){
     return {
       editing_region: false,
       editing_manager: false,
       regions: [],
-      current_region:{}
+      current_region:{},
+      current_manager:{},
+      employees: [],
     }
   },
   props: {
@@ -189,10 +204,21 @@ export default {
   },
   methods:{
     initialize(){
+      this.getRegions()
+      this.getEmployees()
+      this.current_region = this.center.region
+      this.current_manager = this.center.manager
+    },
+    getRegions(){
       GetRawRegions().then(({data}) => {
         this.regions = data
       })
-      this.current_region = this.center.region
+    },
+    getEmployees(){
+      GetAllEmployees().then(({data}) => {
+        console.log(data,'employees')
+        this.employees = data
+      })
     },
     saveRegion(){
       let payload = {
@@ -208,7 +234,13 @@ export default {
       })
     },
     editManager(){
-      alert('manager')
+      console.log(this.current_manager, 'test')
+      this.center.manager = this.current_manager
+      this.center.manager.id = this.current_manager.id
+      console.log(this.center.manager, 'test')
+      this.$nextTick(function () {
+        this.editing_manager = false
+      })
     }
   }
 }
