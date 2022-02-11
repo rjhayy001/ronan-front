@@ -30,38 +30,16 @@
         <div class="field">
           <div class="sub-field">
             <div>
-              <v-row >
-                <v-menu
-                  bottom
-                  origin="center center"
-                  transition="scale-transition"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                      class="sub-dropdown_btn"
-                      v-bind="attrs"
-                      v-on="on"
-                      elevation="0"
-                      width="200px"
-                      height="47px"
-                    >
-                      Jours
-                      <v-icon 
-                      class="dropdown-icon"
-                      small
-                          color="gray"
-                      >mdi-menu-down</v-icon>
-                    </v-btn>
-                  </template>
-                  <v-list>
-                    <v-list-item
-                      v-for="(item, i) in items"
-                      :key="i"
-                    >
-                      <v-list-item-title>{{ item.title }}</v-list-item-title>
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
+              <v-row>
+                  <v-select
+                  class="dota"
+                    v-model="e2"
+                    :items="selects"
+                    menu-props="auto"
+                    solo
+                    flat
+                    height="47px"
+                  ></v-select>
               </v-row>
             </div>
             <div>
@@ -286,6 +264,7 @@ import editHoliday from './includes/holiday/editHoliday.vue'
     },
       data() {
         return {
+          e2:'Jours',
           edit_holiday_dialog: false,
           edit_holiday_data:{},
           edit_rtt_dialog: false,
@@ -319,7 +298,10 @@ import editHoliday from './includes/holiday/editHoliday.vue'
             { title: 'Mois' },
           ],
           regions:[],
-          loading: false
+          loading: false,
+          selects: [
+            'Jours', 'Semaine', 'Mois' 
+          ],
       };
     },
     mounted() {
