@@ -1,6 +1,6 @@
 <template>
     <v-dialog fullscreen v-model="dialog" class="dialogProfile" >
-        <div class="content" style="display:flex">
+        <div class="content" style="display:flex; padding: 10px;">
             <v-btn @click="close" large icon>
                 <v-avatar class="logo_img">
                     <img src="@/assets/images/logo-securauto-150.png" alt="">
