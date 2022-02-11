@@ -33,6 +33,10 @@ export default {
             return moment(date).locale('fr').format('DD MMMM YYYY');
         },
 
+        $timeFormat(time){
+            return moment(time, "HH:mm").format('hh:mm')
+        },
+
         // date
         $isBetween(date1, date2, calendarDate){
             let today = moment(calendarDate)

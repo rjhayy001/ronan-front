@@ -30,6 +30,7 @@
                                 solo
                                 rows="1"
                                 auto-grow
+                                v-model="rtt.reason"
                                 row-height="100"
                                 prepend-inner-icon="mdi-note-edit-outline"
                             ></v-textarea>
@@ -168,6 +169,7 @@
                             height="50px"
                             color="#005075!important"
                             class="btn-dialog ma-2"
+                            @click="saveRtt"
                         >
                             VALIDER
                         </v-btn>
@@ -189,7 +191,8 @@ export default {
                 date:'',
                 start_time:'',
                 end_time:'',
-                user_id:''
+                user_id:'',
+                reason:''
             },
             employees:[],
         }
@@ -211,6 +214,9 @@ export default {
                 this.rtt.user_id = this.employees[0].id
             })
         },
+        saveRtt(){
+            alert('rtt')
+        }
     }
 }
 </script>

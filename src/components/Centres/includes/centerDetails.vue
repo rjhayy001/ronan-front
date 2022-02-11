@@ -35,6 +35,7 @@
           rounded
           color="primary"
           dark
+          @click="editCenter"
         >
           <v-icon left>mdi-pencil</v-icon>
           <span style="font-size:13px">Editer</span>
@@ -43,6 +44,7 @@
           rounded
           color="error"
           dark
+          @click="deleteCenter"
         >
           <v-icon left>mdi-delete</v-icon>
           <span style="font-size:13px">Supprimer</span>
@@ -180,7 +182,7 @@
 </template>
 <script>
 import { GetRawRegions } from "@/repositories/region.api"
-import { updateCenterRegion } from "@/repositories/center.api"
+import { updateCenterRegion, AssignManager } from "@/repositories/center.api"
 import { GetAllEmployees } from "@/repositories/employee.api";
 export default {
   data(){
@@ -209,6 +211,9 @@ export default {
       this.current_region = this.center.region
       this.current_manager = this.center.manager
     },
+    editCenter(){
+      alert('test')
+    },
     getRegions(){
       GetRawRegions().then(({data}) => {
         this.regions = data
@@ -216,7 +221,6 @@ export default {
     },
     getEmployees(){
       GetAllEmployees().then(({data}) => {
-        console.log(data,'employees')
         this.employees = data
       })
     },
@@ -233,12 +237,30 @@ export default {
         this.editing_region = false
       })
     },
+    deleteCenter(){
+        let message = `Are you sure you want to DELETE CENTER ${this.center.name} ?`
+       this.$root
+          .$confirm(message,'#ff5252')
+          .then(result => {
+              if(result)(
+                  alert('NO FUNCTIONALITY USED')
+              )
+          })
+    },
     editManager(){
-      console.log(this.current_manager, 'test')
+      let payload = {
+        user_id: this.current_manager.id,
+        center_ids: this.center.id
+      }
+
       this.center.manager = this.current_manager
       this.center.manager.id = this.current_manager.id
-      console.log(this.center.manager, 'test')
+
       this.$nextTick(function () {
+        AssignManager(payload).then(({data}) =>{
+          console.log(data, 'sad')
+          this.$toast.success(data.message)
+        })
         this.editing_manager = false
       })
     }

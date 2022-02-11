@@ -138,12 +138,13 @@ export default {
             })
         },
         saveRegion() {
+
             this.$refs.form.validate()
             if(this.$refs.form.validate() == true) {
                 CreateRegions(this.payload).then(({data})=> {
                     this.$arrayupdater(data, this.regions)
                     this.addRegions = false
-                    this.$toast.success('added succesfullly')
+                    this.$toast.success('Added Succesfullly')
                     this.clear()
                 })
             }
@@ -153,11 +154,18 @@ export default {
             this.payload.name=""
         },
         removeRegions(region) {
-            RemoveRegions(region.id).then(({data}) =>{
-                console.log(data)
-                this.$arraysplicer(region,this.regions)
-                this.$toast.success("Successfully removed!");
-            })
+            let message = `Are you sure you want to DELETE REGION ${region.name} ?`
+            this.$root.$confirm(message,'#ff5252')
+                .then(result => {
+                    if(result)(
+                        RemoveRegions(region.id).then(({data}) =>{
+                            console.log(data)
+                            this.$arraysplicer(region,this.regions)
+                            this.$toast.success("Successfully removed!");
+                        })
+                    )
+                })
+           
         }
     }
 }

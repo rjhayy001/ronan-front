@@ -10,5 +10,7 @@ export const CreateCenter = (payload) => axios.post(`${resource}`, payload)
 export const AddEmployee = (payload) => axios.post(`${resource}/add_users`, payload)
 export const RemoveEmployee = (id,payload) => axios.post(`${resource}/delete_users/${id}`, payload)
 
+export const AssignManager = (payload) => axios.post(`${resource}/assign_manager`, payload)
+
 // regions
 export const updateCenterRegion = (id,payload) => axios.post(`${resource}/update_region/${id}`, payload)

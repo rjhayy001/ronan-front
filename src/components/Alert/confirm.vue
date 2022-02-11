@@ -1,15 +1,15 @@
 <template>
 	<v-dialog v-model="dialog" width="650" :max-width="options.width" :style="{ zIndex: options.zIndex }" @keydown.esc="cancel">
 		<v-card>
-            <v-card-title class="headline blue lighten-1 white--text" primary-title>{{title}}</v-card-title>
+            <v-card-title class="headline lighten-1 white--text text-capitalize" :style="'background-color:' +color" primary-title>{{title}}</v-card-title>
             <v-card-text class="pa-3" v-show="!!message" v-html="message"></v-card-text>
             <v-card-actions class="pt-0">
                 <!-- <v-spacer></v-spacer> -->
-                <v-btn class="ma-2 px-5" tile  color="#c1c1c1" @click.native="cancel" dark width="48%">
+                <v-btn class="ma-2 px-5" tile large color="#c1c1c1" @click.native="cancel" dark width="48%">
                     <v-icon left>mdi-cancel</v-icon> Cancel
                 </v-btn>
-                <v-btn class="ma-2 px-5" tile  color="primary" @click.native="agree" dark width="48%">
-                    <v-icon left>mdi-check</v-icon> OK
+                <v-btn class="ma-2 px-5" tile large :color="color" @click.native="agree" dark width="48%">
+                    <v-icon left>mdi-check</v-icon> OK 
                 </v-btn>
             </v-card-actions>
 		</v-card>
@@ -28,14 +28,15 @@
 				color: 'primary',
 				width: 700,
 				zIndex: 200
-            }
+            },
+            color:'primary'
         }),
         methods: {
-            open( message , title = 'Confirm this action!', options) {
+            open( message , color='primary', title='Confirm this action!') {
                 this.dialog = true
                 this.title = title
                 this.message = message
-                this.options = Object.assign(this.options, options)
+                this.color = color
                 return new Promise((resolve, reject) => {
                     this.resolve = resolve
                     this.reject = reject
@@ -48,6 +49,11 @@
             cancel() {
                 this.resolve(false)
                 this.dialog = false
+            },
+            design(){
+                return {
+                    'background-color': this.color,
+                }
             }
         }
     }

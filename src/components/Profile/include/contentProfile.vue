@@ -9,12 +9,12 @@
             <div style="padding-top: 60px; line-height: 1.2">
                 <div>
                     <h1 style="font-size: 35px; font-weight: 400; color: #424242">
-                        RONAN ADMIN
+                        {{user.full_name}}
                     </h1>
                 </div>
                 <div >
                     <h3 style="font-weight:400; color:#787878">
-                        ronan@admin.com
+                        {{user.email}}
                     </h3>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                             JOURS DE TRAVAIL
                         </h3>
                         <h1 style="color:#005075">
-                            5
+                            {{user.work_days}}
                         </h1>
                     </div>
                     <div style="margin: 10px 0">
@@ -40,7 +40,7 @@
                             CONSUMABLE CONGÉS
                         </h3>
                         <h1 style="color:#005075">
-                            0
+                            {{user.consumable_holidays}}
                         </h1>
                     </div>
                     <div style="margin: 10px 0">
@@ -48,7 +48,7 @@
                             SOLDE RTT
                         </h3>
                         <h1 style="color:#005075">
-                            0
+                            {{user.rtt_remaining_balance}}
                         </h1>
                     </div>
                 </div>
@@ -111,6 +111,11 @@ export default {
             dialog:true,
             tab: null,
         }
+    },
+    computed: {
+        user() {
+            return this.$store.getters['user']
+        },
     },
     methods: {
 

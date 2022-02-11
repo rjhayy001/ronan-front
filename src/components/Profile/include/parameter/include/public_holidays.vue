@@ -6,13 +6,13 @@
             </h2>
             <v-spacer></v-spacer>
             <v-btn 
-                class="parameter_btn " 
+                class="mr-4" 
                 @click="addHolidays=true" 
                 solo 
                 text 
                 icon
             >
-                <v-icon size="30px" class=" add_padding">
+                <v-icon size="30px" class=" ">
                     mdi-plus
                 </v-icon>
             </v-btn>
@@ -31,13 +31,13 @@
                 </div>
                 <v-spacer></v-spacer>
                 <v-btn 
-                    class="parameter_btn" 
+                    class="mr-5"
                     @click="removeHolidays(holiday)" 
                     solo 
                     text 
                     icon
                 >
-                    <v-icon color="red" class=" add_padding">
+                    <v-icon color="red">
                         mdi-delete-outline
                     </v-icon>
                 </v-btn>
@@ -54,7 +54,7 @@
                     ref="form"
                     lazy-validation
                 >
-                    <v-container class="parameter_dialog_container">
+                    <v-container class="">
                         <v-row class="dialog_content">
                             <div class="head_content">
                                 <div>
@@ -83,7 +83,7 @@
                                     clearable
                                 ></v-text-field>
                             </v-col>
-                            <v-col class="pb-1">
+                            <v-col class="pb-1" cols="12">
                                 <v-menu
                                     ref="start_date"
                                     v-model="menu"
@@ -94,7 +94,7 @@
                                     min-width="auto"
                                 >
                                     <template v-slot:activator="{ on, attrs }">
-                                        <v-btn large v-on="on" v-bind="attrs" width="100%" class="calendar_field">
+                                        <v-btn large v-on="on" v-bind="attrs" width="100%" class="calendar_field mb-2">
                                             <v-icon class="mr-2">mdi-calendar-outline</v-icon>
                                             {{payload.date ? $DateWithMonthTextfr(payload.date): 'choose start date'}}
                                         </v-btn>
@@ -124,24 +124,24 @@
                                     </v-date-picker>
                                 </v-menu>
                             </v-col>
-                            <v-col class="action_btn">
+                            <v-col class="d-flex" cols="12">
                                 <v-btn 
                                     @click.prevent="addHolidays=false" 
                                     @click="clear()"
                                     height="50px" 
                                     color="rgb(238 238 238)"
-                                    width="47%" 
-                                    class="ma-2 btn-dialog"
+                                    width="49%" 
+                                    class=""
                                 >
                                     ANNULER
                                 </v-btn>
+                                <v-spacer></v-spacer>
                                 <v-btn
                                     @click="saveHolidays()"
-                                    width="47%"
+                                    width="49%"
                                     dark
                                     height="50px"
                                     color="#005075!important"
-                                    class="btn-dialog ma-2"
                                 >
                                     VALIDER
                                 </v-btn>
@@ -197,11 +197,17 @@ export default {
             this.payload.date=""
         },
         removeHolidays(holiday) {
-            RemoveHolidays(holiday.id).then(({data}) =>{
-                console.log(data)
-                this.$arraysplicer(holiday,this.holidays)
-                this.$toast.success("Successfully removed!");
-            })
+            let message = `Are you sure you want to DELETE HOLIDAY ${holiday.name} ?`
+            this.$root.$confirm(message,'#ff5252')
+                .then(result => {
+                    if(result)(
+                        RemoveHolidays(holiday.id).then(() =>{
+                            this.$arraysplicer(holiday,this.holidays)
+                            this.$toast.success("Successfully removed!");
+                        })
+                    )
+                })
+            
         }
     }
 }

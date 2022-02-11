@@ -9,7 +9,7 @@
             <div>
                 <div>
                     <h3 style="text-transform:uppercase; font-weight:400">
-                        ronan admin
+                        {{user.full_name}}
                     </h3>
                 </div>
                 <div>
@@ -28,7 +28,7 @@
             <div>
                 <div>
                     <h3 style="text-transform:uppercase; font-weight:400">
-                        ronan
+                        {{user.first_name}}
                     </h3>
                 </div>
                 <div>
@@ -47,7 +47,7 @@
             <div>
                 <div>
                     <h3 style="text-transform:uppercase; font-weight:400">
-                        admin
+                        {{user.last_name}}
                     </h3>
                 </div>
                 <div>
@@ -66,7 +66,7 @@
             <div>
                 <div>
                     <h3 style="text-transform:uppercase; font-weight:400">
-                        Zac de Maner Ker El0, ,29170 Fouesnant
+                        {{user.address}}
                     </h3>
                 </div>
                 <div>
@@ -85,7 +85,7 @@
             <div>
                 <div>
                     <h3 style="text-transform:uppercase; font-weight:400">
-                        Fouesnant
+                        {{user.city}}
                     </h3>
                 </div>
                 <div>
@@ -104,7 +104,7 @@
             <div>
                 <div>
                     <h3 style="text-transform:uppercase; font-weight:400">
-                        29170
+                        {{user.zip_code}}
                     </h3>
                 </div>
                 <div>
@@ -123,10 +123,19 @@
             <div>
                 <div>
                     <h3 style="text-transform:uppercase; font-weight:400">
-                        0698962272
+                       {{user.mobile}}
                     </h3>
                 </div>
             </div>
         </div>
     </div>
 </template>
+<script>
+export default {
+    computed: {
+        user() {
+            return this.$store.getters['user']
+        },
+    }
+}
+</script>
