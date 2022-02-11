@@ -91,7 +91,7 @@ export default {
             }
             let message = `Are you sure you want to REMOVE ${item.first_name}, ${item.last_name} to the center ?`
             this.$root
-            .$confirm(message)
+            .$confirm(message,'#008dd1')
             .then(result => {
                 if(result)(
                     RemoveEmployee(this.center.id, payload).then(() => {

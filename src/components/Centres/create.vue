@@ -1,6 +1,6 @@
 <template>
     <v-dialog v-model="dialog" width="700" @click:outside="close">
-        <center-form @close="close"></center-form>
+        <center-form @close="close" @success="$emit('success')"></center-form>
     </v-dialog>
 </template>
 <script>

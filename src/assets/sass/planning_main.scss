@@ -8,7 +8,7 @@
     z-index:10 !important;
     position: relative;
     background: 
-        linear-gradient(to top right, #2196f3 49%, #ffffff 51%) !important;
+        linear-gradient(to top right, #2196f3 49%, transparent 51%) !important;
 }
 
 .pointer{
@@ -19,12 +19,12 @@
     z-index:10 !important;
     position: relative;
     background: 
-        linear-gradient(to bottom left, #2196f3 49%, #ffffff 51%) !important;
+        linear-gradient(to bottom left, #2196f3 49%, transparent 51%) !important;
 }
 
 .work-full{
     background-color: #2196f3;
-    z-index:10 !important;
+    z-index:1 !important;
     position: relative;
 }
 
@@ -47,21 +47,21 @@
     z-index:1 !important;
     position: relative;
     background: 
-        linear-gradient(to top right, #4caf50 49%, #ffffff 51%) !important;
+        linear-gradient(to top right, #4caf50 49%, transparent 51%) !important;
 }
 
 .holiday-half-afternoon{
     z-index:1 !important;
     position: relative;
     background: 
-        linear-gradient(to bottom left, #4caf50 49%, #ffffff 51%) !important;
+        linear-gradient(to bottom left, #4caf50 49%, transparent 51%) !important;
 }
 
 .rtt-full{
     background-color: #ffeb3a;
     position: absolute;
     top: 0;
-    z-index: 10;
+    z-index: 1;
     right: 0;
     left: 0;
 }

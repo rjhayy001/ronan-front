@@ -1,6 +1,16 @@
 <script>
 import moment from "moment"
 export default {
+    data() {
+        return {
+            nameRules: [
+                v => !!v || 'Le nom est requis',
+            ],
+            dateRules: [
+                v => !!v || 'Le nom est requis',
+            ],
+        }
+    },
 
     methods: {
 
@@ -15,6 +25,16 @@ export default {
         },
         $datePickerDate(date){
             return moment(date).format('YYYY-MM-DD');
+        },
+        // $DateWithMonthText(date){
+        //     return moment(date).format('DD MMMM YYYY');
+        // },
+        $DateWithMonthTextfr(date){
+            return moment(date).locale('fr').format('DD MMMM YYYY');
+        },
+
+        $timeFormat(time){
+            return moment(time, "HH:mm").format('hh:mm')
         },
 
         // date
