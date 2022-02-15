@@ -558,11 +558,12 @@ tbody tr {
   justify-content: flex-start!important;
 }
 
-.field .sub-field div .row .dota .v-input__control {
+.field .sub-field div .row .select-data .v-input__control {
   min-height: 0!important;
   height: 47px;
 }
-.field .sub-field div .row .dota .v-input__control .v-input__slot {
+
+.field .sub-field div .row .select-data .v-input__control .v-input__slot {
   width: 50%;
   display: flex;
   justify-content: center;
