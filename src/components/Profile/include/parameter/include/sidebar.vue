@@ -8,7 +8,7 @@
                     :ripple="false" 
                     depressed 
                     text 
-                    solo 
+                    solo
                 >
                     <v-icon>
                         mdi-cog

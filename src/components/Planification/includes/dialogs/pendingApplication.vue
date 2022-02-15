@@ -47,12 +47,12 @@
             <v-tabs-items v-model="tab" style="height: 100%!important">
                 <v-tab-item :key="1" value="congés">
                     <div style="margin: 20px 0">
-                        <table-leave></table-leave>
+                        <table-leave @success="$emit('success')"></table-leave>
                     </div>
                 </v-tab-item>
                 <v-tab-item :key="2" value="rtt">
                     <div style="margin: 20px 0">
-                        <table-rtt></table-rtt>
+                        <table-rtt @success="$emit('success')"></table-rtt>
                     </div>
                 </v-tab-item>
             </v-tabs-items>

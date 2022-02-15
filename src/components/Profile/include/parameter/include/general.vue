@@ -30,6 +30,7 @@
                                     class="text_field_margin" 
                                     outlined 
                                     dense 
+                                    v-model="updated_user.first_name"
                                     height="20px"
                                 ></v-text-field>
                             </div>
@@ -41,6 +42,7 @@
                                     class="text_field_margin" 
                                     outlined 
                                     dense 
+                                    v-model="updated_user.last_name"
                                     height="20px"
                                 ></v-text-field>
                             </div>
@@ -65,6 +67,7 @@
                                     </h5>
                                 </v-btn>
                                 <v-btn 
+                                    @click="updateUser();name=false"
                                     class="btn" 
                                     color="white!important"
                                 >
@@ -81,7 +84,7 @@
                         >
                             <div>
                                 <h4 class="text_fw title_field">
-                                    RONAN ADMIN
+                                    {{user.full_name}}
                                 </h4>
                             </div>
                             <v-spacer></v-spacer>
@@ -123,7 +126,7 @@
                         <div class="vertical_center">
                             <h4 class="label label_padding">
                                 <strong>
-                                    0698962272
+                                    {{user.mobile}}
                                 </strong>
                             </h4>
                         </div>
@@ -135,6 +138,8 @@
                                 class="text_field_margin" 
                                 outlined  
                                 dense 
+                                type="number"
+                                v-model="updated_user.mobile"
                                 height="20px"
                             ></v-text-field>
                         </div>
@@ -152,6 +157,7 @@
                             <v-btn 
                                 color="white!important" 
                                 class="btn"
+                                @click="updateUser();contact=false"
                             >
                                 <h5 class="txt">
                                     Sauvegarder les modifications
@@ -165,7 +171,7 @@
                     >
                         <div>
                             <h4 class="text_fw title_field">
-                                0698962272
+                                {{user.mobile}}
                             </h4>
                         </div>
                         <v-spacer></v-spacer>
@@ -206,7 +212,7 @@
                         </div>
                         <div class="vertical_center">
                             <h4 class="padding_top label_padding">
-                                Zac de Maner Ker Elo, , 29170 Fouesnant
+                                {{user.address}}
                             </h4>
                         </div>
                         <div class="vertical_center">
@@ -217,6 +223,7 @@
                                 class="text_field_margin"
                                 outlined 
                                 dense 
+                                v-model="updated_user.address"
                                 height="20px"
                             ></v-text-field>
                         </div>
@@ -228,6 +235,7 @@
                                 class="text_field_margin" 
                                 outlined 
                                 dense 
+                                v-model="updated_user.zip_code"
                                 height="20px"
                             ></v-text-field>
                         </div>
@@ -239,6 +247,7 @@
                                 class="text_field_margin" 
                                 outlined 
                                 dense 
+                                v-model="updated_user.city"
                                 height="20px"
                             ></v-text-field>
                         </div>
@@ -278,7 +287,7 @@
                     >
                         <div>
                             <h4 class="text_fw title_field">
-                                Zac de Maner Ker Elo, , 29170 Fouesnant
+                               {{user.address}}
                             </h4>
                         </div>
                         <v-spacer></v-spacer>
@@ -314,7 +323,7 @@
                     >
                         <div>
                             <h4 class="text">
-                                10 juillet 1963
+                                {{$DateWithMonthTextfr(user.birth_date)}}
                             </h4>
                         </div>
                         <div class="vertical_center date_width">
@@ -342,7 +351,7 @@
                                     </v-btn>
                                 </template>
                                 <v-date-picker
-                                    v-model="date"
+                                    v-model="user.birth_date"
                                     no-title
                                     scrollable
                                 >
@@ -357,7 +366,7 @@
                                     <v-btn
                                         text
                                         color="primary"
-                                        @click="$refs.start_date.save(holiday.start_date)"
+                                        @click="$refs.start_date.save(user.birth_date)"
                                     >
                                         OK
                                     </v-btn>
@@ -391,7 +400,7 @@
                     >
                         <div>
                             <h4 class="text_fw title_field">
-                                10 juillet 1963
+                                {{$DateWithMonthTextfr(user.birth_date)}}
                             </h4>
                         </div>
                         <v-spacer></v-spacer>
@@ -433,14 +442,14 @@
                                     Statut actuel :
                                 </h4>
                                 <h4 class="assets">
-                                    Actif
+                                    Actif {{updated_user.isSilent_onPush}}
                                 </h4>
                             </div>
                         </div>
                         <v-spacer></v-spacer>
                         <div> 
                              <v-switch
-                                v-model="switch1"
+                                v-model="updated_user.isSilent_onPush"
                             ></v-switch>
                         </div>
                     </div>
@@ -450,6 +459,7 @@
     </div>
 </template>
 <script>
+import { UpdateInfo } from '@/repositories/employee.api'
 export default {
     data(){
         return{
@@ -461,10 +471,32 @@ export default {
             birthday: false,
             notification: false,
             date: "",
+            updated_user:{}
         }
     },
+    computed: {
+        user() {
+            return this.$store.getters['user']
+        },
+    },
     methods: {
+        initialize(){
+            this.updated_user = JSON.parse(JSON.stringify(this.$store.getters['user']))
+            this.updated_user.isSilent_onPush = this.updated_user.isSilent_onPush == 1 ? true : false
+        },
+        updateUser(){
+            console.log(this.updated_user, 'test')
+            UpdateInfo(this.updated_user.id, this.updated_user).then(({data}) =>{
+                this.$store.state.user= this.updated_user
+                console.log(data)
+                this.initialize()
+                this.$toast.success('Updated Succesfullly')
 
+            })
+        }
+    },
+    created(){
+        this.initialize()
     }
 }
 </script>
