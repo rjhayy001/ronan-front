@@ -1,12 +1,12 @@
-.header-title{
+.header-title {
     font-weight: 600;
     margin: auto !important;
     font-size: 22px;
 }
 
 .sub_title {
-    margin: auto 0 !important; 
-    font-size: 20px !important; 
+    margin: auto 0 !important;
+    font-size: 20px !important;
     font-weight: bold !important;
 }
 
@@ -15,24 +15,24 @@
 }
 
 .dialog-header {
-    display:flex;
+    display: flex;
     flex-direction: column;
-    padding:0 12px; 
-    width:100%;
+    padding: 0 12px;
+    width: 100%;
 }
 
 .dialog-title {
-     padding:0 12px;
-     width: 100%;
+    padding: 0 12px;
+    width: 100%;
 }
 
 .underline-bottom {
-    border-bottom: solid 1px gray; 
+    border-bottom: solid 1px gray;
     margin-bottom: 5px;
 }
 
 .underline-top {
-    border-top: solid 1px gray; 
+    border-top: solid 1px gray;
     margin-bottom: 5px;
 }
 
@@ -49,25 +49,44 @@
     padding: 0 12px !important;
 }
 
-.subheader{
+.subheader {
     margin-top: 16px !important;
 }
 
-.grey--text{
+.grey--text {
     color: grey !important;
 }
 
-.personal-info .v-icon{
+.personal-info .v-icon {
     font-size: 33px !important;
 }
 
-
-.theme--light.v-tabs>.v-tabs-bar .v-tab.emp-tab:not(.active){
+.theme--light.v-tabs>.v-tabs-bar .v-tab.emp-tab:not(.active) {
     color: #b7b7b7 !important;
 }
 
-.theme--light .emp-tab-container .emp-tab.active{
+.theme--light .emp-tab-container .emp-tab.active {
     color: #444343 !important;
+}
+
+.theme--light .center-card .sub-text>.v-icon {
+    color: #d3d1cd;
+    font-size: 26px;
+}
+
+.theme--light .center-card .sub-text {
+    color: #d3d1cd;
+    font-size: 16px;
+}
+
+.theme--light .center-card .center-card-end {
+    font-size: 18px;
+    color: black !important;
+}
+
+.theme--light .center-card .center-card-end-val {
+    font-size: 18px;
+    color: rgb(175, 172, 172) !important;
 }
 
 table>thead.v-data-table-header>tr>th,

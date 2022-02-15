@@ -162,7 +162,43 @@
                 </v-row>
             </div>
             <v-divider></v-divider>
+            <div class="center-card">
+                <v-container>
+                    <v-row justify="space-around">
+                            <v-card class="mx-auto my-5" v-for="(center) in data.centers" :key="center">
+                                <v-card-title>
+                                    Centre assigne :
+                                </v-card-title>
+                                <v-img
+                                    height="300px"
+                                    class="align-end"
+                                    :src="center.image"
+                                >
+                                    <v-card-title 
+                                        v-text="center.city" 
+                                        class="white--text mt-8"
+                                    >
+                                    </v-card-title>
+                                    <v-card-subtitle
+                                        class="sub-text"
+                                    >
+                                        <v-icon>mdi-phone-outline</v-icon> {{center.mobile}}
+                                    </v-card-subtitle>
+                                </v-img>
+                                <v-card-subtitle v-if="center.manager" class="center-card-end">
+                                    Superviseur :
+                                    <p class="center-card-end-val">{{center.manager}}</p>
+                                </v-card-subtitle>
+                                <v-card-subtitle v-else class="center-card-end">
+                                    Superviseur :
+                                    <p class="center-card-end-val">NON DEFINI</p>
+                                </v-card-subtitle>
+                            </v-card>
+                    </v-row>
+                </v-container>
+            </div>
         </v-col>
+
         <v-col cols="9">
             <div class="emp-tab-container">
                 <v-tabs
@@ -192,7 +228,7 @@
                     </v-tab-item>
                     <v-tab-item>
                         <div style="margin: 20px 0">
-                            <rtt-table></rtt-table>
+                            <rtt-table :rtt="data.rtts"></rtt-table>
                         </div>
                     </v-tab-item>
                 </v-tabs-items>
