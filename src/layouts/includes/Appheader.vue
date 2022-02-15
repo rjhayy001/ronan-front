@@ -93,6 +93,7 @@
                         class="text-capitalize"
                         style="gap:10px; color:red"
                         link
+                        @click="logout()"
                     >
                         <v-icon color="red">
                             mdi-logout-variant
@@ -129,6 +130,10 @@ export default {
         profile(){
             this.Profile = true
         },
+        logout(){
+            localStorage.setItem('token', '')
+            this.$router.push({ name: "login"})
+        }
     }
 }
 </script>

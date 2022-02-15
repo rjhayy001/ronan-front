@@ -49,13 +49,17 @@
                 </v-icon>
             </v-btn>
         </div>
-        <pending-application v-if="pending_dialog" :dialog="pending_dialog" @close="pending_dialog=false"/>
+        <pending-application 
+            v-if="pending_dialog" 
+            :dialog="pending_dialog" 
+            @close="pending_dialog=false"
+            @success="$emit('success')"
+        />
         <add-holiday
             v-if="holiday_dialog"
             :dialog="holiday_dialog"
             @close="holiday_dialog=false"
             @success="$emit('success')"
-
         />
 
         <add-rtt
