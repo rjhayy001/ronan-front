@@ -32,7 +32,7 @@
             <div>
               <v-row>
                   <v-select
-                  class="dota"
+                    class="select-data"
                     v-model="e2"
                     :items="selects"
                     menu-props="auto"

@@ -1,6 +1,6 @@
 <template>
-    <div class="component_container add_padding">
-        <div class="title_head border_none">
+    <div class="component_container">
+        <div class="title_head">
             <h2 class="text_fw pad_header">
                 Régions
             </h2>
@@ -12,7 +12,7 @@
                 text 
                 icon
             >
-                <v-icon size="30px">
+                <v-icon size="30px" class=" add_padding">
                     mdi-plus
                 </v-icon>
             </v-btn>
@@ -38,7 +38,7 @@
                     text 
                     icon
                 >
-                    <v-icon color="red">
+                    <v-icon color="red" class=" add_padding">
                         mdi-delete-outline
                     </v-icon>
                 </v-btn>
@@ -138,13 +138,12 @@ export default {
             })
         },
         saveRegion() {
-
             this.$refs.form.validate()
             if(this.$refs.form.validate() == true) {
                 CreateRegions(this.payload).then(({data})=> {
                     this.$arrayupdater(data, this.regions)
                     this.addRegions = false
-                    this.$toast.success('Added Succesfullly')
+                    this.$toast.success('added succesfullly')
                     this.clear()
                 })
             }
@@ -154,18 +153,11 @@ export default {
             this.payload.name=""
         },
         removeRegions(region) {
-            let message = `Are you sure you want to DELETE REGION ${region.name} ?`
-            this.$root.$confirm(message,'#ff5252')
-                .then(result => {
-                    if(result)(
-                        RemoveRegions(region.id).then(({data}) =>{
-                            console.log(data)
-                            this.$arraysplicer(region,this.regions)
-                            this.$toast.success("Successfully removed!");
-                        })
-                    )
-                })
-           
+            RemoveRegions(region.id).then(({data}) =>{
+                console.log(data)
+                this.$arraysplicer(region,this.regions)
+                this.$toast.success("Successfully removed!");
+            })
         }
     }
 }
