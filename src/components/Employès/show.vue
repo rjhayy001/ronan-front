@@ -192,7 +192,7 @@
                     </v-tab-item>
                     <v-tab-item>
                         <div style="margin: 20px 0">
-                            <rtt-table></rtt-table>
+                            <rtt-table :rtt="data.rtts"></rtt-table>
                         </div>
                     </v-tab-item>
                 </v-tabs-items>
