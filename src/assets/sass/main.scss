@@ -1,3 +1,56 @@
-.test {
-    text-align: center;
+@import 'icons.scss';
+@import 'style.scss';
+@import 'planification.scss';
+@import 'loader.scss';
+@import 'planning_main.scss';
+@import 'profile.scss';
+@import 'login.scss';
+
+
+
+
+.main_tabs .v-item-group .v-slide-group__wrapper .tabs .theme--light.v-tabs>.v-tabs-bar .v-tab--disabled, .theme--light.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active), .theme--light.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active)>.v-btn, .theme--light.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active)>.v-icon{
+    color: white!important;
 }
+
+.main_tabs .v-slide-group__content {
+  background: #0086c2
+}
+
+.main_tabs .v-slide-group__wrapper{
+  position:fixed;
+	width: 100%;
+	height: 70px;
+	background-color: #cccccc;
+	text-align : center;
+  z-index: 2;
+}
+
+.v-item-group{
+    height: 50px!important;
+}
+
+.main_tabs.v-tabs-slider-wrapper {
+    color: orange;
+}
+
+.v-text-field.v-text-field--enclosed .v-text-field__details {
+    display: none;
+  }
+
+.invi-head-table .v-data-table-header{
+  visibility: collapse !important;
+}
+
+.no-stripe tbody tr:nth-of-type(odd) {
+  background-color: transparent ;
+}
+
+.no-stripe tbody tr:nth-of-type(even) {
+  background-color: transparent;
+}
+
+.theme--light.no-stripe.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child, .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row), .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child, .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row), .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
+  border-bottom: none !important;
+}
+
