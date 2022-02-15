@@ -79,7 +79,8 @@
                     <div>
                         <label style="color: #0090d1">Email</label>
                         <v-text-field
-                        class="my-2"
+                            class="my-2"
+                            v-model="email"
                             outlined
                             prepend-inner-icon="mdi-email-outline"
                             solo
@@ -87,10 +88,12 @@
                         ></v-text-field>
                         <label style="color: #0090d1">Mot de passe</label>
                         <v-text-field
-                        class="my-2"
+                            class="my-2"
                             prepend-inner-icon="mdi-lock"
                             outlined
+                            type="password"
                             solo
+                            v-model="password"
                             placeholder="Enter votre Email"
                         ></v-text-field>
                     </div>
@@ -114,7 +117,7 @@
                 </div>
                 <div>
                     <div class="mt-10 text-center">
-                        <v-btn width="100%" rounded color="primary" dark x-large>
+                        <v-btn @click="login" width="100%" rounded color="primary" dark x-large>
                             S'IDENTIFIER
                         </v-btn>
                     </div>
