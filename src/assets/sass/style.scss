@@ -53,6 +53,23 @@
     margin-top: 16px !important;
 }
 
+.grey--text{
+    color: grey !important;
+}
+
+.personal-info .v-icon{
+    font-size: 33px !important;
+}
+
+
+.theme--light.v-tabs>.v-tabs-bar .v-tab.emp-tab:not(.active){
+    color: #b7b7b7 !important;
+}
+
+.theme--light .emp-tab-container .emp-tab.active{
+    color: #444343 !important;
+}
+
 table>thead.v-data-table-header>tr>th,
 thead .v-data-table__checkbox>.v-icon {
     background-color: #FF5722 !important;
