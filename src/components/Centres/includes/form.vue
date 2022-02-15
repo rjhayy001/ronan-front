@@ -4,7 +4,7 @@
             <v-form>
                 <v-container>
                     <v-row class="row">
-                        <div class="dialog-header">
+                        <div class="dialog-header mb-2">
                             <div class="dialog-title">
                                 <h3>Créer une centre</h3>
                                 <p>L'action ne peut pas être annulée</p>
@@ -17,10 +17,10 @@
                             cols="12"
                         >
                             <v-text-field
-                                label="Nom"
                                 placeholder="Nom"
-                                outlined
                                 dense
+                                v-model="center.name"
+                                solo
                                 prepend-inner-icon="mdi-rename-box"
                             ></v-text-field>
                         </v-col>
@@ -30,8 +30,9 @@
                             <v-text-field
                                 label="Rue"
                                 placeholder="Rue"
-                                outlined
                                 dense
+                                v-model="center.address"
+                                solo
                                 prepend-inner-icon="mdi-google-street-view"
                             ></v-text-field>
                         </v-col>
@@ -41,8 +42,9 @@
                             <v-text-field
                                 label="Ville"
                                 placeholder="Ville"
-                                outlined
+                                v-model="center.city"
                                 dense
+                                solo
                                 prepend-inner-icon="mdi-city"
                             ></v-text-field>
                         </v-col>
@@ -51,13 +53,14 @@
                         >
                             <v-text-field
                                 label="Code postal"
+                                v-model="center.zip_code"
                                 placeholder="Code postal"
-                                outlined
+                                solo
                                 dense
                                 prepend-inner-icon="mdi-email-outline"
                             ></v-text-field>
                         </v-col>
-                        <div class="dialog-title">
+                        <div class="dialog-title my-2">
                             <div class="underline-bottom mb-2">
                                 <h3>Optionnel</h3>
                             </div>
@@ -66,15 +69,16 @@
                             cols="12"
                         >
                             <v-text-field
+                                v-model="center.mobile"
                                 label="Numéro de contact"
                                 placeholder="Numéro de contact"
-                                outlined
+                                solo
                                 dense
                                 prepend-inner-icon="mdi-phone-outline"
                             ></v-text-field>
                         </v-col>
-                        <div class="dialog-title">
-                            <div class="underline-top mt-2">
+                        <div class="dialog-title my-2">
+                            <div class="underline-bottom mt-2">
                                 <h3>Choisissez la région</h3>
                             </div>
                         </div>
@@ -82,10 +86,13 @@
                             cols="12"
                         >
                             <v-select
-                            :items="regions"
-                            value="Secteur Nord"
-                            filled
-                            dense
+                                :items="regions"
+                                value="Secteur Nord"
+                                solo
+                                item-text="name"
+                                item-value="id"
+                                v-model="center.region_id"
+                                dense
                             ></v-select>
                         </v-col>
                         <v-btn 
@@ -104,6 +111,7 @@
                             dark
                             height="50px"
                             color="#005075!important"
+                            @click="create"
                             class="btn-dialog ma-2"
                         >
                             VALIDER
@@ -115,15 +123,41 @@
     </div>
 </template>
 <script>
+import { GetRawRegions } from "@/repositories/region.api"
+import { CreateCenter } from "@/repositories/center.api"
 export default {
     data(){
         return {
-            regions: []
+            regions: [],
+            center:{
+                name:'',
+                region_id: '',
+                city:'',
+                zip_code: '',
+                address:'',
+                mobile:''
+            }
         }
+    },
+    created(){
+        this.initialize()
     },
     methods:{
         close(){
             this.$emit('close')
+        },
+        initialize(){
+            GetRawRegions().then(({data})=> {
+                this.regions = data
+                this.center.region_id = data[0].id
+            })
+        },
+        create(){
+            CreateCenter(this.center).then(() => {
+                this.$toast.success('successfully created center')
+                this.$emit('success')
+                this.$emit('close')
+            })
         }
     }
 }

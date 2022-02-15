@@ -1,5 +1,5 @@
 <template>
-    <div style="position: fixed; z-index: 999; bottom: 10px; right: 10px;">
+    <div style="position: fixed; z-index: 2; bottom: 10px; right: 10px;">
         <v-btn class="mx-2" 
             fab
             dark
@@ -49,13 +49,17 @@
                 </v-icon>
             </v-btn>
         </div>
-        <pending-application v-if="pending_dialog" :dialog="pending_dialog" @close="pending_dialog=false"/>
+        <pending-application 
+            v-if="pending_dialog" 
+            :dialog="pending_dialog" 
+            @close="pending_dialog=false"
+            @success="$emit('success')"
+        />
         <add-holiday
             v-if="holiday_dialog"
             :dialog="holiday_dialog"
             @close="holiday_dialog=false"
             @success="$emit('success')"
-
         />
 
         <add-rtt

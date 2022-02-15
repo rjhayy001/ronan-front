@@ -9,16 +9,14 @@
             <v-card-title>
                 <v-btn
                     class="mx-2"
-                    fab
                     large
+                    icon
                     small
-                    style="box-shadow: none;background-color:transparent"
                 >
                     <v-icon
                         flat
                         solo
                         style="padding:10px; color:#005075"
-                        medium
                         @click="close()"
                     >
                         mdi-arrow-left
@@ -36,12 +34,12 @@
             >
                 <v-tabs-slider></v-tabs-slider>
 
-                <v-tab href="#congés" style="width: 25em; text-transform: none;">
+                <v-tab href="#congés" class="pb-1" style="width: 25em; text-transform: none;">
                     Congés
                     <v-icon>mdi-umbrella</v-icon>
                 </v-tab>
 
-                <v-tab href="#rtt" style="width: 25em; text-transform: none;">
+                <v-tab href="#rtt" class="pb-1" style="width: 25em; text-transform: none;">
                     RTT
                     <v-icon>mdi-timer-sand</v-icon>
                 </v-tab>
@@ -49,12 +47,12 @@
             <v-tabs-items v-model="tab" style="height: 100%!important">
                 <v-tab-item :key="1" value="congés">
                     <div style="margin: 20px 0">
-                        <table-leave></table-leave>
+                        <table-leave @success="$emit('success')"></table-leave>
                     </div>
                 </v-tab-item>
                 <v-tab-item :key="2" value="rtt">
                     <div style="margin: 20px 0">
-                        <table-rtt></table-rtt>
+                        <table-rtt @success="$emit('success')"></table-rtt>
                     </div>
                 </v-tab-item>
             </v-tabs-items>

@@ -23,6 +23,7 @@
                     <v-icon left>mdi-pencil</v-icon> Edit
                 </v-btn>
                 <v-btn
+                    @click="deleteEmp"
                     rounded
                     elevation="3"
                     color="error"
@@ -86,7 +87,7 @@
                 </v-row>
             </div>
             <div v-if="edit">
-                <edit-view></edit-view>
+                <edit-view :data="data" @update="update" @edit="editInfo"></edit-view>
             </div>
             <div style="text-align:center;">
                 <v-divider></v-divider>
@@ -101,11 +102,9 @@
                 <v-row>
                     <v-col cols="12">
                         <v-row>
-                            <v-col cols="11" style="height:50px">
+                            <v-col cols="12" class="d-flex justify-space-between">
                                 <p style="font-size: 18px;font-weight:bold">Activer</p>
-                            </v-col>
-                            <v-col cols="1" style="height:50px">
-                                <v-switch hide-details="true" color="primary"></v-switch>
+                                <p><v-switch hide-details="true" color="primary"></v-switch></p>
                             </v-col>
                         </v-row>
                     </v-col>
@@ -135,7 +134,7 @@
                 </v-row>
                 <v-divider></v-divider>
             </div>
-            <div style="text-align:center;">
+            <div v-if="data.rtts.length > 0" style="text-align:center;">
                 <v-row>
                     <v-col cols="6">
                         <p style="font-size: 18px;font-weight:bold">RTT non payante</p>
@@ -154,10 +153,8 @@
                 <v-row>
                     <v-col cols="12">
                         <v-row>
-                            <v-col cols="8" style="height:50px">
+                            <v-col cols="12" class="d-flex justify-space-between">
                                 <p style="font-size: 18px;font-weight:bold">Role:</p>
-                            </v-col>
-                            <v-col cols="4" style="height:50px">
                                 <p style="font-size: 18px;"><v-icon style="font-size: 30px;font-weight:bold">mdi-tools</v-icon> {{data.role.name}}</p>
                             </v-col>
                         </v-row>
@@ -167,33 +164,39 @@
             <v-divider></v-divider>
         </v-col>
         <v-col cols="9">
-            <v-tabs
-                class="emp-tab"
-                v-model="tab"
-                grow
-            >
-                <v-tab>
-                    Conges
-                </v-tab>
-                <v-tab>
-                    RTT
-                </v-tab>
-                <v-tab>
-                    Absence
-                </v-tab>
-            </v-tabs>
-            <v-tabs-items v-model="tab">
-                <v-tab-item>
-                    <v-card>
-                        <leave-table></leave-table>
-                    </v-card>
-                </v-tab-item>
-                <v-tab-item>
-                    <v-card>
-                        <rtt-table></rtt-table>
-                    </v-card>
-                </v-tab-item>
-            </v-tabs-items>
+            <div class="emp-tab-container">
+                <v-tabs
+                    v-model="tab"
+                    style="background-color:blue"
+                    grow
+                >
+                    <v-tabs-slider></v-tabs-slider>
+
+                    <v-tab active-class="active" class="emp-tab">
+                        Congés
+                    </v-tab>
+
+                    <v-tab active-class="active"  class="emp-tab">
+                        RTT
+                    </v-tab>
+
+                    <v-tab active-class="active" class="emp-tab">
+                        Absence
+                    </v-tab>
+                </v-tabs>
+                <v-tabs-items v-model="tab" style="height: 100%!important">
+                    <v-tab-item>
+                        <div style="margin: 20px 0">
+                            <leave-table></leave-table>
+                        </div>
+                    </v-tab-item>
+                    <v-tab-item>
+                        <div style="margin: 20px 0">
+                            <rtt-table></rtt-table>
+                        </div>
+                    </v-tab-item>
+                </v-tabs-items>
+            </div>
         </v-col>
     </v-row>
 </template>
@@ -201,13 +204,14 @@
 import LeaveTable from "@/components/Employès/includes/leave.vue"
 import RttTable from "@/components/Employès/includes/rtt.vue"
 import EditView from "@/components/Employès/edit.vue"
-import { GetEmployeeInfo } from "@/repositories/employee.api";
+import { UpdateEmployee,GetEmployeeInfo,DeleteEmployee } from "@/repositories/employee.api";
 export default {
     data(){
         return{
             data:{},
             tab:null,
-            edit: false
+            edit: false,
+            isActive: false
         }
     },
     created(){
@@ -227,7 +231,28 @@ export default {
             else{
                 this.edit = true;
             }
-        }
+        },
+        update(){
+            let img = this.data.image.split('/')
+            if(img[4] == "shield.png"){
+                this.data.image = ""
+            }
+            UpdateEmployee(this.data.id, this.data).then((data) => {
+                if(data){
+                    this.$toast.success("Updated Successfully")
+                    this.edit = false
+                    location.reload()
+                }
+            })
+        },
+        deleteEmp(){
+            DeleteEmployee(this.data.id).then((data) =>{
+                if(data){
+                    this.$toast.success("Deleted Successfully")
+                    this.$router.push({name:"Employès"})
+                }
+            })
+        },
     },
     components:{
         LeaveTable,

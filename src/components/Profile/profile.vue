@@ -1,14 +1,14 @@
 <template>
     <v-dialog fullscreen v-model="dialog" class="dialogProfile" >
-        <div class="content">
+        <div class="content" style="display:flex; padding: 10px;">
             <v-btn @click="close" large icon>
                 <v-avatar class="logo_img">
                     <img src="@/assets/images/logo-securauto-150.png" alt="">
                 </v-avatar>
             </v-btn>
-            <div class="header_title">
-                <h2>
-                    RÉGLAGES
+            <div class="header_title" style="margin: auto 0;padding-left: 10px;">
+                <h2 style="font-weight: 400">
+                    Mes Profil
                 </h2>
             </div>
         </div>
@@ -44,8 +44,3 @@ export default {
 </script>
 
 <style scoped>
-v-dialog{
-    width: 100%;
-    height: 100vh!important;
-}
-</style>

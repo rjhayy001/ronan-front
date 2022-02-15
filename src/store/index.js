@@ -11,5 +11,10 @@ export default new Vuex.Store({
         login(state, data) {
             state.user = data.user
         },
-    }
+    },
+    getters :{
+        user: state => {
+          return state.user
+        }
+      },
 })

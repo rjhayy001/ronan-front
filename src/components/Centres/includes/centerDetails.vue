@@ -35,6 +35,7 @@
           rounded
           color="primary"
           dark
+          @click="editCenter"
         >
           <v-icon left>mdi-pencil</v-icon>
           <span style="font-size:13px">Editer</span>
@@ -43,6 +44,7 @@
           rounded
           color="error"
           dark
+          @click="deleteCenter"
         >
           <v-icon left>mdi-delete</v-icon>
           <span style="font-size:13px">Supprimer</span>
@@ -141,7 +143,7 @@
 
         <v-list-item-action>
           <v-icon color="primary" v-if="!editing_region" @click="editing_region=true">mdi-pencil</v-icon>
-          <v-icon color="primary" v-if="editing_region" @click="saveRegion">mdi-download</v-icon>
+          <v-icon color="primary" v-else @click="saveRegion">mdi-download</v-icon>
         </v-list-item-action>
       </v-list-item>
 
@@ -151,14 +153,26 @@
 
         <v-list-item-content>
           <template v-if="!editing_manager">
-            <v-list-item-title class="item-title">{{center.manager ? center.manager.name : 'Non'}}</v-list-item-title>
+            <v-list-item-title class="item-title">{{center.manager ? center.manager.full_name : 'Non'}}</v-list-item-title>
             <v-list-item-subtitle>Manager</v-list-item-subtitle>
+          </template>
+          <template v-else>
+            <v-select
+              dense
+              item-text="full_name"
+              item-value="id"
+              :items="employees"
+              v-model="current_manager"
+              return-object
+              solo
+            ></v-select>
           </template>
         </v-list-item-content>
 
         <v-list-item-action>
           <v-btn icon>
-            <v-icon color="primary" @click="editManager">mdi-pencil</v-icon>
+          <v-icon color="primary" v-if="!editing_manager" @click="editing_manager=true">mdi-pencil</v-icon>
+          <v-icon color="primary" v-else @click="editManager">mdi-download</v-icon>
           </v-btn>
         </v-list-item-action>
       </v-list-item>
@@ -167,15 +181,18 @@
   </v-card>
 </template>
 <script>
-import { GetAllRegions } from "@/repositories/region.api"
-import { updateCenterRegion } from "@/repositories/center.api"
+import { GetRawRegions } from "@/repositories/region.api"
+import { updateCenterRegion, AssignManager } from "@/repositories/center.api"
+import { GetAllEmployees } from "@/repositories/employee.api";
 export default {
   data(){
     return {
       editing_region: false,
       editing_manager: false,
       regions: [],
-      current_region:{}
+      current_region:{},
+      current_manager:{},
+      employees: [],
     }
   },
   props: {
@@ -189,10 +206,23 @@ export default {
   },
   methods:{
     initialize(){
-      GetAllRegions().then(({data}) => {
+      this.getRegions()
+      this.getEmployees()
+      this.current_region = this.center.region
+      this.current_manager = this.center.manager
+    },
+    editCenter(){
+      alert('test')
+    },
+    getRegions(){
+      GetRawRegions().then(({data}) => {
         this.regions = data
       })
-      this.current_region = this.center.region
+    },
+    getEmployees(){
+      GetAllEmployees().then(({data}) => {
+        this.employees = data
+      })
     },
     saveRegion(){
       let payload = {
@@ -207,8 +237,32 @@ export default {
         this.editing_region = false
       })
     },
+    deleteCenter(){
+        let message = `Are you sure you want to DELETE CENTER ${this.center.name} ?`
+       this.$root
+          .$confirm(message,'#ff5252')
+          .then(result => {
+              if(result)(
+                  alert('NO FUNCTIONALITY USED')
+              )
+          })
+    },
     editManager(){
-      alert('manager')
+      let payload = {
+        user_id: this.current_manager.id,
+        center_ids: this.center.id
+      }
+
+      this.center.manager = this.current_manager
+      this.center.manager.id = this.current_manager.id
+
+      this.$nextTick(function () {
+        AssignManager(payload).then(({data}) =>{
+          console.log(data, 'sad')
+          this.$toast.success(data.message)
+        })
+        this.editing_manager = false
+      })
     }
   }
 }

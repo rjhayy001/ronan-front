@@ -1,18 +1,30 @@
 <template>
     <div>
         <template v-if="!loading">
-            <create-form :dialog="dialog" @close="dialog=false"></create-form>
-            <v-subheader class="">
+            <create-form :dialog="dialog" @close="dialog=false" @success="hardReload"></create-form>
+            <v-subheader class="my-2">
                 <p class="sub_title">Centres</p>
                 <v-spacer></v-spacer>
-                <v-btn depressed>
+                <v-text-field
+                    class="my-2 mr-2 shrink"
+                    small
+                    width="100px"
+                    dense
+                    :hide-details="true"
+                    label="Search Center"
+                    solo
+                    v-model="search"
+                    append-icon="mdi-magnify"
+                    single-line 
+                ></v-text-field>
+                <!-- <v-btn depressed>
                     <v-icon
                         color="black"
                     >
                         mdi-magnify
                     </v-icon>          
-                </v-btn>
-                <v-btn depressed @click="view_list=!view_list">
+                </v-btn> -->
+                <v-btn depressed @click="view_list=!view_list" class="mx-2" icon>
                     <v-icon
                     
                         color="black"
@@ -20,7 +32,7 @@
                     {{view_list ? 'mdi-format-list-bulleted' : 'mdi-view-compact'}}
                     </v-icon>          
                 </v-btn>
-                <v-btn depressed  @click="dialog = true">
+                <v-btn depressed  @click="dialog = true" icon class="mr-2">
                     <v-icon
                         color="black"
                     >
@@ -30,6 +42,7 @@
             </v-subheader>
                 <v-data-table
                     v-if="view_list"
+                    :search="search"
                     class="elevation-1 mx-4 index-table"
                     :headers="headers"
                     :items="centers"
@@ -55,6 +68,7 @@ export default {
     },
     data(){
         return{
+            search:'',
             dialog:false,
             centers:[],
             headers: [
@@ -79,6 +93,12 @@ export default {
                 console.log(data, 'centers')
                 this.centers = data
                 this.loading = false
+            })
+        },
+        hardReload(){
+            GetAllCenters().then(({data}) => {
+                console.log(data, 'centers')
+                this.centers = data
             })
         },
         view(item){
