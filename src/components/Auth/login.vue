@@ -46,10 +46,10 @@
                         </h4>
                     </div>
                     <div style="position: absolute; right: 0; left: 0; bottom: 40vh; display:flex; flex-direction: column; align-items: center; color:white">
-                        <h3 style="font-weight: 400">
+                        <h2 style="font-weight: 400">
                             It's up pleasure to see you again
-                        </h3>
-                        <h1 style="font-weight: 500">
+                        </h2>
+                        <h1 style="font-weight: 500; font-size: 50px">
                             NICE TO SEE YOU AGAIN
                         </h1>
                     </div>

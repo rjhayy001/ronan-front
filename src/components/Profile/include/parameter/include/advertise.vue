@@ -99,8 +99,8 @@
                         </div>
                     </div>
                     <div style="position:relative; height: 100%; width: 100%; display:flex; justify-content: center">
-                        <v-btn large style=" width: 95%; position: absolute; bottom: -4.5vh; background-color:#004d70!important" >
-                            sad
+                        <v-btn large style=" width: 95%; position: absolute; bottom: -2.5vh;" color="primary" dark >
+                            Publier
                         </v-btn>
                     </div>
                 </div>
