@@ -89,6 +89,11 @@
     color: rgb(175, 172, 172) !important;
 }
 
+.theme--light .center-card .center-card-div {
+    width: 90%;
+    margin: auto;
+}
+
 table>thead.v-data-table-header>tr>th,
 thead .v-data-table__checkbox>.v-icon {
     background-color: #FF5722 !important;

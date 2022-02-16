@@ -1,5 +1,11 @@
 <template>
     <v-row justify="space-around">
+        <create-plan
+            v-if="dialog2" 
+            :dialog="dialog2" 
+            @close="closeDialog"
+            :data="create_data"
+        ></create-plan>
         <v-col cols="3">
             <div style="text-align:center;">
                 <v-img
@@ -93,6 +99,7 @@
                 <v-divider></v-divider>
                 <v-btn
                     text
+                    @click="addWork(data, data.centers)"
                 >
                     <v-icon>mdi-plus</v-icon>Ajouter Planification 
                 </v-btn>
@@ -162,40 +169,44 @@
                 </v-row>
             </div>
             <v-divider></v-divider>
-            <div class="center-card">
-                <v-container>
-                    <v-row justify="space-around">
-                            <v-card class="mx-auto my-5" v-for="(center) in data.centers" :key="center">
-                                <v-card-title>
-                                    Centre assigne :
-                                </v-card-title>
-                                <v-img
-                                    height="300px"
-                                    class="align-end"
-                                    :src="center.image"
+            <div class="center-card" v-if="data.centers.length > 0">
+                <v-row justify="space-around">
+                    <v-card 
+                        class="mx-auto my-5" 
+                        color="#f5f5f5"
+                        elevation="0"
+                    >
+                        <v-card-title>
+                            Centre assigne :
+                        </v-card-title>
+                        <div v-for="(center, index) in data.centers" :key="index" class="center-card-div">
+                            <v-img
+                                height="300px"
+                                class="align-end"
+                                :src="center.image"
+                            >
+                                <v-card-title 
+                                    v-text="center.name" 
+                                    class="white--text mt-8"
                                 >
-                                    <v-card-title 
-                                        v-text="center.city" 
-                                        class="white--text mt-8"
-                                    >
-                                    </v-card-title>
-                                    <v-card-subtitle
-                                        class="sub-text"
-                                    >
-                                        <v-icon>mdi-phone-outline</v-icon> {{center.mobile}}
-                                    </v-card-subtitle>
-                                </v-img>
-                                <v-card-subtitle v-if="center.manager" class="center-card-end">
-                                    Superviseur :
-                                    <p class="center-card-end-val">{{center.manager}}</p>
+                                </v-card-title>
+                                <v-card-subtitle
+                                    class="sub-text"
+                                >
+                                    <v-icon>mdi-phone-outline</v-icon> {{center.mobile}}
                                 </v-card-subtitle>
-                                <v-card-subtitle v-else class="center-card-end">
-                                    Superviseur :
-                                    <p class="center-card-end-val">NON DEFINI</p>
-                                </v-card-subtitle>
-                            </v-card>
-                    </v-row>
-                </v-container>
+                            </v-img>
+                            <v-card-subtitle v-if="center.manager" class="center-card-end">
+                                Superviseur :
+                                <p class="center-card-end-val">{{center.manager}}</p>
+                            </v-card-subtitle>
+                            <v-card-subtitle v-else class="center-card-end">
+                                Superviseur :
+                                <p class="center-card-end-val">NON DEFINI</p>
+                            </v-card-subtitle>
+                        </div>
+                    </v-card>
+                </v-row>
             </div>
         </v-col>
 
@@ -240,6 +251,7 @@
 import LeaveTable from "@/components/Employès/includes/leave.vue"
 import RttTable from "@/components/Employès/includes/rtt.vue"
 import EditView from "@/components/Employès/edit.vue"
+import CreatePlan from "@/components/Planification/includes/createPlan.vue"
 import { UpdateEmployee,GetEmployeeInfo,DeleteEmployee } from "@/repositories/employee.api";
 export default {
     data(){
@@ -247,7 +259,9 @@ export default {
             data:{},
             tab:null,
             edit: false,
-            isActive: false
+            isActive: false,
+            dialog2: false,
+            create_data:{}
         }
     },
     created(){
@@ -289,11 +303,27 @@ export default {
                 }
             })
         },
+        addWork(employee, center){
+            var creatDate = new Date();
+            var date = creatDate.getFullYear() + "-" + (creatDate.getUTCMonth() + 1) + "-" + creatDate.getDate()
+            this.create_data = {
+            center:center,
+            employee:employee,
+            date:date
+            }
+            this.$nextTick(function () {
+            this.dialog2 = true
+            })
+        },
+        closeDialog(){
+            this.dialog2 = false
+        },
     },
     components:{
         LeaveTable,
         RttTable,
-        EditView
+        EditView,
+        CreatePlan
     }
 }
 </script>
