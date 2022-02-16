@@ -30,7 +30,7 @@
                                 solo
                                 rows="1"
                                 auto-grow
-                                v-model="rtt.reason"
+                                v-model="rtt.comment"
                                 row-height="100"
                                 prepend-inner-icon="mdi-note-edit-outline"
                             ></v-textarea>
@@ -181,6 +181,7 @@
 </template>
 <script>
 import { GetAllEmployees } from "@/repositories/employee.api";
+import { CreateRtt } from "@/repositories/rtt.api";
 export default {
     data(){
         return {
@@ -192,7 +193,7 @@ export default {
                 start_time:'',
                 end_time:'',
                 user_id:'',
-                reason:''
+                comment:''
             },
             employees:[],
         }
@@ -215,7 +216,14 @@ export default {
             })
         },
         saveRtt(){
-            alert('rtt')
+            CreateRtt(this.rtt).then(({data}) => {
+                console.log(data, 'test')
+                this.$emit('success')
+                this.$emit('close')
+                this.$toast.success(data.message)
+            }).catch(({ response }) => { 
+                this.$toast.error(response.data.message) 
+            })
         }
     }
 }
