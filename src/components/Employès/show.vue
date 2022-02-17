@@ -242,6 +242,11 @@
                             <rtt-table :rtt="data.rtts"></rtt-table>
                         </div>
                     </v-tab-item>
+                    <v-tab-item>
+                        <div style="margin: 20px 0">
+                            <absence-table :data="data.attendances"></absence-table>
+                        </div>
+                    </v-tab-item>
                 </v-tabs-items>
             </div>
         </v-col>
@@ -250,6 +255,7 @@
 <script>
 import LeaveTable from "@/components/Employès/includes/leave.vue"
 import RttTable from "@/components/Employès/includes/rtt.vue"
+import AbsenceTable from "@/components/Employès/includes/absence.vue"
 import EditView from "@/components/Employès/edit.vue"
 import CreatePlan from "@/components/Planification/includes/createPlan.vue"
 import { UpdateEmployee,GetEmployeeInfo,DeleteEmployee } from "@/repositories/employee.api";
@@ -323,7 +329,8 @@ export default {
         LeaveTable,
         RttTable,
         EditView,
-        CreatePlan
+        CreatePlan,
+        AbsenceTable
     }
 }
 </script>

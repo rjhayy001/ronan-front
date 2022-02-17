@@ -3,7 +3,12 @@
           :headers="headers"
           :items="rtt"
           class="elevation-5"
-      ></v-data-table>
+      >
+        <template v-slot:item.status="{item}">
+          <p v-if="item.status = 1">Actifs</p>
+          <p v-else>Inactif</p>
+        </template>
+      </v-data-table>
 </template>
 <script>
 export default {

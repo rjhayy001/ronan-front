@@ -15,10 +15,10 @@ export default {
                 text: 'Repartition',
                 align: 'start',
                 sortable: false,
-                value: 'demands',
+                value: 'request_name',
               },
               { text: 'Solde actuel(jours)', value: 'current_balance' },
-              { text: 'Demande', value: 'request_name' },
+              { text: 'Demande', value: 'demands' },
               { text: 'Jours poses', value: 'days_posed' },
               { text: 'Jours restants', value: 'days_remaining' },
             ],
@@ -32,7 +32,7 @@ export default {
       initialize(){
         let id = this.$route.params.id
         GetUserDemand(id).then(({data}) => {
-          // console.log(data, 'test')
+          console.log(data, 'test')
           this.demand = data
         })
 
