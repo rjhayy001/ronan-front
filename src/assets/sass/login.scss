@@ -11,9 +11,10 @@
 }
 
 .login-main .image-container .image-content{
-    background-image: url('../images/login-image.jpg');
+    background-image: url('../images/login-images.jpg');
     background-size: cover;
     background-repeat: round;
+    object-fit: cover;
     width: 100%;
     height: 100%;
 }
