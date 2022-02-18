@@ -12,9 +12,6 @@
                 text 
                 icon
             >
-                <v-icon size="30px" class=" add_padding">
-                    mdi-plus
-                </v-icon>
             </v-btn>
         </div>
         <div style="display:flex; width: 100%; height: 86vh; ">
@@ -90,16 +87,15 @@
                                     Choisissez l'image
                                 </v-btn>
                             </div>
-                            <div style="height:100%; padding: 10px 0">
+                            <div>
                                 <div style="min-height: 38vh">
 
                                 </div>
-
                             </div>
                         </div>
                     </div>
                     <div style="position:relative; height: 100%; width: 100%; display:flex; justify-content: center">
-                        <v-btn large style=" width: 95%; position: absolute; bottom: -2.5vh;" color="primary" dark >
+                        <v-btn large style=" width: 95%; position: absolute; bottom: 2vh;" color="primary" dark >
                             Publier
                         </v-btn>
                     </div>
@@ -140,6 +136,7 @@ import { GetAllEmployeesSort } from "@/repositories/employee.api";
 export default {
     data(){
         return{
+            imageData: null,
             EmptyMessages: true,
             Messages: [],
             employees:[],
@@ -183,7 +180,24 @@ export default {
             }else {
                 this.EmptyMessages = true
             }
-        }
+        },
     }
 }
 </script>
+
+<style scoped>
+#app {
+  padding: 20px;
+}
+
+#preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#preview img {
+  max-width: 100%;
+  max-height: 500px;
+}
+</style>

@@ -23,7 +23,9 @@ const router = new VueRouter({
 
 function guardRoutes(to, next) {
     const guest_routes = [
-        'login'
+        'login',
+        'forgotpassword',
+        'password-reset',
     ]
     if ((guest_routes.includes(to.name)) && localStorage.getItem('token') === '') {
         next()
