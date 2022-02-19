@@ -49,6 +49,8 @@
                                         readonly
                                         :disabled="!editing"
                                         v-bind="attrs"
+                                        :hide-details="true"
+                                        class="mb-2"
                                         v-on="on"
                                     ></v-text-field>
                                 </template>
@@ -97,6 +99,8 @@
                                         :disabled="!editing"
                                         v-bind="attrs"
                                         v-on="on"
+                                        :hide-details="true"
+                                        class="mb-2"
                                     ></v-text-field>
                                 </template>
                                 <v-time-picker
@@ -130,6 +134,8 @@
                                         :disabled="!editing"
                                         v-bind="attrs"
                                         v-on="on"
+                                        :hide-details="true"
+                                        class="mb-2"
                                     ></v-text-field>
                                 </template>
                                 <v-time-picker

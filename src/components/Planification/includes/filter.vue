@@ -28,33 +28,11 @@
         <v-list-item class="drawer-list">
           <v-col class="list-list">
             <v-checkbox
-              label="Secteur Nord"
+              v-for="(region, index) in regions" :key="index"
+              :label="region.name"
+              :value="region.id"
+              v-model="selectedRegion"
               color="#005075"
-              value="Secteur Nord"
-              hide-details
-            ></v-checkbox>
-          </v-col>
-          <v-col class="list-list">
-            <v-checkbox
-              label="Secteur Sud"
-              color="#005075"
-              value="Secteur Sud"
-              hide-details
-            ></v-checkbox>
-          </v-col>
-          <v-col class="list-list">
-            <v-checkbox
-              label="Autonome"
-              color="#005075"
-              value="Autonome"
-              hide-details
-            ></v-checkbox>
-          </v-col>
-          <v-col class="list-list">
-            <v-checkbox
-              label="Normandie"
-              color="#005075"
-              value="Normandie"
               hide-details
             ></v-checkbox>
           </v-col>
@@ -69,7 +47,7 @@
             </v-list-item-content>
             <v-checkbox
               color="#005075"
-              value="Secteur Nord"
+              v-model="viewEmployee"
               hide-details
             ></v-checkbox>
           </v-col>
@@ -78,21 +56,39 @@
     </v-navigation-drawer>
 </template>
 <script>
+  import { GetRawRegions } from '@/repositories/region.api'
   export default {
-      props: ['drawer'],
-      data() {
-        return {
-            // drawer: false,
-      };
+    props: ['drawer'],
+    data() {
+      return {
+          // drawer: false,
+          regions: [],
+          selectedRegion:[],
+          viewEmployee:false
+      }
     },
-    methods: {
-        test(payload){
-            if(payload==false){
-                console.log(payload)
-                this.$emit('close')
-            }
+     watch:{
+        'selectedRegion': function(value) {
+            this.$emit('filter', value)
         }
     },
-  };
+    created(){
+      this.initialize()
+    },
+    methods: {
+      initialize(){
+        GetRawRegions().then(({data}) => {
+          this.regions = data
+          console.log(data,'test')
+        })
+      },
+      test(payload){
+        if(payload===false){
+          console.log(payload)
+          this.$emit('close')
+        }
+      }
+    },
+  }
 </script>
 

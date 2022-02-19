@@ -30,6 +30,8 @@
                                 solo
                                 rows="1"
                                 auto-grow
+                                class="mb-1"
+                                :hide-details="true"
                                 v-model="rtt.comment"
                                 row-height="100"
                                 prepend-inner-icon="mdi-note-edit-outline"
@@ -151,7 +153,8 @@
                                 v-model="rtt.user_id"
                                 item-text="full_name"
                                 item-value="id"
-                                class="text-capitalize"
+                                :hide-details="true"
+                                class="text-capitalize mb-4"
                             ></v-autocomplete>
                         </v-col>
                         <v-btn 
