@@ -9,7 +9,11 @@ export const GetAllEmployeesSort = () => axios.get(`user/getAllUser`)
 export const DeleteEmployee = (id) => axios.delete(`${resource}/${id}`)
 export const UpdateEmployee = (id, payload) => axios.put(`${resource}/${id}`, payload)
 export const GetEmployeeInfo = (id) => axios.get(`${resource}/get_user/${id}`)
+
+//roles
 export const GetAllRoles = () => axios.get(`/roles`)
 
 export const AddEmployeeConsumableHolidays = (payload) => axios.post(`${resource}/increase_users_holidays`, payload)
 
+// demands
+export const GetUserDemand = (userId) => axios.get(`/demands/${userId}`)
