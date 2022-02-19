@@ -7,16 +7,50 @@
 .login-main .image-container {
     width: 60%!important;
     height: 100%;
-    background-color: red;
+    width: 100%; 
+    position:relative
 }
 
-.login-main .image-container .image-content{
+.login-main .image-container .image-content {
     background-image: url('../images/login-images.jpg');
     background-size: cover;
     background-repeat: round;
     object-fit: cover;
     width: 100%;
     height: 100%;
+}
+
+.login-main .image-container .image-content .content-top {
+    padding: 30px 20px; 
+    color: white;
+}
+
+.login-main .image-container .image-content .content-top h2 {
+    font-weight: 500;
+}
+
+.login-main .image-container .image-content .content-top h4 {
+    font-weight: 400;
+}
+
+.login-main .image-container .image-content .content-mid {
+    position: absolute; 
+    right: 0; 
+    left: 0; 
+    bottom: 41vh; 
+    display:flex; 
+    flex-direction: column; 
+    align-items: center; 
+    color:white;
+}
+
+.login-main .image-container .image-content .content-mid h2 {
+    font-weight: 400;
+}
+
+.login-main .image-container .image-content .content-mid h1 {
+    font-weight: 500;
+    font-size: 50px;
 }
 
 .login-main .login-container {
@@ -27,8 +61,109 @@
     justify-content:center
 }
 
+.login-main .login-container .login-form {
+    width: 65%; 
+    height: 100vh; 
+    position: inherit;
+}
+
+.login-main .login-container .login-form .form_head {
+    display:flex; 
+    justify-content:center; 
+    flex-direction:column; 
+    margin:auto; 
+    align-items:center;
+}
+
+.login-main .login-container .login-form .form_head .head_avatar {
+    padding: 3em;
+    display: flex; 
+    justify-content: center;
+}
+
+.login-main .login-container .login-form .form_head .head_text {
+    display: flex; 
+    justify-content: center; 
+    flex-direction: column; 
+    align-items: center; 
+    width: 95%;
+}
+
+.login-main .login-container .login-form .form_head .head_text h1 {
+    color: #0090d1;
+}
+
+.login-main .login-container .login-form .form_head .head_text h3 {
+    font-weight: 400; 
+    line-height: 1.2; 
+    text-align: center; 
+    color: #c4c4c4;
+}
+
+.login-main .login-container .login-form .form_textfield {
+    position:relative;
+}
+
+.login-main .login-container .login-form div .action_log-btn {
+    letter-spacing: 0.5em; 
+    font-weight: 800;
+}
+
+.login-main .login-container .login-form div .back-btn {
+    border: 4px solid; 
+    letter-spacing: 0.5em; 
+    font-weight: 800;
+}
+
+.login-main .login-container .login-form .form_textfield .login_field label {
+    color: #0090d1;
+}
+
+.login-main .login-container .login-form .form_textfield .resetpassword {
+    position: absolute; 
+    right: 0; 
+    bottom: 15px;
+}
+.login-main .login-container .login-form .form_textfield .resetpassword span {
+    text-transform:initial; 
+    color: #0090d1;
+}
+
+.login-main .login-container .login-form .action_login .action_container {
+    justify-content: center; 
+    align-items:center;
+}
+.login-main .login-container .login-form .action_login .action_container .checkbox {
+    margin-left: 0!important; 
+    color: #0090d1!important;
+}
+.login-main .login-container .login-form .action_login .action_container .btn-forpass span {
+    text-decoration: underline; 
+    text-transform: initial; 
+    color: #757575;
+}
+
+.login-main .login-container .login-form .action_login  .text-center .val-btn {
+    letter-spacing: 0.5em; 
+    font-weight: 800;
+}
+
+.login-main .login-container .login-form .action_login  .text-center .tour-btn {
+    border: 4px solid; 
+    letter-spacing: 0.5em; 
+    font-weight: 800;
+}
 
 .checkbox .v-input--selection-controls__input .v-icon {
     color: primary!important;
 }
 
+.login_field .v-input .v-input__control .v-text-field__details .error--text .v-messages__wrapper .v-messages__message {
+    font-size: 16px!important;
+    padding-top: 3px;
+    height: 20px!important;
+}
+
+.login_field .v-input .v-input__control {
+    height: 100px!important;
+}

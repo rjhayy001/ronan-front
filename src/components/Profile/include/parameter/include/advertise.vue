@@ -12,9 +12,6 @@
                 text 
                 icon
             >
-                <v-icon size="30px" class=" add_padding">
-                    mdi-plus
-                </v-icon>
             </v-btn>
         </div>
         <div style="display:flex; width: 100%; height: 86vh; ">
@@ -86,20 +83,30 @@
                                 </span>
                             </div>
                             <div style="padding-top: 20px">
-                                <v-btn large style="text-transform: none; width: 100%; background-color:#e0e0e0!important">
+                                <v-btn large
+                                    :loading="isSelecting" 
+                                    @click="handleFileImport"
+                                    style="text-transform: none; width: 100%; background-color:#e0e0e0!important">
                                     Choisissez l'image
                                 </v-btn>
+                                <input 
+                                    ref="uploader" 
+                                    class="d-none" 
+                                    type="file" 
+                                    @change="onFileChanged"
+                                />
                             </div>
-                            <div style="height:100%; padding: 10px 0">
+                            <div>
                                 <div style="min-height: 38vh">
+                                    <v-img :src="selectedFile" contain>
 
+                                    </v-img>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                     <div style="position:relative; height: 100%; width: 100%; display:flex; justify-content: center">
-                        <v-btn large style=" width: 95%; position: absolute; bottom: -2.5vh;" color="primary" dark >
+                        <v-btn large style=" width: 95%; position: absolute; bottom: 6vh;" color="primary" dark >
                             Publier
                         </v-btn>
                     </div>
@@ -120,7 +127,7 @@
                                 </v-avatar>
                             </div>
                             <div  style="line-height: 1.2;margin: auto 0 auto 10px">
-                                <h4 style="font-weight: 400">
+                                <h4 style="font-weight: 700">
                                     {{employee.full_name}}
                                 </h4>
                                 <h5 style="justify-content: initial; display: flex; font-weight: 400">
@@ -140,6 +147,7 @@ import { GetAllEmployeesSort } from "@/repositories/employee.api";
 export default {
     data(){
         return{
+            imageData: null,
             EmptyMessages: true,
             Messages: [],
             employees:[],
@@ -147,6 +155,8 @@ export default {
             selects: [
                 'Basse', 'Moyenne', 'Haute' 
             ],
+            isSelecting: false,
+            selectedFile: null
         }
     },created(){
         this.initialize()
@@ -183,7 +193,40 @@ export default {
             }else {
                 this.EmptyMessages = true
             }
-        }
+        },
+        handleFileImport() {
+                this.isSelecting = true;
+
+                // After obtaining the focus when closing the FilePicker, return the button state to normal
+                window.addEventListener('focus', () => {
+                    this.isSelecting = false
+                }, { once: true });
+                
+                // Trigger click on the FileInput
+                this.$refs.uploader.click();
+            },
+            onFileChanged(e) {
+                const file = e.target.files[0];
+                this.selectedFile = URL.createObjectURL(file)
+                // Do whatever you need with the file, liek reading it with FileReader
+            },
     }
 }
 </script>
+
+<style scoped>
+#app {
+  padding: 20px;
+}
+
+#preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#preview img {
+  max-width: 100%;
+  max-height: 500px;
+}
+</style>

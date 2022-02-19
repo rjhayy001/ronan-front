@@ -16,6 +16,7 @@
                         <div 
                             v-if="name" 
                             class="if_true"
+                            ref="form"
                         >
                             <div>
                                 <h4 class="text">
@@ -27,6 +28,7 @@
                                     Prénom
                                 </h4>
                                 <v-text-field 
+                                    :rules="generalRules.firstName"
                                     class="text_field_margin" 
                                     outlined 
                                     dense 
@@ -39,6 +41,7 @@
                                     Nom de famille
                                 </h4>
                                 <v-text-field 
+                                    :rules="generalRules.lastName"
                                     class="text_field_margin" 
                                     outlined 
                                     dense 
@@ -497,6 +500,7 @@ export default {
     },
     created(){
         this.initialize()
+        console.log("user", this.updated_user)
     }
 }
 </script>
