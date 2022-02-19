@@ -79,20 +79,23 @@
 </template>
 <script>
   export default {
-      props: ['drawer'],
-      data() {
-        return {
-            // drawer: false,
-      };
+    props: ['drawer'],
+    data() {
+      return {
+          // drawer: false,
+      }
+    },
+    created(){
+      alert('sad')
     },
     methods: {
-        test(payload){
-            if(payload==false){
-                console.log(payload)
-                this.$emit('close')
-            }
+      test(payload){
+        if(payload===false){
+          console.log(payload)
+          this.$emit('close')
         }
+      }
     },
-  };
+  }
 </script>
 
