@@ -50,6 +50,8 @@
                                 v-bind="attrs"
                                 :disabled="!editing"
                                 v-on="on"
+                                :hide-details="true"
+                                class="mb-2"
                             ></v-text-field>
                             </template>
                             <v-date-picker
@@ -96,6 +98,8 @@
                                     :disabled="!editing"
                                     v-bind="attrs"
                                     v-on="on"
+                                    :hide-details="true"
+                                    class="mb-2"
                                 ></v-text-field>
                                 </template>
                                 <v-date-picker

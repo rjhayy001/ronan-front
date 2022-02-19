@@ -176,7 +176,7 @@
                     </div>
                   </template>
                 </template>
-                <!-- for holidays -->
+                <!-- for employee holidays -->
                 <template v-if="user.holidays && date.text !='Sun'">
                   <template v-for="(holiday, holi_index) in user.holidays">
                     <div 
@@ -206,6 +206,19 @@
                     </div>
                   </template>
                 </template>
+                <!-- for national holidays -->
+                <template v-for="(nat_holiday, nat_index) in national_holidays">
+                    <div 
+                      v-if="$isSameDate(
+                        nat_holiday.date,
+                        date.date
+                      )" 
+                      :key="nat_index + 'nat_holiday'" 
+                      :class="['nat-holiday','pointer']"
+                    >
+                      <p class="date-hidden" >.</p>
+                    </div>
+                  </template>
               </div>
             </div>
           </template>
@@ -213,7 +226,12 @@
       </div>
     </div>
     <table-loader v-else></table-loader>
-    <filter-planning :drawer="drawer" @close="drawer = false"/>
+    <!-- filter -->
+    <filter-planning 
+      @filter="filter"
+      :drawer="drawer" 
+      @close="drawer = false"
+    />
     <!-- plan or work -->
     <create-plan 
       v-if="dialog2" 
@@ -245,6 +263,7 @@
   </div>
 </template>
 <script>
+import { GetAllHolidays } from "@/repositories/holidays.api"
 import filterPlanning from './includes/filter.vue';
 import menuButton from './includes/menu.vue';
 import createPlan from './create.vue';
@@ -302,6 +321,7 @@ import editHoliday from './includes/holiday/editHoliday.vue'
           selects: [
             'Jours', 'Semaine', 'Mois' 
           ],
+          national_holidays: []
       };
     },
     mounted() {
@@ -312,11 +332,18 @@ import editHoliday from './includes/holiday/editHoliday.vue'
       initialize(){
         this.getMonthyear();
         this.getmonthly();
+        this.getNationalHoliday()
         this.getData()
       },
       forceReload(){
         GetAllRegions().then(({data}) => {
           this.regions = data
+        })
+      },
+      getNationalHoliday(){
+        GetAllHolidays().then(({data}) =>{
+          this.national_holidays = data
+          console.log(data,"holidays")
         })
       },
       getData(){
@@ -406,6 +433,26 @@ import editHoliday from './includes/holiday/editHoliday.vue'
       },
       showPendingApplication(){
         this.dialog3=true
+      },
+      filter(filters){
+        if(filters.length){
+          let storage =[]
+          GetAllRegions().then(({data}) => {
+            data.forEach(dat => {
+              filters.forEach(filter => {
+                if(filter === dat.id){
+                  storage.push(dat)
+                }
+              })
+            })
+            console.log(storage, 'storage')
+            this.regions = storage
+          })
+        }
+        else{
+          this.forceReload()
+          console.log('else')
+        }
       }
     },
   };
