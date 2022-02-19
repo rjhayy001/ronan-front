@@ -12,7 +12,7 @@
                 text 
                 icon
             >
-                <v-icon size="30px" class=" ">
+                <v-icon size="30px">
                     mdi-plus
                 </v-icon>
             </v-btn>
