@@ -17,98 +17,108 @@
                         v-if="email" 
                         class="if_true"
                     >
-                        <div class="security_connection">
-                            <v-icon color="yellow" class="icon-alert">
-                                mdi-alert
-                            </v-icon>
-                            <div>
-                                <h4 class="text">
-                                    Vous allez maintenant changer votre email.
-                                </h4>
-                                <h4 class="text text_color">
-                                    Vous ne perdrez aucune donnée lors de 
-                                    la modification de votre e-mail. 
-                                    L'action ne peut pas être annulée
-                                </h4>
-                            </div>
-                        </div>
-                        <div v-if="code">
-                            <div class="vertical_center">
-                                <h4 class="label">
-                                    Code de confirmation
-                                </h4>
-                                <v-text-field 
-                                    label="Code de confirmation"
-                                    placeholder="Code de confirmation"
-                                    outlined
-                                    class="text_field_margin" 
-                                    dense 
-                                    height="20px!important"
-                                ></v-text-field>
-                            </div>
-                            <div class="button button-code">
-                                <v-btn 
-                                    @click="email=false"
-                                    :ripple="false" 
-                                    outlined 
-                                    color="#bdbdbd"
-                                >
-                                    <h5 class="txt">
-                                        Annuler
-                                    </h5>
-                                </v-btn>
-                                <v-btn 
-                                    class="btn" 
-                                    color="white!important"
-                                >
-                                    <h5 class="txt">
-                                        Sauvegarder les modifications
-                                    </h5>
-                                </v-btn>
-                            </div>
-                        </div>
-                        <div v-else>
-                            <div class="vertical_center">
-                                <h4 class="label">
-                                    Nouveau Courriel
-                                </h4>
-                                <v-text-field 
-                                    label="Nouveau Courriel"
-                                    placeholder="Nouveau Courriel"
-                                    outlined
-                                    class="text_field_margin" 
-                                    dense 
-                                    height="20px!important"
-                                ></v-text-field>
-                            </div>
-                            <div class="button_container">
-                                <v-btn class="btn-btn" outlined text solo @click="code=true">
-                                    <h5 class="txt text-text">
-                                        Vous avez déjà le code ?
-                                    </h5>
-                                </v-btn>
-                            </div>
-                            <div class="button button-code">
-                                <v-btn 
-                                    @click="email=false" 
-                                    :ripple="false" 
-                                    outlined 
-                                    color="#bdbdbd"
-                                >
-                                    <h5 class="txt">
-                                        Annuler
-                                    </h5>
-                                </v-btn>
-                                <v-btn 
-                                    class="btn" 
-                                    color="white!important"
-                                >
-                                    <h5 class="txt">
-                                        Sauvegarder les modifications
-                                    </h5>
-                                </v-btn>
-                            </div>
-                        </div>
+                        <v-card flat>
+                            <v-form  
+                                ref="form"
+                                lazy-validation
+                                style="background:#eeeeee"
+                            >
+                                <div class="security_connection">
+                                    <v-icon color="yellow" class="icon-alert">
+                                        mdi-alert
+                                    </v-icon>
+                                    <div>
+                                        <h4 class="text">
+                                            Vous allez maintenant changer votre email.
+                                        </h4>
+                                        <h4 class="text text_color">
+                                            Vous ne perdrez aucune donnée lors de 
+                                            la modification de votre e-mail. 
+                                            L'action ne peut pas être annulée
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div v-if="code">
+                                    <div class="vertical_center">
+                                        <h4 class="label">
+                                            Code de confirmation
+                                        </h4>
+                                        <v-text-field 
+                                            :rules="security_connection.change_email.code_confirmation"
+                                            label="Code de confirmation"
+                                            placeholder="Code de confirmation"
+                                            outlined
+                                            class="text_field_margin" 
+                                            dense 
+                                            height="20px!important"
+                                        ></v-text-field>
+                                    </div>
+                                    <div class="button button-code">
+                                        <v-btn 
+                                            @click="email=false"
+                                            :ripple="false" 
+                                            outlined 
+                                            color="#bdbdbd"
+                                        >
+                                            <h5 class="txt">
+                                                Annuler
+                                            </h5>
+                                        </v-btn>
+                                        <v-btn 
+                                            class="btn" 
+                                            color="white!important"
+                                        >
+                                            <h5 class="txt">
+                                                Sauvegarder les modifications
+                                            </h5>
+                                        </v-btn>
+                                    </div>
+                                </div>
+                                <div v-else>
+                                    <div class="vertical_center">
+                                        <h4 class="label">
+                                            Nouveau Courriel
+                                        </h4>
+                                        <v-text-field
+                                            :rules="security_connection.change_email.new_email"
+                                            label="Nouveau Courriel"
+                                            placeholder="Nouveau Courriel"
+                                            outlined
+                                            class="text_field_margin" 
+                                            dense 
+                                            height="20px!important"
+                                        ></v-text-field>
+                                    </div>
+                                    <div class="button_container">
+                                        <v-btn class="btn-btn" style="position:absolute; top:0px" outlined text solo @click="clickCode()">
+                                            <h5 class="txt text-text">
+                                                Vous avez déjà le code ?
+                                            </h5>
+                                        </v-btn>
+                                    </div>
+                                    <div class="button button-code">
+                                        <v-btn 
+                                            @click="email=false" 
+                                            :ripple="false" 
+                                            outlined 
+                                            color="#bdbdbd"
+                                        >
+                                            <h5 class="txt">
+                                                Annuler
+                                            </h5>
+                                        </v-btn>
+                                        <v-btn 
+                                            class="btn" 
+                                            color="white!important"
+                                        >
+                                            <h5 class="txt">
+                                                Sauvegarder les modifications
+                                            </h5>
+                                        </v-btn>
+                                    </div>
+                                </div>
+                            </v-form>
+                        </v-card>
                     </div>
                     <div 
                         v-else
@@ -168,10 +178,10 @@
                                 Ancien mot de passe
                             </h4>
                             <v-text-field 
+                                :rules="security_connection.old_password"
                                 :append-icon="old_password ? 'mdi-eye' : 'mdi-eye-off'"
                                 @click:append="old_password = !old_password"
                                 :type="old_password ? 'text' : 'password'"
-                                :rules="[rules.required]"
                                 label="Ancien mot de passe"
                                 placeholder="Ancien mot de passe"
                                 class="text_field_margin" 
@@ -185,10 +195,10 @@
                                 Nouveau mot de passe
                             </h4>
                             <v-text-field
+                                :rules="security_connection.new_password"
                                 :append-icon="new_password ? 'mdi-eye' : 'mdi-eye-off'"
                                 @click:append="new_password = !new_password"
                                 :type="new_password ? 'text' : 'password'"
-                                :rules="[rules.required]"
                                 label="Nouveau mot de passe"
                                 placeholder="Nouveau mot de passe"
                                 class="text_field_margin" 
@@ -202,10 +212,10 @@
                                 Confirmation du nouveau mot de passe
                             </h4>
                             <v-text-field
+                                :rules="security_connection.confirm_password"
                                 :append-icon="confirm_new_password ? 'mdi-eye' : 'mdi-eye-off'"
                                 @click:append="confirm_new_password = !confirm_new_password"
                                 :type="confirm_new_password ? 'text' : 'password'" 
-                                :rules="[rules.required]"
                                 label="Confirmation du nouveau mot de passe"
                                 placeholder="Confirmation du nouveau mot de passe"
                                 class="text_field_margin" 
@@ -311,6 +321,7 @@
                                     Ancienne clé d'administrateur
                                 </h4>
                                 <v-text-field 
+                                    :rules="security_connection.old_administrator_key"
                                     label="Ancienne clé d'administrateur"
                                     placeholder="Ancienne clé d'administrateur"
                                     class="text_field_margin"
@@ -324,6 +335,7 @@
                                     Nouvelle clé administrateur
                                 </h4>
                                 <v-text-field
+                                    :rules="security_connection.new_administrator_key"
                                     label="Nouvelle clé administrateur"
                                     placeholder="Nouvelle clé administrateur"
                                     class="text_field_margin" 
@@ -379,7 +391,10 @@ export default {
         }
     },
     methods: {
-
+        clickCode() {
+            this.$refs.form.reset()
+            this.code = true;
+        }
     }
 }
 </script>

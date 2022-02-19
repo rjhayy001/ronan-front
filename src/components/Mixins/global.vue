@@ -36,6 +36,36 @@ export default {
                     ]
                 }
             },
+            security_connection: {
+                change_email: {
+                    new_email: [
+                        v => !!v || "Nouveau courriel requis",
+                        v => /.+@.+\..+/.test(v) || "L'e-mail doit être valide",
+                    ],
+                    code_confirmation: [
+                        v => !!v || "Code de confirmation requis",
+                        v=> {
+                            const pattern = /^\d+$/;
+                            return pattern.test(v) || 'Chiffres uniquement'
+                        }
+                    ]
+                },
+                old_password: [
+                    v => !!v || "Ancien mot de passe requis",
+                ],
+                new_password: [
+                    v => !!v || "Nouveau mot de passe requis",
+                ],
+                confirm_password: [
+                    v => !!v || "Confirmation du nouveau mot de passe requis",
+                ],
+                old_administrator_key: [
+                    v => !!v || "Ancienne clé d'administrateur requise",
+                ],
+                new_administrator_key: [
+                    v => !!v || "Nouvelle clé d'administrateur requise",
+                ]
+            },
             loginRules: {
                 email: [
                     v => !!v || "L'e-mail est nécessaire",

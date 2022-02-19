@@ -126,7 +126,7 @@
                                 Numéro de contact actuel
                             </h4>
                         </div>
-                        <div class="vertical_center">
+                        <div class="vertical_center" style="height: 4vh!important;">
                             <h4 class="label label_padding">
                                 <strong>
                                     {{user.mobile}}
@@ -213,7 +213,7 @@
                                 Adresse postale actuelle
                             </h4>
                         </div>
-                        <div class="vertical_center">
+                        <div class="vertical_center" style="height: 4vh!important;">
                             <h4 class="padding_top label_padding">
                                 {{user.address}}
                             </h4>
@@ -329,7 +329,7 @@
                                 {{$DateWithMonthTextfr(user.birth_date)}}
                             </h4>
                         </div>
-                        <div class="vertical_center date_width">
+                        <div class="vertical_center date_width" style="height: 4vh!important;">
                             <v-menu
                                 ref="start_date"
                                 v-model="start_menu"
