@@ -7,6 +7,8 @@ import store from './store'
 import axios from '@/plugins/axios'
 import tableLoader from '@/components/Loader/tableLoader'
 import global_mixin from '@/components/Mixins/global';
+import image_mixin from '@/components/Mixins/images';
+import rules_mixin from '@/components/Mixins/rules';
 import styling_mixin from '@/components/Mixins/styling';
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
@@ -32,6 +34,8 @@ Vue.component('app-success', require('@/components/Alert/success.vue').default)
 
 Vue.mixin(global_mixin)
 Vue.mixin(styling_mixin)
+Vue.mixin(image_mixin)
+Vue.mixin(rules_mixin)
 
 new Vue({
   vuetify,
