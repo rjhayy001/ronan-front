@@ -32,6 +32,8 @@
                                 dense
                                 v-model="holiday.request_name"
                                 solo
+                                :hide-details="true"
+                                class="mb-1"
                                 prepend-inner-icon="mdi-pencil-outline"
                             ></v-text-field>
                         </v-col>
@@ -46,9 +48,11 @@
                                 v-model="holiday.reason"
                                 row-height="100"
                                 prepend-inner-icon="mdi-note-edit-outline"
+                                :hide-details="true"
+                                class="mb-1"
                             ></v-textarea>
                         </v-col>
-                        <v-col cols="8" class="pb-1">
+                        <v-col cols="8" class="py-2">
                             <v-menu
                                 ref="start_date"
                                 v-model="start_menu"
@@ -87,18 +91,19 @@
                                 </v-date-picker>
                             </v-menu>
                         </v-col>
-                        <v-col cols="4" class="pb-1">
+                        <v-col cols="4" class="py-2">
                             <v-select
                                 dense
                                 :items="items"
                                 solo
+                                :hide-details="true"
                                 v-model="holiday.startDate_isHalf_day"
                                 item-text="text"
                                 item-value="value"
                                 class="text-capitalize"
                             ></v-select>
                         </v-col>
-                          <v-col cols="8" class="pt-0">
+                          <v-col cols="8" class="py-0">
                             <v-menu
                                 ref="end_date"
                                 v-model="end_menu"
@@ -138,7 +143,7 @@
                                 </v-date-picker>
                             </v-menu>
                         </v-col>
-                        <v-col cols="4" class="pt-0">
+                        <v-col cols="4" class="py-0">
                             <v-select
                                 dense
                                 :items="items"
@@ -146,10 +151,11 @@
                                 v-model="holiday.endDate_isHalf_day"
                                 item-text="text"
                                 item-value="value"
+                                :hide-details="true"
                                 class="text-capitalize"
                             ></v-select>
                         </v-col>
-                        <v-col cols="12">
+                        <v-col cols="12" class="mt-2">
                             <v-autocomplete
                                 dense
                                 :items="employees"
@@ -157,7 +163,8 @@
                                 v-model="holiday.user_id"
                                 item-text="full_name"
                                 item-value="id"
-                                class="text-capitalize"
+                                class="text-capitalize "
+                                :hide-details="true"
                             ></v-autocomplete>
                         </v-col>
                         <v-col v-if="error" style="position: absolute; bottom: 4em;     width: 20em;">

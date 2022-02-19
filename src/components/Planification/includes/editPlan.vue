@@ -61,6 +61,8 @@
                                 prepend-inner-icon="mdi-calendar"
                                 readonly
                                 v-bind="attrs"
+                                :hide-details="true"
+                                class="mb-2"
                                 :disabled="!editing"
                                 v-on="on"
                             ></v-text-field>
@@ -109,6 +111,8 @@
                                 :disabled="!editing"
                                 v-bind="attrs"
                                 v-on="on"
+                                :hide-details="true"
+                                class="mb-2"
                             ></v-text-field>
                             </template>
                             <v-date-picker

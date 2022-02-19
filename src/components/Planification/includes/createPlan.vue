@@ -62,6 +62,8 @@
                                 readonly
                                 v-bind="attrs"
                                 v-on="on"
+                                :hide-details="true"
+                                class="mb-2"
                             ></v-text-field>
                             </template>
                             <v-date-picker
@@ -97,7 +99,8 @@
                              v-model="payload.start_date_Type"
                             item-text="text"
                             item-value="value"
-                            class="text-capitalize"
+                            :hide-details="true"
+                            class="text-capitalize mb-2"
                         ></v-select>
                     </div>
                      <div>
@@ -119,6 +122,8 @@
                                 prepend-inner-icon="mdi-calendar"
                                 readonly
                                 v-bind="attrs"
+                                :hide-details="true"
+                                class="mb-2"
                                 v-on="on"
                             ></v-text-field>
                             </template>
@@ -152,6 +157,7 @@
                             dense
                             :items="items"
                             label="Roles"
+                            :hide-details="true"
                             solo
                             v-model="payload.end_Date_Type"
                             item-text="text"
