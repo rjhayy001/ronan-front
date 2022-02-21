@@ -102,6 +102,7 @@ export default {
         // $DateWithMonthText(date){
         //     return moment(date).format('DD MMMM YYYY');
         // },
+
         $DateWithMonthTextfr(date){
             return moment(date).locale('fr').format('DD MMMM YYYY');
         },

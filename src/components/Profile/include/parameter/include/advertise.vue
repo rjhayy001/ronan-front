@@ -15,8 +15,8 @@
             </v-btn>
         </div>
         <div style="display:flex; width: 100%; height: 86vh; ">
-            <div style="color:black; width: 80%; height: 60px;">
-                <div style="height: 85vh; position:relative; width: 100%">
+            <v-card style="color:black; width: 80%; height: 100%;">
+                <v-form ref="form" style="height: 85vh; position:relative; width: 100%">
                     <div class="data-scroll">
                         <div style="width: 95%; justify-content: center; margin:auto">
                             <div v-if="EmptyMessages">
@@ -50,6 +50,7 @@
                             <div style="width: 100%; height: 100%">
                                 <div class="advertise_field" style="padding-bottom: 10px">
                                     <v-text-field 
+                                        :rules="advertiseRules.title_ad"
                                         outlined 
                                         prepend-inner-icon="mdi-alpha-t"
                                         label="Titre de l'annonce *"
@@ -59,6 +60,7 @@
                                 </div>
                                 <div class="advertise_field text_box" style="padding-bottom: 10px">
                                     <v-text-field 
+                                        :rules="advertiseRules.content_ad"
                                         outlined 
                                         v-model="data.message"
                                         prepend-inner-icon="mdi-text-box-multiple-outline"
@@ -118,8 +120,8 @@
                             Publier
                         </v-btn>
                     </div>
-                </div>
-            </div>
+                </v-form>
+            </v-card>
             <div style="width: 20%; color: black;  background-color:#e0e0e0; ">
                 <div  style="padding-bottom: 5px">
                     <h2 class="title_head" style=" padding-left: 15px">
@@ -215,6 +217,7 @@ export default {
                 this.Messages.push(employee);           
             }else{
                 this.Messages.splice(this.Messages.indexOf(employee), 1);  
+                this.reset()
             }
             console.log(this.Messages,"Message");
             this.showHide()
@@ -252,23 +255,41 @@ export default {
             this.Messages.forEach(employee => {
                 ids.push(employee.id)
             })
-
             return ids
         },
         save(){
-            let payload = {
-                type: this.data.type.value,
-                title: this.data.title,
-                message: this.data.message,
-                image: this.data.image,
-                sender_id: this.$store.getters['user'].id,
-                reciever_id: this.extractId(),
+            if(this.data.title != '' || this.data.message != '') {
+                let payload = {
+                    type: this.data.type.value,
+                    title: this.data.title,
+                    message: this.data.message,
+                    image: this.data.image,
+                    sender_id: this.$store.getters['user'].id,
+                    reciever_id: this.extractId(),
+                }
+
+                CreateNotice(payload).then(() => {
+                    this.$toast.success('announce published')
+                    this.reset()
+                })
+            }else{
+                this.$toast.error('Do not leave Empty Field')
             }
-
-            CreateNotice(payload).then(() => {
-                this.$toast.success('announce published')
-            })
-
+        },
+        reset() {
+            this.$refs.form.resetValidation();
+            this.data.title=''
+            this.data.message=''
+            this.selectedFile=''
+            this.data.image=''
+            this.Messages=''
+            this.data.type = {
+                value: 0,
+                title: "Basse",
+                description:
+                    "Ceci est un avis de base, pas d'interruptions et pas de données à voir"
+            },
+            this.showHide()
         }
     }
 }

@@ -49,7 +49,7 @@
                         ></v-text-field>
                     </div>
                     <div class="resetpassword">
-                        <v-btn @click="toPasswordreset()" height="100%!important" flat text>
+                        <v-btn class="btn-reset" @click="toPasswordreset()" height="100%!important" flat text>
                             <span>
                                 Vous avez déjà le code ?
                             </span>
@@ -57,12 +57,12 @@
                     </div>
                 </div>
                 <div class="action_login">
-                    <div class="mt-10 text-center">
+                    <div class="mt-5 text-center">
                         <v-btn class="val-btn" width="100%" rounded color="primary" dark x-large>
                             Valider
                         </v-btn>
                     </div>
-                    <div class="mt-10 text-center">
+                    <div class="mt-5 text-center">
                         <v-btn class="tour-btn" @click="toLogin" outlined width="100%" rounded color="primary" dark x-large>
                             retour
                         </v-btn>

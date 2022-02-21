@@ -51,12 +51,12 @@
                     </div>
                 </div>
                 <div class="action_login">
-                    <div class="mt-10 text-center">
+                    <div class="mt-5 text-center">
                         <v-btn class="action_log-btn" width="100%" rounded color="primary" dark x-large>
                             Valider
                         </v-btn>
                     </div>
-                    <div class="mt-10 text-center">
+                    <div class="mt-5 text-center">
                         <v-btn class="back_btn" @click="forgotpassword()" outlined width="100%" rounded color="primary" dark x-large>
                             retour
                         </v-btn>

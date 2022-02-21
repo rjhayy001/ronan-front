@@ -18,10 +18,12 @@
                         >
                             <v-text-field
                                 placeholder="Nom"
+                                label="Nom"
+                                :rules="centre.name"
                                 dense
                                 v-model="center.name"
-                                solo
                                 prepend-inner-icon="mdi-rename-box"
+                                outlined
                             ></v-text-field>
                         </v-col>
                         <v-col
@@ -30,10 +32,11 @@
                             <v-text-field
                                 label="Rue"
                                 placeholder="Rue"
+                                :rules="centre.street"
                                 dense
                                 v-model="center.address"
-                                solo
                                 prepend-inner-icon="mdi-google-street-view"
+                                outlined
                             ></v-text-field>
                         </v-col>
                         <v-col
@@ -42,10 +45,11 @@
                             <v-text-field
                                 label="Ville"
                                 placeholder="Ville"
+                                :rules="centre.city"
                                 v-model="center.city"
                                 dense
-                                solo
                                 prepend-inner-icon="mdi-city"
+                                outlined
                             ></v-text-field>
                         </v-col>
                         <v-col
@@ -53,11 +57,12 @@
                         >
                             <v-text-field
                                 label="Code postal"
-                                v-model="center.zip_code"
                                 placeholder="Code postal"
-                                solo
+                                :rules="centre.code_postal"
+                                v-model="center.zip_code"
                                 dense
                                 prepend-inner-icon="mdi-email-outline"
+                                outlined
                             ></v-text-field>
                         </v-col>
                         <div class="dialog-title my-2">
@@ -69,12 +74,13 @@
                             cols="12"
                         >
                             <v-text-field
-                                v-model="center.mobile"
                                 label="Numéro de contact"
                                 placeholder="Numéro de contact"
-                                solo
+                                :rules="centre.number"
+                                v-model="center.mobile"
                                 dense
                                 prepend-inner-icon="mdi-phone-outline"
+                                outlined
                             ></v-text-field>
                         </v-col>
                         <div class="dialog-title my-2">
