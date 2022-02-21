@@ -1,13 +1,14 @@
 <template>
     <v-navigation-drawer
       v-model="drawer"
-      absolute
       temporary
+      fixed
       right
       width="300px"
       height="120vh"
       @input="test($event)"
       class="right-drawer"
+      style="margin-top: 70px"
     >
       <v-list-item>
         <v-list-item-content>
@@ -39,7 +40,7 @@
         </v-list-item>
       </v-list>
       <v-divider></v-divider>
-      <v-list dense>
+      <!-- <v-list dense>
         <v-list-item class="drawer-list">
           <v-col class="list-list list1">
             <v-list-item-content>
@@ -52,7 +53,7 @@
             ></v-checkbox>
           </v-col>
         </v-list-item>
-      </v-list>
+      </v-list> -->
     </v-navigation-drawer>
 </template>
 <script>
