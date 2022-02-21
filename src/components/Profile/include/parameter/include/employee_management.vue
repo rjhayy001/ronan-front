@@ -71,7 +71,7 @@
                     ref="form"
                     lazy-validation
                 >
-                    <v-container>
+                    <v-container class="dialog_gestion">
                         <div class="d-flex">
                             <div class="mr-5">
                                 <v-avatar max-width="none" height="65px" width="65px">
@@ -92,7 +92,8 @@
                                 cols="12"
                             >
                                 <v-text-field
-                                outlined
+                                style="width: 100%"
+                                    outlined
                                     label="Clé"
                                     placeholder="Clé"
                                     prepend-inner-icon="mdi-key-outline"
@@ -101,7 +102,7 @@
                         </div>
                     </v-container>
                 </v-form>
-                <v-card-actions  class="d-flex" style="padding:10px 10px 20px 10px;margin: auto;width: 90%">
+                <v-card-actions>
                     <v-btn @click="verification=false" large style="width: 48%">
                         ANNULER
                     </v-btn>
