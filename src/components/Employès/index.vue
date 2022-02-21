@@ -77,7 +77,7 @@ export default {
         initialize(){
             this.loading = true
             GetAllEmployees().then(({data}) => {
-                console.log(data)
+                // console.log(data)
                 this.employees = data
                 this.loading = false
             })
