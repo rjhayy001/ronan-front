@@ -1,13 +1,13 @@
 <template>
     <v-dialog v-model="dialog" width="700" persistent>
-        <center-form @close="close" @success="$emit('success')"></center-form>
+        <edit-form @close="close" @success="$emit('success')"></edit-form>
     </v-dialog>
 </template>
 <script>
-import centerForm from './includes/form.vue'
+import editForm from './includes/formEdit.vue'
 export default {
     components: {
-        centerForm
+        editForm
     },
     props:{
         dialog: {

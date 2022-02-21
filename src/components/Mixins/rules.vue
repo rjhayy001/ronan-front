@@ -63,8 +63,15 @@ export default {
                 name: [
                     v => !!v || 'Le nom est requis',
                 ],
+                email: [
+                    v => !!v || "L'e-mail est nécessaire",
+                    v => /.+@.+\..+/.test(v) || "L'e-mail doit être valide",
+                ],
                 street: [
                     v => !!v || 'Le rue est requis',
+                ],
+                address: [
+                    v => !!v || "L'adresse est requise",
                 ],
                 city: [
                     v => !!v || 'Le ville est requis',
