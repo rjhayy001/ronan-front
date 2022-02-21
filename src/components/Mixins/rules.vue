@@ -20,7 +20,7 @@ export default {
                    v => !!v || 'Le nom est requis', 
                 ],
                 lastName: [
-                   v => !!v || 'Le dernier est requis', 
+                    v => !!v || 'Le dernier est requis', 
                 ],
                 contact: {
                     required: [
@@ -34,6 +34,14 @@ export default {
                         v => v.length >= 8 || 'Min 8 characters',
                     ]
                 }
+            },
+            advertiseRules: {
+                title_ad: [
+                    v => !!v || "Titre de l'annonce requis", 
+                ],
+                content_ad: [
+                    v => !!v || "Contenu de l'annonce requis", 
+                ],
             },
             loginRules: {
                 email: [
@@ -50,6 +58,31 @@ export default {
                         return pattern.test(v) || 'Chiffres uniquement'
                     }
                 ]
+            },
+            centre: {
+                name: [
+                    v => !!v || 'Le nom est requis',
+                ],
+                street: [
+                    v => !!v || 'Le rue est requis',
+                ],
+                city: [
+                    v => !!v || 'Le ville est requis',
+                ],
+                code_postal: [
+                    v => !!v || "Le code postal est nécessaire",
+                    v=> {
+                        const pattern = /^\d+$/;
+                        return pattern.test(v) || 'Chiffres uniquement'
+                    }
+                ],
+                number: [
+                    v => !!v || "Le numéro de contact est nécessaire",
+                    v=> {
+                        const pattern = /^\d+$/;
+                        return pattern.test(v) || 'Chiffres uniquement'
+                    }
+                ],
             }
         }
     },

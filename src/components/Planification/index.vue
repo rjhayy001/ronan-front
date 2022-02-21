@@ -110,6 +110,9 @@
                 <div v-if="$isSameDate(date.date,currentDay)" class="currentDay">
                   {{ date.number }}
                 </div>
+                <div v-else-if="$isHoliday(date.date)" class="holiday">
+                  {{ date.number }}
+                </div>
                 <div v-else :class="[date.text=='Sun' ? 'sunday': '']">
                   {{ date.number }}
                 </div>
@@ -125,6 +128,9 @@
               <div id="data" v-if="$isSameDate(date.date,currentDay)" class="currentDay">
                 <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
               </div>
+              <div v-else-if="$isHoliday(date.date)" class="holiday">
+                <p class="date-hidden">.</p>
+              </div>
               <div id="data" v-else-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
                 <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
               </div>
@@ -139,7 +145,10 @@
                 <div id="data"  v-if="$isSameDate(date.date,currentDay)" class="currentDay">
                   <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                 </div>
-                <div id="data"  v-else-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
+                <div v-else-if="$isHoliday(date.date)" class="holiday">
+                  <p class="date-hidden">.</p>
+                </div>
+                <div id="data"  v-else-if="date.text=='Sun'" style="background-color:rgb(97 97 97); z-index: 5">
                   <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                 </div>
               </div>
@@ -433,6 +442,16 @@ import editHoliday from './includes/holiday/editHoliday.vue'
       },
       showPendingApplication(){
         this.dialog3=true
+      },
+      $isHoliday(date){
+        let flag = false
+        this.national_holidays.forEach(hol => {
+          console.log(this.$isSameDate(hol.date,date), 'date')
+          if(this.$isSameDate(hol.date,date)){
+            flag = true
+          }
+        })
+        return flag
       },
       filter(filters){
         if(filters.length){

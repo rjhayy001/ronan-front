@@ -75,7 +75,7 @@
                         <div class="d-flex">
                             <div class="mr-5">
                                 <v-avatar max-width="none" height="65px" width="65px">
-                                    <img src="@/assets/images/logo-securauto-150.png" alt="">
+                                    <img src="@/assets/images/verification_1.png" alt=""/>
                                 </v-avatar>
                             </div>
                             <div style="line-height: 1.2; margin: auto 0;">
