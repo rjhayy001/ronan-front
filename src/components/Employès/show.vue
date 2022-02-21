@@ -101,7 +101,7 @@
                 <v-divider></v-divider>
                 <v-btn
                     text
-                    @click="addWork(data, data.centers[0])"
+                    @click="addWork()"
                 >
                     <v-icon>mdi-plus</v-icon>Ajouter Planification 
                 </v-btn>
@@ -332,19 +332,16 @@ export default {
             })
             
         },
-        addWork(employee, center){
+        addWork(){
             var monthDate = moment(moment(this.year+'-'+this.month_digit), 'YYYY-MM'); 
             var daysInMonth = monthDate.daysInMonth() ;
             var current = moment(this.month).date(daysInMonth)
             var date = current.format('YYYY-MM-DD')
-            console.log(employee)
-            console.log(center)
             this.create_data = {
                 center:this.data.centers[0],
                 employee:this.data,
                 date:date
             }
-            console.log(this.create_data, "here")
             this.$nextTick(function () {
                 this.dialog2 = true
             })
