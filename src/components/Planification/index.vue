@@ -352,7 +352,6 @@ import editHoliday from './includes/holiday/editHoliday.vue'
       getNationalHoliday(){
         GetAllHolidays().then(({data}) =>{
           this.national_holidays = data
-          console.log(data,"holidays")
         })
       },
       getData(){
@@ -399,7 +398,6 @@ import editHoliday from './includes/holiday/editHoliday.vue'
         this.date = arrDays.reverse();
       },
       editWork(employee, center, planning) {
-        console.log(employee, center, planning)
         this.edit_data = {
           employee: employee,
           center: center,
@@ -446,7 +444,6 @@ import editHoliday from './includes/holiday/editHoliday.vue'
       $isHoliday(date){
         let flag = false
         this.national_holidays.forEach(hol => {
-          console.log(this.$isSameDate(hol.date,date), 'date')
           if(this.$isSameDate(hol.date,date)){
             flag = true
           }
@@ -455,6 +452,7 @@ import editHoliday from './includes/holiday/editHoliday.vue'
       },
       filter(filters){
         if(filters.length){
+          this.loading = true
           let storage =[]
           GetAllRegions().then(({data}) => {
             data.forEach(dat => {
@@ -464,13 +462,12 @@ import editHoliday from './includes/holiday/editHoliday.vue'
                 }
               })
             })
-            console.log(storage, 'storage')
+            this.loading = false
             this.regions = storage
           })
         }
         else{
-          this.forceReload()
-          console.log('else')
+          this.initialize()
         }
       }
     },
