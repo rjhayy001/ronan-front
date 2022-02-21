@@ -1,13 +1,14 @@
 <template>
     <v-navigation-drawer
       v-model="drawer"
-      absolute
       temporary
+      fixed
       right
       width="300px"
       height="120vh"
       @input="test($event)"
       class="right-drawer"
+      style="margin-top: 70px"
     >
       <v-list-item>
         <v-list-item-content>
