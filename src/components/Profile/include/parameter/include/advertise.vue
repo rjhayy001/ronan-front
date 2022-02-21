@@ -15,8 +15,11 @@
             </v-btn>
         </div>
         <div style="display:flex; width: 100%; height: 86vh; ">
-            <v-card style="color:black; width: 80%; height: 100%;">
-                <v-form ref="form" style="height: 85vh; position:relative; width: 100%">
+            <v-card  style="color:black; width: 80%; height: 100%;">
+                <template ref="form" v-if="is_loading">
+                    <table-loader></table-loader>
+                </template>
+                <v-form v-else style="height: 85vh; position:relative; width: 100%">
                     <div class="data-scroll">
                         <div style="width: 95%; justify-content: center; margin:auto">
                             <div v-if="EmptyMessages">
@@ -158,6 +161,7 @@ import { CreateNotice } from "@/repositories/notice.api";
 export default {
     data(){
         return{
+            is_loading:false,
             data:{
                 type:{
                     value: 0,
@@ -267,17 +271,19 @@ export default {
                     sender_id: this.$store.getters['user'].id,
                     reciever_id: this.extractId(),
                 }
+                this.is_loading = true
 
                 CreateNotice(payload).then(() => {
                     this.$toast.success('announce published')
+                    this.is_loading = false
                     this.reset()
+                    
                 })
             }else{
                 this.$toast.error('Do not leave Empty Field')
             }
         },
         reset() {
-            this.$refs.form.resetValidation();
             this.data.title=''
             this.data.message=''
             this.selectedFile=''
