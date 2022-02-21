@@ -59,151 +59,170 @@
             width="1000"
           
             >
-             <v-card 
-                      
+            <v-card
             >
-                <v-card-title>
-                    <span class="text-h5">User Profile</span>
+            <v-card>
+                <v-card-title>                   
+                   <span class="mdi mdi-account-plus size" style="font-size: 30px;">Créer un Nouvel Employé</span>
+
                 </v-card-title>
-             <v-col cols="12">
-                <v-text-field
-                  outlined
-                  v-model="employee.first_name"
-                  label="Prenom"
-                  required
-                ></v-text-field>
-              </v-col>
-               <v-col cols="12">
-                <v-text-field
-                  outlined
-                  v-model="employee.last_name"
-                  label="Nom"
-                  required
-                ></v-text-field>
-              </v-col>
-               <v-col cols="12">
-                <v-text-field
-                  outlined
-                  v-model="employee.email"
-                  label="Email*"
-                  required
-                ></v-text-field>
-              </v-col>
-               <v-col cols="12">
-                <v-text-field
-                  outlined
-                  v-model="employee.password"
-                  label="Mot de passe"
-                  required
-                ></v-text-field>
-              </v-col>
-               <v-col cols="12">
-                <v-text-field
-                  outlined
-                  v-model="employee.address"
-                  label="Adresse"
-                  required
-                ></v-text-field>
-              </v-col>
-               <v-col cols="12">
-                <v-text-field
-                  outlined
-                  v-model="employee.city"
-                  label="Ville"
-                  required
-                ></v-text-field>
-              </v-col>
-               <v-col cols="12">
-                <v-text-field
-                v-model="employee.zip_code"
-                  label="Code Postal"
-                  required
-                ></v-text-field>
-              </v-col>
-               <v-col cols="12">
-                <v-text-field
-                  outlined
-                v-model="employee.mobile"
-                  label="Numéro de portable"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                  <v-menu
-        v-model="menu"
-        :close-on-content-click="false"
-        :nudge-right="40"
-        transition="scale-transition"
-        offset-y
-        min-width="auto"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-text-field
-            v-model="employee.birth_date"
-            label="Picker without buttons"
-            prepend-icon="mdi-calendar"
-            readonly
-            v-bind="attrs"
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker
-          v-model="date"
-          @input="menu = false"
-        ></v-date-picker>
-      </v-menu>
-                <!-- <v-menu
-                    v-model="menu"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
-                >
-                    <template v-slot:activator="{ on, attrs }">
+            </v-card>
+            <v-card
+            max-height="500"
+            class="scroll"
+            >
+                <v-col cols="12">
                     <v-text-field
-                        v-model="data.birth_date"
-                        label="Choisir la date de naissance"
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                    ></v-text-field>
-                    </template>
-                    <v-date-picker
-                    v-model="date"
-                    @input="menu = false"
-                    ></v-date-picker>
-                </v-menu> -->
-              </v-col>
-               <v-col cols="12">
-                   Role
-                <v-select
-                    v-model="employee.role_id"
-                    :items="role"
-                    item-value="id"
-                    item-text="name"
-                    :outlined="false"
-                    label="Item"
+                    outlined
+                    v-model="employee.first_name"
+                    label="Prenom"
                     required
-                ></v-select>
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                    <v-text-field
+                    outlined
+                    v-model="employee.last_name"
+                    label="Nom"
+                    required
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                    <v-text-field
+                    outlined
+                    v-model="employee.email"
+                    label="Email*"
+                    required
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                    <v-text-field
+                    outlined
+                    v-model="employee.password"
+                    label="Mot de passe"
+                    required
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                    <v-text-field
+                    outlined
+                    v-model="employee.address"
+                    label="Adresse"
+                    required
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                    <v-text-field
+                    outlined
+                    v-model="employee.city"
+                    label="Ville"
+                    required
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                    <v-text-field
+                    v-model="employee.zip_code"
+                    label="Code Postal"
+                    required
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                    <v-text-field
+                    outlined
+                    v-model="employee.mobile"
+                    label="Numéro de portable"
+                    required
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                    <v-menu
+                            v-model="menu"
+                            :close-on-content-click="false"
+                            :nudge-right="40"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="auto"
+                        >
+                            <template v-slot:activator="{ on, attrs }">
+                            <v-text-field
+                                v-model="employee.birth_date"
+                                label="Choisir la date de nuissance"
+                                prepend-icon="mdi-calendar"
+                                readonly
+                                v-bind="attrs"
+                                v-on="on"
+                            ></v-text-field>
+                            </template>
+                            <v-date-picker
+                            v-model="date"
+                            @input="menu = false"
+                            ></v-date-picker>
+                        </v-menu>
+                    <!-- <v-menu
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        :nudge-right="40"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                    >
+                        <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                            v-model="data.birth_date"
+                            label="Choisir la date de naissance"
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                        ></v-text-field>
+                        </template>
+                        <v-date-picker
+                        v-model="date"
+                        @input="menu = false"
+                        ></v-date-picker>
+                    </v-menu> -->
+                </v-col>
+                <v-col cols="12">
+                    Role
+                    <v-select
+                        v-model="employee.role_id"
+                        :items="role"
+                        item-value="id"
+                        item-text="name"
+                        :outlined="false"
+                        label="Item"
+                        required
+                    ></v-select>
 
-              </v-col>
-              <v-btn
-              @click="dialog = false"
-              >
-                  Annuler
-              </v-btn>
-               <v-btn
-               @click="addEmployee"
-               >
-                  Valider
-              </v-btn>
-
-
-           
-
+                </v-col>
               
+            </v-card>
+            <v-card>
+                  <v-spacer></v-spacer>
+                <v-card-actions>
+                    <v-btn
+                    @click="dialog = false"
+                    width="477px"
+                    padding-left="2em"
+                    >
+                        Annuler
+                    </v-btn>
+                    <v-btn
+                   style="background-color: #005075!important"
+                    @click="addEmployee"
+                    width="477px"
+                    >
+                        Valider
+                    </v-btn>
+                     <!-- <v-btn
+      depressed
+      color="primary"
+    >
+      Primary
+    </v-btn> -->
+                </v-card-actions> 
+                  <v-spacer></v-spacer>        
+            </v-card>
             </v-card>
 
             </v-dialog>
@@ -291,6 +310,7 @@ export default {
         addEmployee(){
             addEmployee(this.employee).then(res=>{
                 console.log(res)
+                this.dialog = false
             })
         },
     //     searchEmployee(key){
@@ -369,6 +389,11 @@ thead .v-data-table__checkbox>.v-icon {
     color: #fff !important;
     text-transform: capitalize !important;
 }
+.scroll {
+   overflow-y: scroll
+}
+
+
 
 
 
