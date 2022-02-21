@@ -97,6 +97,7 @@
                                     label="Clé"
                                     placeholder="Clé"
                                     prepend-inner-icon="mdi-key-outline"
+                                    v-model="password"
                                 ></v-text-field>
                             </v-col>
                         </div>
@@ -107,7 +108,7 @@
                         ANNULER
                     </v-btn>
                     <v-spacer></v-spacer>
-                    <v-btn large style="width: 48%;background-color: #005075!important; color: white">
+                    <v-btn large @click="save" style="width: 48%;background-color: #005075!important; color: white">
                          VALIDER
                     </v-btn>
                 </v-card-actions>
@@ -130,6 +131,7 @@ export default {
     },
     data(){
         return{
+            password:'',
             verification: false,
             radios: '1',
             is_specific_value:false,
@@ -167,18 +169,24 @@ export default {
             
         }
     },
-
     methods: {
         validate(){
             alert('sad')
         },
         save(){
-            if(this.payload.to_add == null){
-                this.payload.to_add = JSON.parse(JSON.stringify(this.specific_value))
+            if(this.password != localStorage.getItem('password')){
+                this.$toast.error('incorrect password')
+            }else{
+                if(this.payload.to_add == null){
+                    this.payload.to_add = JSON.parse(JSON.stringify(this.specific_value))
+                }
+                AddEmployeeConsumableHolidays(this.payload).then(({data}) =>{
+                    console.log(data, 'sad, verification')
+                    this.$toast.success(data.message)
+                })
+                this.verification = false
             }
-            AddEmployeeConsumableHolidays(this.payload).then(({data}) =>{
-                console.log(data, 'sad')
-            })
+
         }
     }
 }

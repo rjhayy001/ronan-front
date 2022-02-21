@@ -54,11 +54,13 @@
                                         prepend-inner-icon="mdi-alpha-t"
                                         label="Titre de l'annonce *"
                                         placeholder="Votre titre"
+                                        v-model="data.title"
                                     ></v-text-field>
                                 </div>
                                 <div class="advertise_field text_box" style="padding-bottom: 10px">
                                     <v-text-field 
                                         outlined 
+                                        v-model="data.message"
                                         prepend-inner-icon="mdi-text-box-multiple-outline"
                                         label="Contenu de l'annonce *"
                                         placeholder="Contenu"
@@ -71,16 +73,20 @@
                                     <v-row>
                                         <v-select
                                             class="select-data"
-                                            v-model="e2"
-                                            :items="selects"
+                                            v-model="data.type"
+                                            :items="type"
                                             menu-props="auto"
-                                            solo
+                                            item-text="title"
+                                            item-value="value"
+                                            return-object
+                                            outlined
+                                            dense
                                             flat
                                             height="47px"
                                         ></v-select>
                                     </v-row>
                                     <span>
-                                        Ceci est un avis de base, pas d'interruptiona et pas de données à voir
+                                        {{data.type.description}}
                                     </span>
                                 </div>
                                 <div style="padding: 10px 0">
@@ -108,7 +114,7 @@
                         </div>
                     </div>
                     <div style="position: absolute; bottom: 10px; width: 100%; display: flex; justify-content: center; margin: auto">
-                        <v-btn width="95%" large color="primary" dark >
+                        <v-btn @click="save()" width="95%" large color="primary" dark >
                             Publier
                         </v-btn>
                     </div>
@@ -146,21 +152,50 @@
 
 <script>
 import { GetAllEmployeesSort } from "@/repositories/employee.api";
+import { CreateNotice } from "@/repositories/notice.api";
 export default {
     data(){
         return{
+            data:{
+                type:{
+                    value: 0,
+                    title: "Basse",
+                    description: "Ceci est un avis de base, pas d'interruptions et pas de données à voir"
+                },
+                title: '',
+                message: '',
+                image:''
+
+            },
             imageData: null,
             EmptyMessages: true,
             Messages: [],
             employees:[],
             e2:'Basse',
-            selects: [
-                'Basse', 'Moyenne', 'Haute' 
-            ],
             isSelecting: false,
-            selectedFile: null
+            selectedFile: null,
+            type:[
+                {
+                    value: 0,
+                    title: "Basse",
+                    description:
+                        "Ceci est un avis de base, pas d'interruptions et pas de données à voir"
+                    },
+                {
+                    value: 1,
+                    title: "Moyenne",
+                    description: "Une importance moyenne vous montrera des données"
+                    },
+                {
+                    value: 2,
+                    title: "Haute",
+                    description:
+                        "Cela provoquera des interruptions dans le récepteur et des détails flash à l'écran"
+                }
+            ]
         }
-    },created(){
+    },
+    created(){
         this.initialize()
     },
     methods: {
@@ -197,21 +232,44 @@ export default {
             }
         },
         handleFileImport() {
-                this.isSelecting = true;
+            this.isSelecting = true;
 
-                // After obtaining the focus when closing the FilePicker, return the button state to normal
-                window.addEventListener('focus', () => {
-                    this.isSelecting = false
-                }, { once: true });
-                
-                // Trigger click on the FileInput
-                this.$refs.uploader.click();
-            },
-            onFileChanged(e) {
-                const file = e.target.files[0];
-                this.selectedFile = URL.createObjectURL(file)
-                // Do whatever you need with the file, liek reading it with FileReader
-            },
+            // After obtaining the focus when closing the FilePicker, return the button state to normal
+            window.addEventListener('focus', () => {
+                this.isSelecting = false
+            }, { once: true });
+            
+            // Trigger click on the FileInput
+            this.$refs.uploader.click();
+        },
+        onFileChanged(e) {
+            const file = e.target.files[0];
+            this.selectedFile = URL.createObjectURL(file)
+            // Do whatever you need with the file, liek reading it with FileReader
+        },
+        extractId(){
+            let ids = []
+            this.Messages.forEach(employee => {
+                ids.push(employee.id)
+            })
+
+            return ids
+        },
+        save(){
+            let payload = {
+                type: this.data.type.value,
+                title: this.data.title,
+                message: this.data.message,
+                image: this.data.image,
+                sender_id: this.$store.getters['user'].id,
+                reciever_id: this.extractId(),
+            }
+
+            CreateNotice(payload).then(() => {
+                this.$toast.success('announce published')
+            })
+
+        }
     }
 }
 </script>
