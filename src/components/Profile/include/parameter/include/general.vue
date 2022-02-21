@@ -126,7 +126,7 @@
                                 Numéro de contact actuel
                             </h4>
                         </div>
-                        <div class="vertical_center">
+                        <div class="vertical_center" style="height: 4vh!important;">
                             <h4 class="label label_padding">
                                 <strong>
                                     {{user.mobile}}
@@ -213,7 +213,7 @@
                                 Adresse postale actuelle
                             </h4>
                         </div>
-                        <div class="vertical_center">
+                        <div class="vertical_center" style="height: 4vh!important;">
                             <h4 class="padding_top label_padding">
                                 {{user.address}}
                             </h4>
@@ -329,7 +329,7 @@
                                 {{$DateWithMonthTextfr(user.birth_date)}}
                             </h4>
                         </div>
-                        <div class="vertical_center date_width">
+                        <div class="vertical_center date_width" style="height: 4vh!important;">
                             <v-menu
                                 ref="start_date"
                                 v-model="start_menu"
@@ -485,22 +485,20 @@ export default {
     methods: {
         initialize(){
             this.updated_user = JSON.parse(JSON.stringify(this.$store.getters['user']))
-            this.updated_user.isSilent_onPush = this.updated_user.isSilent_onPush == 1 ? true : false
+            this.updated_user['isSilent_onPush'] = this.updated_user.isSilent_onPush == 1 ? true : false
         },
         updateUser(){
             console.log(this.updated_user, 'test')
             UpdateInfo(this.updated_user.id, this.updated_user).then(({data}) =>{
                 this.$store.state.user= this.updated_user
-                console.log(data)
                 this.initialize()
+                console.log(data)
                 this.$toast.success('Updated Succesfullly')
-
             })
         }
     },
     created(){
         this.initialize()
-        console.log("user", this.updated_user)
     }
 }
 </script>

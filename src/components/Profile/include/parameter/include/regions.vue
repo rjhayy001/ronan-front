@@ -6,13 +6,13 @@
             </h2>
             <v-spacer></v-spacer>
             <v-btn 
-                class="parameter_btn" 
+                class="mr-4" 
                 @click="addRegions=true" 
                 solo 
                 text 
                 icon
             >
-                <v-icon size="30px" class=" add_padding">
+                <v-icon size="30px">
                     mdi-plus
                 </v-icon>
             </v-btn>

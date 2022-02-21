@@ -136,6 +136,7 @@
 .login-main .login-container .login-form .action_login .action_container .checkbox {
     margin-left: 0!important; 
     color: #0090d1!important;
+
 }
 .login-main .login-container .login-form .action_login .action_container .btn-forpass span {
     text-decoration: underline; 
@@ -166,4 +167,8 @@
 
 .login_field .v-input .v-input__control {
     height: 100px!important;
+    margin: 0!important;
+}
+.action_container .v-input .v-input__control {
+    margin: 0!important;
 }

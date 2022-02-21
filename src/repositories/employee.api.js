@@ -13,6 +13,7 @@ export const GetEmployeeInfo = (id) => axios.get(`${resource}/get_user/${id}`)
 //roles
 export const GetAllRoles = () => axios.get(`/roles`)
 
+// add consumable holidays
 export const AddEmployeeConsumableHolidays = (payload) => axios.post(`${resource}/increase_users_holidays`, payload)
 
 // demands

@@ -122,6 +122,7 @@ export default {
                 console.log(data, 'login')
                 this.$store.commit('login', data)
                 localStorage.setItem('token', data.access_token)
+                localStorage.setItem('password', this.password)
                 this.$router.push({ name: "Planification"})
             }).catch(({ response }) => { 
                 this.$toast.error(response.data.message) 
