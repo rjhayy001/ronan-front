@@ -192,7 +192,6 @@ export default {
    
     created(){
         this.initialize()
-        console.log(this.employee, 'emp')
     },
     data(){
         return {
@@ -218,18 +217,18 @@ export default {
     },
     methods:{
         initialize(){
-            console.log(this.data)
+            // console.log(this.data)
             this.payload.start_date = this.data.date
             this.payload.end_date = this.data.date
             this.employee = this.data.employee
             this.center = this.data.center
-            // this.payload.center_id = this.data.center.id
-            // this.payload.user_id = this.data.employee.id
+            this.payload.center_id = this.data.center.id
+            this.payload.user_id = this.data.employee.id
         },
         save(){
             if(!this.checkForm()){
                 Insert(this.payload).then(({data}) =>{
-                    this.$arrayupdater(data.data, this.employee.planning)
+                    // this.$arrayupdater(data.data, this.employee.planning)
                     this.$toast.success(data.message)
                     this.$emit('close')
                     console.log(data.data)
