@@ -262,7 +262,7 @@ export default {
             return ids
         },
         save(){
-            if(this.data.title != '' || this.data.message != '') {
+            if(this.data.title != '' && this.data.message != '') {
                 let payload = {
                     type: this.data.type.value,
                     title: this.data.title,

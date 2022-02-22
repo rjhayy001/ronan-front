@@ -1,8 +1,8 @@
 <template>
     <v-row justify="space-around">
         <create-plan
-            v-if="dialog2" 
-            :dialog="dialog2" 
+            v-if="dialog2"
+            :dialog2="dialog2" 
             @close="closeDialog"
             :data="create_data"
         ></create-plan>
@@ -19,6 +19,7 @@
                 <p>{{data.email}}</p>
 
                 <v-btn
+                    v-if="!edit"
                     @click="editInfo"
                     rounded
                     elevation="3"
@@ -29,6 +30,7 @@
                     <v-icon left>mdi-pencil</v-icon> Edit
                 </v-btn>
                 <v-btn
+                    v-if="!edit"
                     @click="deleteEmp"
                     rounded
                     elevation="3"
@@ -99,7 +101,7 @@
                 <v-divider></v-divider>
                 <v-btn
                     text
-                    @click="addWork(data, data.centers)"
+                    @click="addWork()"
                 >
                     <v-icon>mdi-plus</v-icon>Ajouter Planification 
                 </v-btn>
@@ -111,7 +113,7 @@
                         <v-row>
                             <v-col cols="12" class="d-flex justify-space-between">
                                 <p style="font-size: 18px;font-weight:bold">Activer</p>
-                                <p><v-switch hide-details="true" color="primary"></v-switch></p>
+                                <p><v-switch v-model="data.isActive" @click="updateStatus()" hide-details="true" color="primary"></v-switch></p>
                             </v-col>
                         </v-row>
                     </v-col>
@@ -244,7 +246,7 @@
                     </v-tab-item>
                     <v-tab-item>
                         <div style="margin: 20px 0">
-                            <absence-table :data="data.attendances"></absence-table>
+                            <absence-table :data="data.attendances" @initialize="initialize"></absence-table>
                         </div>
                     </v-tab-item>
                 </v-tabs-items>
@@ -257,8 +259,14 @@ import LeaveTable from "@/components/Employès/includes/leave.vue"
 import RttTable from "@/components/Employès/includes/rtt.vue"
 import AbsenceTable from "@/components/Employès/includes/absence.vue"
 import EditView from "@/components/Employès/edit.vue"
-import CreatePlan from "@/components/Planification/includes/createPlan.vue"
-import { UpdateEmployee,GetEmployeeInfo,DeleteEmployee } from "@/repositories/employee.api";
+import CreatePlan from "@/components/Employès/includes/createPlan.vue"
+import moment from 'moment'
+import { 
+    UpdateEmployee,
+    GetEmployeeInfo,
+    DeleteEmployee,
+    changeStatus
+    } from "@/repositories/employee.api";
 export default {
     data(){
         return{
@@ -267,6 +275,7 @@ export default {
             edit: false,
             isActive: false,
             dialog2: false,
+            month: moment().format('MMM YYYY'),
             create_data:{}
         }
     },
@@ -297,7 +306,7 @@ export default {
                 if(data){
                     this.$toast.success("Updated Successfully")
                     this.edit = false
-                    location.reload()
+                    this.initialize()
                 }
             })
         },
@@ -309,16 +318,32 @@ export default {
                 }
             })
         },
-        addWork(employee, center){
-            var creatDate = new Date();
-            var date = creatDate.getFullYear() + "-" + (creatDate.getUTCMonth() + 1) + "-" + creatDate.getDate()
+        updateStatus(){
+            if(this.data.isActive == false){
+                this.data.isActive = 0
+            }else{
+                this.data.isActive = 1
+            }
+            console.log(this.data)
+            changeStatus(this.data).then((data) =>{
+                if(data){
+                    this.$toast.success("Status Updated Successfully")
+                }
+            })
+            
+        },
+        addWork(){
+            var monthDate = moment(moment(this.year+'-'+this.month_digit), 'YYYY-MM'); 
+            var daysInMonth = monthDate.daysInMonth() ;
+            var current = moment(this.month).date(daysInMonth)
+            var date = current.format('YYYY-MM-DD')
             this.create_data = {
-            center:center,
-            employee:employee,
-            date:date
+                center:this.data.centers[0],
+                employee:this.data,
+                date:date
             }
             this.$nextTick(function () {
-            this.dialog2 = true
+                this.dialog2 = true
             })
         },
         closeDialog(){

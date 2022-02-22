@@ -474,7 +474,9 @@ export default {
             birthday: false,
             notification: false,
             date: "",
-            updated_user:{}
+            updated_user:{
+                
+            },
         }
     },
     computed: {
@@ -485,14 +487,17 @@ export default {
     methods: {
         initialize(){
             this.updated_user = JSON.parse(JSON.stringify(this.$store.getters['user']))
+            this.updated_user['image'] = ''
             this.updated_user['isSilent_onPush'] = this.updated_user.isSilent_onPush == 1 ? true : false
         },
         updateUser(){
             console.log(this.updated_user, 'test')
             UpdateInfo(this.updated_user.id, this.updated_user).then(({data}) =>{
                 this.$store.state.user= this.updated_user
-                this.initialize()
-                console.log(data)
+                this.$nextTick(function () {
+                    this.initialize()
+                })
+                console.log(data, 'info')
                 this.$toast.success('Updated Succesfullly')
             })
         }

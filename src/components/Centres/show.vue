@@ -2,7 +2,7 @@
     <div class="ma-2">
         <v-row class="row" v-if="!loading">
             <v-flex sm2>
-              <center-details :center="center"></center-details>
+              <center-details :center="center" @success="hardReload"></center-details>
             </v-flex>
             <v-flex sm10>
               <employee-lists :center="center"></employee-lists>
@@ -34,9 +34,13 @@ export default {
         initialize(){
             this.loading =true
             GetCenterInfo(this.$route.params.id).then( ({data}) => {
-                console.log(data, 'info')
                 this.center = data
                 this.loading = false
+            })
+        },
+        hardReload(){
+            GetCenterInfo(this.$route.params.id).then( ({data}) => {
+                this.center = data
             })
         }
     }

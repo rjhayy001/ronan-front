@@ -4,7 +4,7 @@
             fab
             dark
             color="#005075"
-            @click="view_list=!view_list"
+            @click="btn"
             @click.prevent="click()"
         >
             <v-icon>
@@ -30,6 +30,13 @@ export default {
             this.button=false;
             this.view_list=false
         },
+        btn(){
+            if(this.view_list == true){
+                this.view_list = false
+            }else{
+                this.view_list = true
+            }
+        },
         click(){
             if(this.button==false){
                 this.button=true;
@@ -37,6 +44,19 @@ export default {
             }else{
                 this.button=false
                 this.$emit('cancel')
+            }
+        }
+    },
+    props:{
+        menu:{
+            type: Boolean
+        }
+    },
+    watch:{
+        "menu"(val){
+            if(val){
+                this.view_list = false
+                this.button = false
             }
         }
     },

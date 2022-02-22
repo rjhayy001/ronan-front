@@ -3,6 +3,7 @@
           :headers="headers"
           :items="rtt"
           class="elevation-5"
+          :hide-default-footer="true"
       >
         <template v-slot:item.status="{item}">
           <p v-if="item.status = 1">Actifs</p>

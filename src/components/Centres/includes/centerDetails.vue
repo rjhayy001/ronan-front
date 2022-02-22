@@ -33,7 +33,7 @@
           rounded
           color="primary"
           dark
-          @click="dialog = true"
+          @click="editCenter"
         >
           <v-icon left>mdi-pencil</v-icon>
           <span style="font-size:13px">Editer</span>
@@ -176,7 +176,7 @@
       </v-list-item>
 
     </v-list>
-  <edit-form :dialog="dialog" @close="dialog=false"></edit-form>
+  <edit-form :dialog="dialog" @close="dialog=false" :center="center" @success="$emit('success')"></edit-form>
   </v-card>
 </template>
 <script>
@@ -206,18 +206,22 @@ export default {
     },
   },
   created(){
-    this.initialize()
   },
   methods:{
+    test(){
+      alert('sad')
+    },
     initialize(){
       this.getRegions()
       this.getEmployees()
       this.current_region = this.center.region
       this.current_manager = this.center.manager
     },
-    // editCenter(){
-    //   alert('test')
-    // },
+    editCenter(){
+        this.$nextTick(function (){
+          this.dialog = true
+        })
+    },
     getRegions(){
       GetRawRegions().then(({data}) => {
         this.regions = data
@@ -226,6 +230,7 @@ export default {
     getEmployees(){
       GetAllEmployees().then(({data}) => {
         this.employees = data
+        console.log(this.employees,"employee")
       })
     },
     saveRegion(){
@@ -267,7 +272,11 @@ export default {
         })
         this.editing_manager = false
       })
-    }
+    },
+    // view(center){
+    //   console.log(center,"for update")
+    //   // this.$router.push({name: 'view_center', params: { id: item.id },})
+    // }
   }
 }
 </script>

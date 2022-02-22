@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div>
         <v-card>
             <v-form ref="form">
                 <v-container>
@@ -21,7 +21,6 @@
                             cols="12"
                         >
                             <v-text-field
-                                :rules="centre.name"
                                 v-model="data.name"
                                 placeholder="Entrez nouveau nom"
                                 dense
@@ -34,7 +33,6 @@
                             cols="12"
                         >
                             <v-text-field
-                                :rules="centre.email"
                                 v-model="data.email"
                                 placeholder="Entrez nouvel email"
                                 dense
@@ -48,7 +46,7 @@
                         >
                             <v-text-field
                                 :rules="centre.number"
-                                v-model="data.number"
+                                v-model="data.mobile"
                                 placeholder="Entrez nouveau numéro"
                                 dense
                                 prepend-inner-icon="mdi-phone"
@@ -87,7 +85,7 @@
                         >
                             <v-text-field
                                 :rules="centre.code_postal"
-                                v-model="data.code_postal"
+                                v-model="data.zip_code"
                                 placeholder="Entrez nouveau code postal"
                                 dense
                                 prepend-inner-icon="mdi-email"
@@ -112,8 +110,8 @@
                             dark
                             height="50px"
                             color="#005075!important"
-                            @click="submit"
                             class="btn-dialog ma-2"
+                            @click="submit"
                         >
                             VALIDER
                         </v-btn>
@@ -124,60 +122,58 @@
     </div>
 </template>
 <script>
-
+import { UpdateCenter } from "@/repositories/center.api"
 export default {
+    props: {
+        center:{
+            required:true,
+            type:Object,
+        },
+        dialog:{
+            required:true,
+            type:Boolean,
+        },
+    },
+    watch:{
+        'dialog': function(value) {
+            if(value){
+                this.data = JSON.parse(JSON.stringify(this.center))
+                this.data['image'] = ''
+            }
+        }
+    },
     data(){
         return {
-            data: {
-                name: '',
-                email: '',
-                number: '',
-                address: '',
-                city: '',
-                code_postal: '',
+            data:{
             }
         }
     },
     created(){
-        this.initialize()
+        this.data = JSON.parse(JSON.stringify(this.center))
+        this.data['image'] = ''
     },
     methods:{
         close(){
             this.$refs.form.resetValidation();
             this.$emit('close')
         },
-
         submit() {
-            this.$refs.form.validate()
-            if(this.$refs.form.validate() == true) {
-                if(this.data.name != '' && this.data.email != '' && 
-                this.data.number !='' && this.data.address !='' && this.data.city !='' 
-                && this.data.code_postal !='') {
-                    this.reset()
-                    alert('success')
-                }else{
-                    this.$toast.error('Do not leave Empty Field')
-                }
-            }else{
-                this.$toast.error('Do not leave Empty Field and field-up correctly ')
-            }
+            console.log(this.center, "cemtyer")
+            UpdateCenter(this.data.id, this.data).then(() => {
+                this.$emit('close') 
+                this.$toast.success('successful center update')
+                this.$emit('success')
+            })
         },
         reset() {
-                this.$refs.form.resetValidation();
-                this.data.name='';
-                this.data.email='';
-                this.data.number='';
-                this.data.address='';
-                this.data.city='';
-                this.data.code_postal='';
+            this.$refs.form.resetValidation();
+            this.data.name='';
+            this.data.email='';
+            this.data.number='';
+            this.data.address='';
+            this.data.city='';
+            this.data.code_postal='';
         }
-        // initialize(){
-        //     GetRawRegions().then(({data})=> {
-        //         this.regions = data
-        //         this.center.region_id = data[0].id
-        //     })
-        // },
-
     }
 }
 </script>

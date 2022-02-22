@@ -1,16 +1,22 @@
 <template>
-  <div>
+    <div>
         <template v-if="!loading">
             <v-subheader class="">
                 <p class="sub_title">Employees</p>
                 <v-spacer></v-spacer>
-                <v-btn depressed>
-                    <v-icon
-                        color="black"
-                    >
-                        mdi-magnify
-                    </v-icon>          
-                </v-btn>
+                 <v-text-field
+                    class="my-2 mr-2 shrink"
+                    small
+                    width="100px"
+                    dense
+                    :hide-details="true"
+                    label="Search Employee"
+                    solo
+                  
+                    append-icon="mdi-magnify"
+                    single-line 
+                    v-model="search"
+                ></v-text-field>
                 <v-btn depressed @click="view_list=!view_list">
                     <v-icon
                     
@@ -19,7 +25,7 @@
                     {{view_list ? 'mdi-format-list-bulleted' : 'mdi-view-compact'}}
                     </v-icon>          
                 </v-btn>
-                <v-btn depressed  @click="dialog = true">
+                <v-btn depressed  @click="addEmployee=true">
                     <v-icon
                         color="black"
                     >
@@ -35,6 +41,7 @@
                 :items-per-page="50"
                 :loading="loading"
                 @click:row="view($event)"
+                :search="search"
             >
                 <template v-slot:item.logo="{ item }">
                     <v-avatar class="logo_img">
@@ -49,13 +56,27 @@
             </v-data-table>
         </template>
         <table-loader v-else></table-loader>
-  </div>
+        <add-employee
+            v-if="addEmployee"
+            :dialog="addEmployee"
+            @close="addEmployee=false"
+        ></add-employee>
+    </div>
 </template>
 <script>
-import { GetAllEmployees } from "@/repositories/employee.api";
+import { GetAllEmployees} from "@/repositories/employee.api";
+// import addEmploDialog from "@/components/"
+import  addEmployee from "./includes/addEmployee.vue"
+// import axios from "axios";
 export default {
+     components : {
+       addEmployee,
+    },
     data(){
         return {
+            addEmployee:false,
+            search:'',
+            
             loading:false,
             view_list: true,
             headers: [
@@ -67,24 +88,64 @@ export default {
                 { text: 'Email', value: 'email', width: '15%'},
                 { text: 'actif', value: 'is_active', width: '10%'},
             ],
+            
             employees:[],
+           
+          
+            form:{
+                search: '',
+            }
         }
     },
     created(){
         this.initialize()
     },
+    watch: {
+       "form.search": {
+        handler(val) {
+          this.searchEmployee(val)
+        },
+        deep: true,
+      },
+    },
     methods: {
+        addData(){
+            this.addEmployee = true
+        },
         initialize(){
             this.loading = true
             GetAllEmployees().then(({data}) => {
-                console.log(data)
+                // console.log(data)
                 this.employees = data
                 this.loading = false
             })
         },
         view(item){
             this.$router.push({name: 'view_employee', params: { id: item.id },})
+        },
+         close(){
+            this.$emit('close')
         }
+        // addEmployee(){
+        //     addEmployee(this.employee).then(res=>{
+        //         console.log(res)
+        //         this.dialog = false
+        //     })
+        // },
+    //     searchEmployee(key){
+    //       if (this.timer) {
+    //       clearTimeout(this.timer);
+    //       this.timer = null;
+    //     }
+    //         this.timer = setTimeout(() => {
+    //         getEmployee({name:key}).then((response) => {
+    //             this.users = response.data 
+    //             this.loading = false
+    //         }).catch((errors) => {
+    //             console.log(errors)
+    //         });
+    //         },800);
+    //   },
     }
 }
 </script>
@@ -147,6 +208,12 @@ thead .v-data-table__checkbox>.v-icon {
     color: #fff !important;
     text-transform: capitalize !important;
 }
+.scroll {
+   overflow-y: scroll
+}
+
+
+
 
 
 </style>
