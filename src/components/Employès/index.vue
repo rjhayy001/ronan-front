@@ -63,7 +63,7 @@
             >
             <v-card>
                 <v-card-title>                   
-                   <span class="mdi mdi-account-plus size" style="font-size: 30px;">Créer un Nouvel Employé</span>
+                   <span class="mdi mdi-account-plus size" style="font-size: 30px;"> Créer un Nouvel Employé</span>
 
                 </v-card-title>
             </v-card>
