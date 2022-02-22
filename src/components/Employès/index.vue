@@ -25,7 +25,7 @@
                     {{view_list ? 'mdi-format-list-bulleted' : 'mdi-view-compact'}}
                     </v-icon>          
                 </v-btn>
-                <v-btn depressed  @click="dialog = true">
+                <v-btn depressed  @click="addEmployee=true">
                     <v-icon
                         color="black"
                     >
@@ -54,192 +54,32 @@
                     </v-icon>
                 </template>
             </v-data-table>
-            <v-dialog
-            v-model="dialog"
-            width="1000"
-          
-            >
-            <v-card
-            >
-            <v-card>
-                <v-card-title>                   
-                   <span class="mdi mdi-account-plus size" style="font-size: 30px;"> Créer un Nouvel Employé</span>
-
-                </v-card-title>
-            </v-card>
-            <v-card
-            max-height="500"
-            class="scroll"
-            >
-                <v-col cols="12">
-                    <v-text-field
-                    outlined
-                    v-model="employee.first_name"
-                    label="Prenom"
-                    required
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                    <v-text-field
-                    outlined
-                    v-model="employee.last_name"
-                    label="Nom"
-                    required
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                    <v-text-field
-                    outlined
-                    v-model="employee.email"
-                    label="Email*"
-                    required
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                    <v-text-field
-                    outlined
-                    v-model="employee.password"
-                    label="Mot de passe"
-                    required
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                    <v-text-field
-                    outlined
-                    v-model="employee.address"
-                    label="Adresse"
-                    required
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                    <v-text-field
-                    outlined
-                    v-model="employee.city"
-                    label="Ville"
-                    required
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                    <v-text-field
-                    v-model="employee.zip_code"
-                    label="Code Postal"
-                    required
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                    <v-text-field
-                    outlined
-                    v-model="employee.mobile"
-                    label="Numéro de portable"
-                    required
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                    <v-menu
-                            v-model="menu"
-                            :close-on-content-click="false"
-                            :nudge-right="40"
-                            transition="scale-transition"
-                            offset-y
-                            min-width="auto"
-                        >
-                            <template v-slot:activator="{ on, attrs }">
-                            <v-text-field
-                                v-model="employee.birth_date"
-                                label="Choisir la date de nuissance"
-                                prepend-icon="mdi-calendar"
-                                readonly
-                                v-bind="attrs"
-                                v-on="on"
-                            ></v-text-field>
-                            </template>
-                            <v-date-picker
-                            v-model="date"
-                            @input="menu = false"
-                            ></v-date-picker>
-                        </v-menu>
-                    <!-- <v-menu
-                        v-model="menu"
-                        :close-on-content-click="false"
-                        :nudge-right="40"
-                        transition="scale-transition"
-                        offset-y
-                        min-width="auto"
-                    >
-                        <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                            v-model="data.birth_date"
-                            label="Choisir la date de naissance"
-                            prepend-icon="mdi-calendar"
-                            readonly
-                            v-bind="attrs"
-                            v-on="on"
-                        ></v-text-field>
-                        </template>
-                        <v-date-picker
-                        v-model="date"
-                        @input="menu = false"
-                        ></v-date-picker>
-                    </v-menu> -->
-                </v-col>
-                <v-col cols="12">
-                    Role
-                    <v-select
-                        v-model="employee.role_id"
-                        :items="role"
-                        item-value="id"
-                        item-text="name"
-                        :outlined="false"
-                        label="Item"
-                        required
-                    ></v-select>
-
-                </v-col>
-              
-            </v-card>
-            <v-card>
-                  <v-spacer></v-spacer>
-                <v-card-actions>
-                    <v-btn
-                    @click="dialog = false"
-                    width="477px"
-                    padding-left="2em"
-                    >
-                        Annuler
-                    </v-btn>
-                    <v-btn
-                   style="background-color: #005075!important;color:white!important;"
-                    @click="addEmployee"
-                    width="477px"
-                    
-                    >
-                        Valider
-                    </v-btn>
-                     <!-- <v-btn
-      depressed
-      color="primary"
-    >
-      Primary
-    </v-btn> -->
-                </v-card-actions> 
-                  <v-spacer></v-spacer>        
-            </v-card>
-            </v-card>
-
-            </v-dialog>
         </template>
         <table-loader v-else></table-loader>
+        <add-employee
+            v-if="addEmployee"
+            :dialog="addEmployee"
+            @close="addEmployee=false"
+        >
+
+        </add-employee>
   </div>
+  
 </template>
 <script>
-import { GetAllEmployees, addEmployee} from "@/repositories/employee.api";
+import { GetAllEmployees} from "@/repositories/employee.api";
+// import addEmploDialog from "@/components/"
+import  addEmployee from "./includes/adddialog.vue"
 // import axios from "axios";
 export default {
+     components : {
+       addEmployee,
+    },
     data(){
         return {
+            addEmployee:false,
             search:'',
-            date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-            menu:false,
+            
             loading:false,
             view_list: true,
             headers: [
@@ -251,35 +91,10 @@ export default {
                 { text: 'Email', value: 'email', width: '15%'},
                 { text: 'actif', value: 'is_active', width: '10%'},
             ],
-            employee:{
-                first_name: '',
-                last_name: '',
-                email: '',
-                password: '',
-                address: '',
-                city: '',
-                zip_code: '',
-                mobile: '',
-                birth_date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-                role_id: '',
-            },
+            
             employees:[],
-            dialog: false,
-            role: [
-                {
-                    id:1,
-                    name:'Admin'
-                },
-                {
-                    id:2,
-                    name:'Accountant'
-                },
-                {
-                    id:3,
-                    name:'Employee'
-                }
-              
-            ],
+           
+          
             form:{
                 search: '',
             }
@@ -297,6 +112,9 @@ export default {
       },
     },
     methods: {
+        addData(){
+            this.addEmployee = true
+        },
         initialize(){
             this.loading = true
             GetAllEmployees().then(({data}) => {
@@ -308,12 +126,15 @@ export default {
         view(item){
             this.$router.push({name: 'view_employee', params: { id: item.id },})
         },
-        addEmployee(){
-            addEmployee(this.employee).then(res=>{
-                console.log(res)
-                this.dialog = false
-            })
-        },
+         close(){
+            this.$emit('close')
+        }
+        // addEmployee(){
+        //     addEmployee(this.employee).then(res=>{
+        //         console.log(res)
+        //         this.dialog = false
+        //     })
+        // },
     //     searchEmployee(key){
     //       if (this.timer) {
     //       clearTimeout(this.timer);
