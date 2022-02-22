@@ -208,9 +208,10 @@
                         Annuler
                     </v-btn>
                     <v-btn
-                   style="background-color: #005075!important"
+                   style="background-color: #005075!important;color:white!important;"
                     @click="addEmployee"
                     width="477px"
+                    
                     >
                         Valider
                     </v-btn>
