@@ -64,9 +64,9 @@ export default {
         }
         UpdateUserDemand(datas).then((data) => {
           console.log(data)
+          this.initialize()
         })
 
-        this.initialize()
       },
       minus(item){
         var extended = parseInt(item.demands - 1)
@@ -77,9 +77,9 @@ export default {
         }
         UpdateUserDemand(datas).then((data) => {
           console.log(data)
+          this.initialize()
         })
 
-        this.initialize()
       }
     }
 }
