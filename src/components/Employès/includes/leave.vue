@@ -8,13 +8,13 @@
         <template v-slot:item.demands="{item}">
           <v-row>
             <v-col cols="4">
-              <v-icon @click="minus(item)">mdi-minus</v-icon>
+              <v-icon v-if="item.holiday_status == 1" @click="minus(item)">mdi-minus</v-icon>
             </v-col>
             <v-col cols="4">
               {{item.demands}}
             </v-col>
             <v-col cols="4">
-              <v-icon @click="add(item)">mdi-plus</v-icon>
+              <v-icon v-if="item.holiday_status == 1" @click="add(item)">mdi-plus</v-icon>
             </v-col>
           </v-row>
         </template>
@@ -50,7 +50,7 @@ export default {
       initialize(){
         let id = this.$route.params.id
         GetUserDemand(id).then(({data}) => {
-          // console.log(data, 'test')
+          console.log(data, 'test')
           this.demand = data
         })
       },
