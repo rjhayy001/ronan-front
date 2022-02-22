@@ -149,9 +149,7 @@ export default {
         this.initialize()
     },
     methods:{
-        close(){
-            this.$emit('close')
-        },
+       
         initialize(){
             GetRawRegions().then(({data})=> {
                 this.regions = data

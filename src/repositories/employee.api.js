@@ -10,6 +10,7 @@ export const DeleteEmployee = (id) => axios.delete(`${resource}/${id}`)
 export const UpdateEmployee = (id, payload) => axios.put(`${resource}/${id}`, payload)
 export const GetEmployeeInfo = (id) => axios.get(`${resource}/get_user/${id}`)
 export const changeStatus = (payload) => axios.put(`${resource}/updateStatus/`, payload)
+export const addEmployee = (data) => axios.post(`${resource}`, data)
 
 //roles
 export const GetAllRoles = () => axios.get(`/roles`)
