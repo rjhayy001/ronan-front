@@ -122,23 +122,28 @@
             </div>
             <div v-if="data.rtts.length > 0">
                 <v-row>
-                    <v-col cols="10">
+                    <v-col cols="12" class="d-flex justify-space-between">
                         <p style="font-size: 18px;font-weight:bold;margin-bottom:0!important;margin-top:15px;">RTT converti en especes</p>
+                        <p>
+                            <v-btn-toggle
+                                rounded
+                                borderless
+                            >
+                                <v-btn
+                                    text
+                                    class="mx-2"
+                                    fab
+                                    large
+                                    @click="convert = !convert"
+                                >
+                                    <v-icon style="font-size:30px;">mdi-swap-horizontal</v-icon>
+                                </v-btn>
+                            </v-btn-toggle>
+                        </p>
                     </v-col>
-                    <v-col cols="2">
-                        <v-btn-toggle
-                            rounded
-                            borderless
-                        >
-                        <v-btn
-                            text
-                            class="mx-2"
-                            fab
-                            large
-                        >
-                            <v-icon style="font-size:30px;">mdi-swap-horizontal</v-icon>
-                        </v-btn>
-                        </v-btn-toggle>
+                    <v-col cols="12" v-if="convert">
+                        <v-text-field v-model="convertable" placeholder="0.00" @keydown.enter="convertBalance">
+                        </v-text-field>
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
@@ -265,7 +270,8 @@ import {
     UpdateEmployee,
     GetEmployeeInfo,
     DeleteEmployee,
-    changeStatus
+    changeStatus,
+    useBalance
     } from "@/repositories/employee.api";
 export default {
     data(){
@@ -275,6 +281,8 @@ export default {
             edit: false,
             isActive: false,
             dialog2: false,
+            convert: false,
+            convertable: "",
             month: moment().format('MMM YYYY'),
             create_data:{}
         }
@@ -324,13 +332,45 @@ export default {
             }else{
                 this.data.isActive = 1
             }
-            console.log(this.data)
+            // console.log(this.data)
             changeStatus(this.data).then((data) =>{
                 if(data){
                     this.$toast.success("Status Updated Successfully")
                 }
             })
             
+        },
+        convertBalance(){
+            let datas = {
+                user_id: this.data.id,
+                amount: this.convertable
+            }
+            if(this.convertable != ""){
+                useBalance(datas).then((data) => {
+                    // console.log(data)
+                    if(data.status == 200){
+                        this.$toast.success(data.data.message)
+                        this.initialize()
+                        this.convertable = ""
+                        this.convert = false
+                    }
+                }).catch((response) =>{
+                    console.log(response)
+                    let code = response.message.split(' ')
+                    let lastNum = parseInt(code.length - 1)
+                    if(code[lastNum]== "422"){
+                        this.$toast.error("Limite dépassée")
+                        this.convertable = ""
+                    }
+                    else if(code[lastNum]== "404"){
+                        this.$toast.error("Échec de mise à jour, Utilisateur non trouvé")
+                        this.convertable = ""
+                    }
+                })
+            }
+            else{
+                this.$toast.error("Aucune valeur")
+            }
         },
         addWork(){
             var monthDate = moment(moment(this.year+'-'+this.month_digit), 'YYYY-MM'); 

@@ -11,6 +11,8 @@ export const UpdateEmployee = (id, payload) => axios.put(`${resource}/${id}`, pa
 export const GetEmployeeInfo = (id) => axios.get(`${resource}/get_user/${id}`)
 export const changeStatus = (payload) => axios.put(`${resource}/updateStatus/`, payload)
 
+//paid status
+export const useBalance = (payload) => axios.put(`/paid_status/use`, payload)
 //roles
 export const GetAllRoles = () => axios.get(`/roles`)
 // demands

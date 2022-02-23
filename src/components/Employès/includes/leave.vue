@@ -50,7 +50,7 @@ export default {
       initialize(){
         let id = this.$route.params.id
         GetUserDemand(id).then(({data}) => {
-          console.log(data, 'test')
+          // console.log(data, 'test')
           this.demand = data
         })
       },
