@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div >
         <v-card>
-            <v-form>
+            <v-form ref="form">
                 <v-container>
                     <v-row class="row">
                         <div class="dialog-header mb-2">
@@ -149,7 +149,10 @@ export default {
         this.initialize()
     },
     methods:{
-       
+        close(){
+            this.$refs.form.resetValidation();
+            this.$emit('close')
+        },
         initialize(){
             GetRawRegions().then(({data})=> {
                 this.regions = data

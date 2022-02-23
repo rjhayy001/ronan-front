@@ -8,6 +8,9 @@
 
 
 
+.v-application {
+  font-family: monospace!important;
+}
 
 .main_tabs .v-item-group .v-slide-group__wrapper .tabs .theme--light.v-tabs>.v-tabs-bar .v-tab--disabled, .theme--light.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active), .theme--light.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active)>.v-btn, .theme--light.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active)>.v-icon{
     color: white!important;
@@ -53,4 +56,17 @@
 .theme--light.no-stripe.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:last-child, .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row), .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:last-child, .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row), .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
   border-bottom: none !important;
 }
+
+::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+  }
+  ::-webkit-scrollbar-track-piece  {
+  background-color: transparent;
+  }
+  ::-webkit-scrollbar-thumb:vertical {
+  height: 30px;
+  -webkit-border-radius: 1ex;
+  background-color: orange;
+  }
 

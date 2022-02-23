@@ -63,10 +63,55 @@ export default {
                 name: [
                     v => !!v || 'Le nom est requis',
                 ],
+                email: [
+                    v => !!v || "L'e-mail est nécessaire",
+                    v => /.+@.+\..+/.test(v) || "L'e-mail doit être valide",
+                ],
                 street: [
                     v => !!v || 'Le rue est requis',
                 ],
+                address: [
+                    v => !!v || "L'adresse est requise",
+                ],
                 city: [
+                    v => !!v || 'Le ville est requis',
+                ],
+                code_postal: [
+                    v => !!v || "Le code postal est nécessaire",
+                    v=> {
+                        const pattern = /^\d+$/;
+                        return pattern.test(v) || 'Chiffres uniquement'
+                    }
+                ],
+                number: [
+                    v => !!v || "Le numéro de contact est nécessaire",
+                    v=> {
+                        const pattern = /^\d+$/;
+                        return pattern.test(v) || 'Chiffres uniquement'
+                    }
+                ],
+            },
+            employee: {
+                first_names: [
+                    v => !!v || 'Le prénom est requis',
+                ],
+                last_names: [
+                    v => !!v || 'Le nom de famille est requis',
+                ],
+                passwords: [
+                    v => !!v || 'Le mot de passe est requis',
+                ],
+                email: [
+                    v => !!v || "L'e-mail est nécessaire",
+                    v => /.+@.+\..+/.test(v) || "L'e-mail doit être valide",
+                ],
+                street: [
+                    v => !!v || 'Le rue est requis',
+                ],
+                addresse: [
+                    v => !!v || "L'adresse est requise",
+                ],
+                citys: [
                     v => !!v || 'Le ville est requis',
                 ],
                 code_postal: [

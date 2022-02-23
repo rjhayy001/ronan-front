@@ -494,11 +494,12 @@ export default {
             console.log(this.updated_user, 'test')
             UpdateInfo(this.updated_user.id, this.updated_user).then(({data}) =>{
                 this.$store.state.user= this.updated_user
-                this.$nextTick(function () {
-                    this.initialize()
-                })
                 console.log(data, 'info')
                 this.$toast.success('Updated Succesfullly')
+                this.$nextTick(function () {
+                    this.initialize()
+                    this.$forceUpdate();
+                })
             })
         }
     },

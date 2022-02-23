@@ -1,8 +1,8 @@
 <template>
-  <div>
+    <div>
         <template v-if="!loading">
-            <v-subheader class="">
-                <p class="sub_title">Employees</p>
+            <v-subheader class="my-2">
+                <p class="sub_title">Liste de tous les employés</p>
                 <v-spacer></v-spacer>
                  <v-text-field
                     class="my-2 mr-2 shrink"
@@ -54,25 +54,28 @@
                     </v-icon>
                 </template>
             </v-data-table>
+            <ViewTable
+                v-if="!view_list"
+                :employees="employees"
+            />
         </template>
         <table-loader v-else></table-loader>
         <add-employee
             v-if="addEmployee"
             :dialog="addEmployee"
             @close="addEmployee=false"
-        >
-
-        </add-employee>
-  </div>
-  
+        ></add-employee>
+    </div>
 </template>
 <script>
 import { GetAllEmployees} from "@/repositories/employee.api";
 // import addEmploDialog from "@/components/"
-import  addEmployee from "./includes/adddialog.vue"
+import ViewTable from './includes/viewTable.vue'
+import  addEmployee from "./includes/addEmployee.vue"
 // import axios from "axios";
 export default {
      components : {
+         ViewTable,
        addEmployee,
     },
     data(){

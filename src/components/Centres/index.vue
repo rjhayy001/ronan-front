@@ -52,6 +52,7 @@
 
                 <ViewTable
                     v-if="!view_list"
+                    :centers="centers"
                 />
         </template>
         <table-loader v-else></table-loader>
@@ -64,12 +65,13 @@ import { GetAllCenters } from "@/repositories/center.api";
 export default {
     components: {
         ViewTable,
-        createForm
+        createForm,
     },
     data(){
         return{
             search:'',
             dialog:false,
+            edit:false,
             centers:[],
             headers: [
                 { text: 'Nom', value: 'name', width: '20%'},
