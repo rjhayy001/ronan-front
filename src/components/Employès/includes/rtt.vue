@@ -6,7 +6,7 @@
           :hide-default-footer="true"
       >
         <template v-slot:item.status="{item}">
-          <p v-if="item.status = 1">Actifs</p>
+          <p v-if="item.status = 1">Actifs <v-icon color="success">mdi-circle-medium</v-icon></p>
           <p v-else>Inactif</p>
         </template>
       </v-data-table>

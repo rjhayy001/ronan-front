@@ -1,5 +1,5 @@
 <template>
-<v-dialog v-model="dialog2" width="700">
+<v-dialog v-model="dialog2" width="700" persistent>
     <v-card rounded>
         <v-toolbar dense flat class="py-4">
             <v-toolbar-title>Create Planification</v-toolbar-title>
