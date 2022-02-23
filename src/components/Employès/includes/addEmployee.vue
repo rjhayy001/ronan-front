@@ -100,51 +100,53 @@
                                     required
                                 ></v-text-field>
                             </v-col>
-                            <v-menu
-                                ref="start_date"
-                                v-model="start_menu"
-                                :close-on-content-click="false"
-                                transition="scale-transition"
-                                offset-y
-                                max-width="auto"
-                                min-width="0"
-                            >
-                                <template v-slot:activator="{ on, attrs }">
-                                    <v-btn 
-                                        solo 
-                                        text 
-                                        v-on="on" 
-                                        v-bind="attrs" 
-                                        width="100%" 
-                                        class="calendar_btn"
-                                    >
-                                        <span class="text" style="    margin: auto auto auto 20px!important">
-                                            {{employee.birth_date ? employee.birth_date : 'Choissisez la date'}}
-                                        </span>
-                                        <v-icon class="mr-2">mdi-calendar-outline</v-icon>
-                                    </v-btn>
-                                </template>
-                                <v-date-picker
-                                    v-model="employee.birth_date"
-                                    no-title
-                                    scrollable
+                            <v-col cols="12">
+                                <v-menu
+                                    ref="start_date"
+                                    v-model="menu"
+                                    :close-on-content-click="false"
+                                    transition="scale-transition"
+                                    offset-y
+                                    max-width="auto"
+                                    min-width="0"
                                 >
-                                    <v-spacer></v-spacer>
-                                    <v-btn
-                                        text
-                                        color="primary"
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-btn 
+                                            solo 
+                                            text 
+                                            v-on="on" 
+                                            v-bind="attrs" 
+                                            width="100%" 
+                                            class="calendar_btn"
+                                        >
+                                            <span class="text" style="    margin: auto auto auto 20px!important">
+                                                {{employee.birth_date ? employee.birth_date : 'Choisir la date de naissance'}}
+                                            </span>
+                                            <v-icon class="mr-2">mdi-calendar-outline</v-icon>
+                                        </v-btn>
+                                    </template>
+                                    <v-date-picker
+                                        v-model="employee.birth_date"
+                                        no-title
+                                        scrollable
                                     >
-                                        Cancel
-                                    </v-btn>
-                                    <v-btn
-                                        @click="$refs.start_date.save(employee.birth_date)"
-                                        text
-                                        color="primary"
-                                    >
-                                        OK
-                                    </v-btn>
-                                </v-date-picker>
-                            </v-menu>
+                                        <v-spacer></v-spacer>
+                                        <v-btn
+                                            text
+                                            color="primary"
+                                        >
+                                            Cancel
+                                        </v-btn>
+                                        <v-btn
+                                            @click="$refs.start_date.save(employee.birth_date)"
+                                            text
+                                            color="primary"
+                                        >
+                                            OK
+                                        </v-btn>
+                                    </v-date-picker>
+                                </v-menu>
+                            </v-col>
                             <v-col cols="12">
                                 <div>
                                     <h5 style="padding-top: 20px">

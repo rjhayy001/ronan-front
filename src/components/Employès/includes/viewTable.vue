@@ -55,35 +55,34 @@
             style="background-color:#fafafa"
         >
             <v-list>
-                <v-list-item class="table_list">
+                <v-list-item class="table_list" v-for="(item, index) in employees" :key="index+item.id+'employeelist'"
+                    @click="$router.push({name: 'view_employee', params: { id: item.id },})"
+                >
                     <v-list-item-icon style="margin: auto 20px auto 10px">
-                        <v-avatar max-width="none" height="50px" width="50px">
+                        <v-avatar max-width="none" height="40px" width="40px">
                             <img src="@/assets/images/logo-securauto-150.png" alt="">
                         </v-avatar>
                     </v-list-item-icon>
                     <v-list-item-content>
                         <v-list-item-title>
-                            <h2 style="font-weight: 400">
-                            asd
-                            </h2>
+                            <h3 style="font-weight: 400">
+                            {{item.full_name}}
+                            </h3>
                         </v-list-item-title>
                         <v-list-item-title>
-                            <h4 style="font-weight: 400; color: gray">
-                            asd
-                            </h4>
+                            <h5 style="font-weight: 400; color: gray">
+                            {{item.address}}
+                            </h5>
                         </v-list-item-title>
                         <v-list-item-title class="d-flex" style="gap: 5px">
-                            <h4 style="font-weight: 400; color: gray">
-                            asd
-                            </h4>
-                            <h4 style="font-weight: 400; color: gray">
-                            asdasd
-                            </h4>
+                            <h5 style="font-weight: 400; color: gray">
+                            {{item.city}}
+                            </h5>
                         </v-list-item-title>
                         <v-list-item-title>
-                            <h4 style="font-weight: 400; color: gray">
-                            asd
-                            </h4>
+                            <h5 style="font-weight: 400; color: gray">
+                            {{item.mobile}}
+                            </h5>
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
@@ -93,6 +92,12 @@
 </template>
 <script>
 export default {
+    props:{
+        employees: {
+            required: true,
+            type: Array
+        }
+    },
     data(){
         return{
             e2:'100',

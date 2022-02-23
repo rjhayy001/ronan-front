@@ -1,7 +1,7 @@
 <template>
     <div>
         <template v-if="!loading">
-            <v-subheader class="">
+            <v-subheader class="my-2">
                 <p class="sub_title">Liste de tous les employés</p>
                 <v-spacer></v-spacer>
                  <v-text-field
@@ -56,6 +56,7 @@
             </v-data-table>
             <ViewTable
                 v-if="!view_list"
+                :employees="employees"
             />
         </template>
         <table-loader v-else></table-loader>
