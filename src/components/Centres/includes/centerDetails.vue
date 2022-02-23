@@ -22,9 +22,7 @@
             <span>retour</span>
           </v-btn>
         </v-card-title>
-
         <v-spacer></v-spacer>
-
       </v-row>
     </v-img>
 
@@ -178,15 +176,21 @@
       </v-list-item>
 
     </v-list>
+  <edit-form :dialog="dialog" @close="dialog=false" :center="center" @success="$emit('success')"></edit-form>
   </v-card>
 </template>
 <script>
+import editForm from '../edit.vue'
 import { GetRawRegions } from "@/repositories/region.api"
 import { updateCenterRegion, AssignManager } from "@/repositories/center.api"
 import { GetAllEmployees } from "@/repositories/employee.api";
 export default {
+      components: {
+        editForm,
+    },
   data(){
     return {
+      dialog:false,
       editing_region: false,
       editing_manager: false,
       regions: [],
@@ -202,9 +206,11 @@ export default {
     },
   },
   created(){
-    this.initialize()
   },
   methods:{
+    test(){
+      alert('sad')
+    },
     initialize(){
       this.getRegions()
       this.getEmployees()
@@ -212,7 +218,9 @@ export default {
       this.current_manager = this.center.manager
     },
     editCenter(){
-      alert('test')
+        this.$nextTick(function (){
+          this.dialog = true
+        })
     },
     getRegions(){
       GetRawRegions().then(({data}) => {
@@ -222,6 +230,7 @@ export default {
     getEmployees(){
       GetAllEmployees().then(({data}) => {
         this.employees = data
+        console.log(this.employees,"employee")
       })
     },
     saveRegion(){
@@ -263,7 +272,11 @@ export default {
         })
         this.editing_manager = false
       })
-    }
+    },
+    // view(center){
+    //   console.log(center,"for update")
+    //   // this.$router.push({name: 'view_center', params: { id: item.id },})
+    // }
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+    <div>
         <template v-if="!loading">
             <v-subheader class="">
                 <p class="sub_title">Employees</p>
@@ -60,16 +60,13 @@
             v-if="addEmployee"
             :dialog="addEmployee"
             @close="addEmployee=false"
-        >
-
-        </add-employee>
-  </div>
-  
+        ></add-employee>
+    </div>
 </template>
 <script>
 import { GetAllEmployees} from "@/repositories/employee.api";
 // import addEmploDialog from "@/components/"
-import  addEmployee from "./includes/adddialog.vue"
+import  addEmployee from "./includes/addEmployee.vue"
 // import axios from "axios";
 export default {
      components : {
