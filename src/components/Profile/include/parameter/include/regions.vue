@@ -143,9 +143,11 @@ export default {
                 CreateRegions(this.payload).then(({data})=> {
                     this.$arrayupdater(data, this.regions)
                     this.addRegions = false
-                    this.$toast.success('added succesfullly')
+                    this.$toast.success('Successfully added')
                     this.clear()
                 })
+            }else{
+                this.$toast.error('Do not leave empty field')
             }
         },
         clear() {

@@ -1,8 +1,8 @@
 <template>
     <div>
         <v-card>
-            <v-form ref="form">
-                <v-container>
+            <v-form ref="form" lazy-validation>
+                <v-container class="center_form">
                     <v-row class="row">
                         <div class="dialog-header mb-2" style="display:flex; flex-direction:row">
                             <div>
@@ -21,12 +21,14 @@
                             cols="12"
                         >
                             <v-text-field
+                                :rules="centre.name"
                                 v-model="data.name"
                                 placeholder="Entrez nouveau nom"
                                 dense
                                 prepend-inner-icon="mdi-rename-box"
                                 outlined
                                 clearable
+                                
                             ></v-text-field>
                         </v-col>
                         <v-col
@@ -71,7 +73,7 @@
                             cols="12"
                         >
                             <v-text-field
-                                :rules="centre.city"
+                                :rules="centre.citys"
                                 v-model="data.city"
                                 placeholder="Entrez nouvelle ville"
                                 dense
@@ -158,12 +160,16 @@ export default {
             this.$emit('close')
         },
         submit() {
-            console.log(this.center, "cemtyer")
-            UpdateCenter(this.data.id, this.data).then(() => {
-                this.$emit('close') 
-                this.$toast.success('successful center update')
-                this.$emit('success')
-            })
+            this.$refs.form.validate()
+            if(this.$refs.form.validate() == true) {
+                UpdateCenter(this.data.id, this.data).then(() => {
+                    this.$emit('close') 
+                    this.$toast.success('successful center update')
+                    this.$emit('success')
+                })
+            }else{
+                this.$toast.error('Do not leave empty field')
+            }
         },
         reset() {
             this.$refs.form.resetValidation();

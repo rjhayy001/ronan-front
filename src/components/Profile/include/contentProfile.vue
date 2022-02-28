@@ -1,5 +1,5 @@
 <template>
-    <v-container style="margin:auto; padding:0; max-width:99%; justify-content:center">
+    <v-container style="margin: 70px auto auto auto; padding:0; max-width:99%; justify-content:center">
         <div style="width: 100%; margin:auto; text-align: center;">
             <div>
                 <v-avatar max-width="none" height="200px" width="200px">

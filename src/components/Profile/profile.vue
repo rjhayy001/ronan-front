@@ -1,6 +1,6 @@
 <template>
-    <v-dialog fullscreen v-model="dialog" class="dialogProfile" >
-        <div class="content" style="display:flex; padding: 10px;">
+    <v-dialog fullscreen v-model="dialog" class="dialogProfile">
+        <div class="content" style="background-color:white;display:flex; padding: 10px; position:fixed; z-index:2 ">
             <v-btn @click="close" large icon>
                 <v-avatar class="logo_img">
                     <img src="@/assets/images/logo-securauto-150.png" alt="">
@@ -11,8 +11,16 @@
                     Mes Profil
                 </h2>
             </div>
+            <v-spacer></v-spacer>
+            <div style="margin: auto 0">
+                <v-btn to="parameter/general" icon>
+                    <v-icon color="#005075">
+                        mdi-cog
+                    </v-icon>
+                </v-btn>
+            </div>
         </div>
-        <content-profile style="z-index:10"/>
+        <content-profile style=" top: 50px; background-color:#fafafa"/>
     </v-dialog>
 </template>
 
