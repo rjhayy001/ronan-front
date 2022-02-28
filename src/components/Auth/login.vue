@@ -105,6 +105,8 @@ export default {
         checkbox: true,
         email: "ronan@admin.com",
         password: "password",
+        email1: "ronan@admin.com",
+        password2: "password",
     };
   },
   methods: {
@@ -128,7 +130,7 @@ export default {
                 this.$toast.error(response.data.message) 
             })
         }else{
-            this.$toast.error('All Field are Required')
+            this.$toast.error('Do not leave empty field')
         }
     },
   },

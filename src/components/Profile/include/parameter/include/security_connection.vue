@@ -378,10 +378,6 @@ export default {
             old_password: false,
             new_password: false,
             confirm_new_password: false,
-            // rules: {
-            //     required: value => !!value || 'Required.',
-            //     // min: v => v.length >= 8 || 'Min 8 characters',
-            // },
             password: 'password',
             email: false,
             code: false,
@@ -394,6 +390,9 @@ export default {
         clickCode() {
             this.$refs.form.reset()
             this.code = true;
+        },
+        clickResetPassword() {
+            alert('sad')
         }
     }
 }

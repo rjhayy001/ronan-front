@@ -21,7 +21,7 @@
             </div>
         </div>
         <v-card class="login-container">
-            <v-form ref="form" class="login-form">
+            <v-form ref="form" class="login-form" style="position:relative">
                 <div class="form_head">
                     <div class="head_avatar">
                         <v-avatar max-width="none" height="150px" width="150px">
@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="form_textfield mt-8">
-                    <div class="login_field">
+                    <div class="login_field" style="position:relative">
                         <v-text-field
                             :rules="loginRules.email"      
                             class="my-2"
@@ -47,17 +47,17 @@
                             solo
                             placeholder="Enter votre Email"
                         ></v-text-field>
-                    </div>
-                    <div class="resetpassword">
-                        <v-btn class="btn-reset" @click="toPasswordreset()" height="100%!important" flat text>
-                            <span>
-                                Vous avez déjà le code ?
-                            </span>
-                        </v-btn>
+                        <div class="resetpassword">
+                            <v-btn class="btn-reset" @click="toPasswordreset()" height="100%!important" flat text>
+                                <span>
+                                    Vous avez déjà le code ?
+                                </span>
+                            </v-btn>
+                        </div>
                     </div>
                 </div>
                 <div class="action_login">
-                    <div class="mt-5 text-center">
+                    <div class="mt-7 text-center">
                         <v-btn class="val-btn" width="100%" rounded color="primary" dark x-large>
                             Valider
                         </v-btn>

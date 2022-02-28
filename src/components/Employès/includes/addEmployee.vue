@@ -6,7 +6,7 @@
     >
         <v-card>
             <v-form ref="form">
-                <v-container>
+                <v-container class="employee_form">
                     <v-row class="row">
                         <div class="dialog-header mb-2" style="display:flex; flex-direction:row;">
                             <div class="d-flex" style="padding: 0 0 0 10px">
@@ -43,6 +43,7 @@
                             </v-col>
                             <v-col cols="12">
                                 <v-text-field
+                                    :rules="employee.emails"
                                     outlined
                                     dense
                                     v-model="employee.email"
@@ -239,12 +240,7 @@ export default {
     methods: {
        addEmployee(){
            this.$refs.form.validate()
-           if(this.$refs.form.validate() == true && this.employee.first_name != '' &&
-                this.employee.last_name != '' && this.employee.password != '' &&
-                this.employee.address != '' && this.employee.city != '' &&
-                this.employee.zip_code != '' && this.employee.mobile != ''
-            ){
-
+           if(this.$refs.form.validate() == true && this.employee.birth_date != ''){
                 addEmployee(this.employee).then(res=>{
                     console.log(res)
                     this.$emit('close')

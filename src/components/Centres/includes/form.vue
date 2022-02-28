@@ -2,7 +2,7 @@
     <div >
         <v-card>
             <v-form ref="form">
-                <v-container>
+                <v-container class="center_form">
                     <v-row class="row">
                         <div class="dialog-header mb-2">
                             <div class="dialog-title">
@@ -32,7 +32,7 @@
                             <v-text-field
                                 label="Rue"
                                 placeholder="Rue"
-                                :rules="centre.street"
+                                :rules="centre.address"
                                 dense
                                 v-model="center.address"
                                 prepend-inner-icon="mdi-google-street-view"
@@ -45,7 +45,7 @@
                             <v-text-field
                                 label="Ville"
                                 placeholder="Ville"
-                                :rules="centre.city"
+                                :rules="centre.citys"
                                 v-model="center.city"
                                 dense
                                 prepend-inner-icon="mdi-city"
@@ -141,7 +141,8 @@ export default {
                 city:'',
                 zip_code: '',
                 address:'',
-                mobile:''
+                mobile:'',
+                street:''
             }
         }
     },
@@ -151,6 +152,13 @@ export default {
     methods:{
         close(){
             this.$refs.form.resetValidation();
+            this.center.name=''
+            this.center.address=''
+            this.center.city=''
+            this.center.zip_code=''
+            this.center.mobile=''
+            this.center.street=''
+            this.center.region_id=this.regions[0].id
             this.$emit('close')
         },
         initialize(){
@@ -160,11 +168,16 @@ export default {
             })
         },
         create(){
-            CreateCenter(this.center).then(() => {
-                this.$toast.success('successfully created center')
-                this.$emit('success')
-                this.$emit('close')
-            })
+            this.$refs.form.validate()
+            if(this.$refs.form.validate() == true) {
+                CreateCenter(this.center).then(() => {
+                    this.$toast.success('uccessfully created center')
+                    this.$emit('success')
+                    this.$emit('close')
+                })
+            }else{
+                this.$toast.error('Do not leave empty field')
+            }
         }
     }
 }

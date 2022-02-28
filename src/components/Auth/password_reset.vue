@@ -48,6 +48,22 @@
                             solo
                             placeholder="Entrer le code de validation"
                         ></v-text-field>
+                        <v-text-field
+                            :rules="loginRules.code"      
+                            class="my-2"
+                            outlined
+                            prepend-inner-icon="mdi-email-outline"
+                            solo
+                            placeholder="Entrer le code de validation"
+                        ></v-text-field>
+                        <v-text-field
+                            :rules="loginRules.code"      
+                            class="my-2"
+                            outlined
+                            prepend-inner-icon="mdi-email-outline"
+                            solo
+                            placeholder="Entrer le code de validation"
+                        ></v-text-field>
                     </div>
                 </div>
                 <div class="action_login">
