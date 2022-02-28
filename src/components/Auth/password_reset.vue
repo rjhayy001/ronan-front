@@ -44,31 +44,35 @@
                             :rules="loginRules.code"      
                             class="my-2"
                             outlined
+                            v-model="token"
                             prepend-inner-icon="mdi-email-outline"
                             solo
                             placeholder="Entrer le code de validation"
                         ></v-text-field>
                         <v-text-field
-                            :rules="loginRules.code"      
+                            :rules="loginRules.password"      
                             class="my-2"
                             outlined
                             prepend-inner-icon="mdi-email-outline"
+                            v-model="new_password"
                             solo
-                            placeholder="Entrer le code de validation"
+                            type="password"
+                            placeholder="Enter new Password"
                         ></v-text-field>
                         <v-text-field
-                            :rules="loginRules.code"      
+                            :rules="loginRules.password"      
                             class="my-2"
+                            type="password"
                             outlined
                             prepend-inner-icon="mdi-email-outline"
                             solo
-                            placeholder="Entrer le code de validation"
+                            placeholder="Confirm Password"
                         ></v-text-field>
                     </div>
                 </div>
                 <div class="action_login">
                     <div class="mt-5 text-center">
-                        <v-btn class="action_log-btn" width="100%" rounded color="primary" dark x-large>
+                        <v-btn class="action_log-btn" @click="resetPassword" width="100%" rounded color="primary" dark x-large>
                             Valider
                         </v-btn>
                     </div>
@@ -83,14 +87,32 @@
     </div>
 </template>
 <script>
+import { ResetPassword } from "@/repositories/auth.api";
 export default {
-  name: "Login",
   data() {
     return {
-
+        token: '',
+        new_password: '',
     };
   },
   methods: {
+    resetPassword(){
+        let payload = {
+            email: localStorage.getItem('email_to_reset'),
+            token: this.token,
+            password: this.new_password
+        }
+
+        ResetPassword(payload).then(({data}) =>{
+            console.log(data, 'test')
+            this.$toast.success(data.message)
+            this.$router.push({ name: "login"})
+        }).catch((response) =>{
+            console.log(response,'sad')
+            this.$toast.error('Invalid Token') 
+        })
+
+    },
     forgotpassword(){
         this.$router.push({ name: "forgotpassword"})
     },

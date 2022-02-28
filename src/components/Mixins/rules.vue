@@ -53,10 +53,6 @@ export default {
                 ],
                 code: [
                     v => !!v || "Le code est nécessaire",
-                    v=> {
-                        const pattern = /^\d+$/;
-                        return pattern.test(v) || 'Chiffres uniquement'
-                    }
                 ]
             },
             centre: {
