@@ -304,7 +304,7 @@ import { GetAllRegions } from "@/repositories/region.api"
     },
       data() {
         return {
-          employee_view:true,
+          employee_view:false,
           e2:'Jours',
           edit_holiday_dialog: false,
           edit_holiday_data:{},
