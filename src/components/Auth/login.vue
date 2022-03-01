@@ -29,14 +29,14 @@
                         </v-avatar>
                     </div>
                     <div class="head_text">
-                        <h1>
+                        <h2>
                             Compte de connexion
-                        </h1>
-                        <h3>
+                        </h2>
+                        <h5>
                             Entrez information d'identification et assurez-vous
                             qu'elles sont valides avant de pouvoir continuer utiliser
                             notre application
-                        </h3>
+                        </h5>
                     </div>
                 </div>
                 <div class="form_textfield mt-8">
@@ -75,7 +75,7 @@
                             color="primary"
                             hide-details
                         ></v-checkbox>
-                        <v-btn class="btn-forpass" @click="toForget" height="100%!important" flat text>
+                        <v-btn class="btn-forpass" @click="toForget" height="100%!important" text>
                             <span>
                                 Mot de passe oublié ?
                             </span>

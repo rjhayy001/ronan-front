@@ -19,7 +19,7 @@
                             <div class="ml-3">
                                 <h3
                                  style="letter-spacing:2px; color:#058cd1;">NOUVELLE DEMANDE DE RTT</h3>
-                                <p style="font-weight:200;">Veullez remplir tous les champs ci-dessous et cliquez sur soumettre. Merci!</p>
+                                <p style="font-weight:600; font-size: 12px; color:#7e7e7e">Veuillez remplir tous les champs ci-dessous et cliquez sur soumettre. Merci!</p>
                             </div>
                         </div>
                         <v-col
@@ -56,7 +56,7 @@
                                         style="color:#909090; justify-content: initial;"
                                     >
                                        <v-icon class="mr-2">mdi-calendar-outline</v-icon>
-                                       {{rtt.date ? rtt.date : 'choose date'}}
+                                       {{rtt.date ? rtt.date : 'Choisissez la date'}}
                                    </v-btn>
                                 </template>
                                 <v-date-picker
@@ -70,7 +70,7 @@
                                     color="primary"
                                     @click="date = false"
                                 >
-                                    Cancel
+                                    ANNULER
                                 </v-btn>
                                 <v-btn
                                     text
@@ -102,7 +102,7 @@
                                         style="color:#909090; justify-content: initial;"
                                     >
                                        <v-icon class="mr-2">mdi-clock-outline</v-icon>
-                                       {{rtt.start_time ? rtt.start_time : 'choose start time'}}
+                                       {{rtt.start_time ? rtt.start_time : "Choisissez l'heure de début"}}
                                    </v-btn>
                                 </template>
                                 <v-time-picker
@@ -133,7 +133,7 @@
                                         style="color:#909090; justify-content: initial;"
                                     >
                                        <v-icon class="mr-2">mdi-clock-outline</v-icon>
-                                       {{rtt.end_time ? rtt.end_time : 'choose end time'}}
+                                       {{rtt.end_time ? rtt.end_time : "Choisissez l'heure de fin"}}
                                    </v-btn>
                                 </template>
                                 <v-time-picker

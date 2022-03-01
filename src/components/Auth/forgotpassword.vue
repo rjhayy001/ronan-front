@@ -32,12 +32,12 @@
                         </v-avatar>
                     </div>
                     <div class="head_text">
-                        <h1>
+                        <h2>
                             Mot de passe oublié
-                        </h1>
-                        <h3>
+                        </h2>
+                        <h5>
                             Nous essaierons de recuperer votre compte perdu
-                        </h3>
+                        </h5>
                     </div>
                 </div>
                 <div class="form_textfield mt-8">
@@ -60,7 +60,7 @@
                         </v-btn>
                     </div>
                 </div>
-                <div class="action_login">
+                <div class="action_login" style="padding-top: 2px">
                     <div class="mt-5 text-center">
                         <v-btn class="val-btn" @click="sendToken" width="100%" rounded color="primary" dark x-large>
                             Valider
@@ -87,18 +87,22 @@ export default {
     },
   methods: {
     sendToken(){
-        this.loading = true
-        let payload = {
-            email: this.email
+        this.$refs.form.validate()
+        if(this.$refs.form.validate() == true) {
+            this.loading = true
+            let payload = {
+                email: this.email
+            }
+            SendEmailToken(payload).then(({data}) =>{
+                console.log(data, 'sad')
+                localStorage.setItem('email_to_reset', this.email)
+                this.$toast.success(data.message)
+                this.$router.push({ name: "password-reset"})
+                this.loading = false
+            })
+        }else{
+            this.$toast.error('Do not leave empty field')
         }
-
-        SendEmailToken(payload).then(({data}) =>{
-            console.log(data, 'sad')
-            localStorage.setItem('email_to_reset', this.email)
-            this.$toast.success(data.message)
-            this.$router.push({ name: "password-reset"})
-            this.loading = false
-        })
     },
     toLogin(){
         this.$router.push({ name: "login"})

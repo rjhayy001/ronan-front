@@ -19,7 +19,7 @@
                         </div>
                         <div 
                             v-if="email" 
-                            class="if_true"
+                            class="if_true parameter_field"
                         >
                             <v-card flat>
                                 <v-form  
@@ -35,7 +35,7 @@
                                             <h4 class="text">
                                                 Vous allez maintenant changer votre email.
                                             </h4>
-                                            <h4 class="text text_color">
+                                            <h4 class="text text_color" style="font-size: 12px!important">
                                                 Vous ne perdrez aucune donnée lors de 
                                                 la modification de votre e-mail. 
                                                 L'action ne peut pas être annulée
@@ -164,7 +164,7 @@
                         </div>
                         <div 
                             v-if="change" 
-                            class="if_true"
+                            class="if_true parameter_field"
                         >
                             <div class="security_connection">
                                 <v-icon color="yellow" class="icon-alert">
@@ -174,11 +174,11 @@
                                     <h4 class="text">
                                         Vous allez modifier votre mot de passe.
                                     </h4>
-                                    <h4 class="text text_color">
+                                    <h5 class="text text_color" style="font-size: 13px!important">
                                         Lors de la soumission, le système mettra à jour les informations 
                                         d'identification enregistrées dans votre appreil. 
                                         L'action ne peut pas être annulée
-                                    </h4>
+                                    </h5>
                                 </div>
                             </div>
                             <div class="vertical_center vertical-margin">
@@ -186,7 +186,7 @@
                                     Ancien mot de passe
                                 </h4>
                                 <v-text-field 
-                                    :rules="security_connection.old_password"
+                                    :rules="rules" 
                                     :append-icon="old_password ? 'mdi-eye' : 'mdi-eye-off'"
                                     @click:append="old_password = !old_password"
                                     :type="old_password ? 'text' : 'password'"
@@ -196,6 +196,7 @@
                                     outlined  
                                     dense 
                                     height="20px"
+                                    v-model="current_old_password"
                                 ></v-text-field>
                             </div>
                             <div class="vertical_center vertical-margin">
@@ -203,7 +204,7 @@
                                     Nouveau mot de passe
                                 </h4>
                                 <v-text-field
-                                    :rules="security_connection.new_password"
+                                    :rules="security_connection.change_password.new_password"
                                     :append-icon="new_password ? 'mdi-eye' : 'mdi-eye-off'"
                                     @click:append="new_password = !new_password"
                                     :type="new_password ? 'text' : 'password'"
@@ -213,6 +214,7 @@
                                     outlined  
                                     dense 
                                     height="20px"
+                                    v-model="current_new_password"
                                 ></v-text-field>
                             </div>
                             <div class="vertical_center vertical-margin">
@@ -220,7 +222,7 @@
                                     Confirmation du nouveau mot de passe
                                 </h4>
                                 <v-text-field
-                                    :rules="security_connection.confirm_password"
+                                    :rules="security_connection.change_password.confirm_password"
                                     :append-icon="confirm_new_password ? 'mdi-eye' : 'mdi-eye-off'"
                                     @click:append="confirm_new_password = !confirm_new_password"
                                     :type="confirm_new_password ? 'text' : 'password'" 
@@ -258,7 +260,7 @@
                             class="if_false"
                         >
                             <div>
-                                <v-text-field disabled readonly flat solo class="text_fw title_field pass_text" type="password" :value="password" ></v-text-field>
+                                <v-text-field hide-details="true" disabled readonly flat solo class="text_fw title_field pass_text" type="password" :value="password" ></v-text-field>
                             </div>
                             <v-spacer></v-spacer>
                             <div class="container_action"> 
@@ -287,7 +289,7 @@
                             </h4>
                         </div>
                         <div 
-                            class="if_true"
+                            class="if_true parameter_field"
                         >
                             <div class="security_connection">
                                 <v-icon color="green" class="icon-shield">
@@ -297,7 +299,7 @@
                                     <h4 class="text">
                                         Clé administrateur
                                     </h4>
-                                    <h4 class="text text_color text-2">
+                                    <h4 class="text text_color text-2" style="font-size: 13px!important">
                                         Attention : Cette clé permet de réinitialiser les congés de l'utilisateur
                                     </h4>
                                 </div>
@@ -328,7 +330,7 @@
                                         Ancienne clé d'administrateur
                                     </h4>
                                     <v-text-field 
-                                        :rules="security_connection.old_administrator_key"
+                                        :rules="security_connection.administrator_key.old_administrator_key"
                                         label="Ancienne clé d'administrateur"
                                         placeholder="Ancienne clé d'administrateur"
                                         class="text_field_margin"
@@ -342,7 +344,7 @@
                                         Nouvelle clé administrateur
                                     </h4>
                                     <v-text-field
-                                        :rules="security_connection.new_administrator_key"
+                                        :rules="security_connection.administrator_key.new_administrator_key"
                                         label="Nouvelle clé administrateur"
                                         placeholder="Nouvelle clé administrateur"
                                         class="text_field_margin" 
@@ -384,6 +386,9 @@ import { ChangeEmailSendToken, UpdateEmail } from "@/repositories/employee.api";
 export default {
     data(){
         return{
+            rules: [
+                v => !!v || 'Le mot de passe est requis', 
+                v =>  (v === this.current_password) || 'Le mot de passe doit correspondre'],
             loading:false,
             old_password: false,
             new_password: false,
@@ -392,6 +397,11 @@ export default {
             email: false,
             code: false,
             change:false,
+            current_old_password:'',
+            current_new_password:'',
+            confirm_current_new_password:'',
+            current_password:'',
+            confirm_password:'',
             validation_key: false,
             data: ["Secteur Nord","Secteur Sud","Autonome","Normandie"],
             change_email:{
@@ -400,39 +410,48 @@ export default {
             }
         }
     },
-    computed: {
-        curent_password() {
-            return localStorage.getItem('password')
-        },
+    mounted() {
+        if (localStorage.password) {
+            this.current_password = localStorage.getItem('password')
+        }
     },
     methods: {
         changeEmail(){
-            let payload = {
-                token: this.change_email.token
+            this.$refs.form.validate()
+            if(this.$refs.form.validate() == true) {
+                let payload = {
+                    token: this.change_email.token
+                }
+                UpdateEmail(payload).then(({data}) => {
+                    this.email = false
+                    this.$toast.success(data.message)
+                    this.$store.state.user = data.user
+                    this.$refs.form.reset()
+                }).catch(({ response }) => { 
+                    this.$toast.error(response.data.message) 
+                })
+            }else{
+                this.$toast.error('Do not leave empty field')
             }
-            UpdateEmail(payload).then(({data}) => {
-                this.email = false
-                this.$toast.success(data.message)
-                this.$store.state.user = data.user
-                this.$refs.form.reset()
-            }).catch(({ response }) => { 
-                this.$toast.error(response.data.message) 
-            })
-
         },
         sendTokenToEmail(){
-            this.loading = true
+            this.$refs.form.validate()
+            if(this.$refs.form.validate() == true) {
+                this.loading = true
 
-            let payload = {
-                email: this.change_email.new_email
+                let payload = {
+                    email: this.change_email.new_email
+                }
+
+                ChangeEmailSendToken(payload).then(({data}) => {
+                    console.log(data, 'sad')
+                    this.$toast.success(data.message)
+                    this.loading = false
+                    this.clickCode()
+                })
+            }else{
+                this.$toast.error('Do not leave empty field')
             }
-
-            ChangeEmailSendToken(payload).then(({data}) => {
-                console.log(data, 'sad')
-                this.$toast.success(data.message)
-                this.loading = false
-                this.clickCode()
-            })
         },
         clickCode() {
             this.$refs.form.reset()

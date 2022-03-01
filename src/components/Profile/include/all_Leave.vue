@@ -33,10 +33,10 @@ import { GetEmployeeHolidays } from "@/repositories/holidays.api"
             value: 'id',
             width:'10%'
           },
-          { text: 'Name of employee', align: 'start', value: 'user.full_name' },
-          { text: 'Start Date', align: 'start', value: 'start_date' },
-          { text: 'End Date', align: 'start', value: 'end_date' },
-          { text: 'status', align: 'start', value: 'status',  width:'10%' },
+          { text: 'Nom de la employé', align: 'start', value: 'user.full_name' },
+          { text: 'Date de debut', align: 'start', value: 'start_date' },
+          { text: 'Date de fin', align: 'start', value: 'end_date' },
+          { text: 'Statut', align: 'start', value: 'status',  width:'15%' },
         ],
       }
     },

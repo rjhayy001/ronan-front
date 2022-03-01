@@ -41,9 +41,9 @@
                             </h3>
                         </div>
                         <div>
-                            <h4>
+                            <h5 style="font-weight: 400">
                                 ( {{type.subtitle}} )
-                            </h4>
+                            </h5>
                         </div>
                     </template>
                 </v-radio>
@@ -82,8 +82,8 @@
                                 <h3 style=" font-weight: 400">
                                     Vérification de l'administrateur
                                 </h3>
-                                <h3 style=" font-weight: 400; color: gray">
-                                    Pour authentifier votre  identifié, veuillez saisir la clé administrateur.
+                                <h3 style=" font-weight: 400; color: gray; font-size: 12px">
+                                    Pour authentifier votre  identité, veuillez saisir la clé administrateur.
                                 </h3>
                             </div>
                         </div>
@@ -142,28 +142,28 @@ export default {
                 to_add: 2.08
             },
             users_to_reset: [
-                { id:1, name: 'All' },
-                { id:2, name: 'All seniors' },
-                { id:3, name: 'All Non-Seniors' },
+                { id:1, name: 'Tout' },
+                { id:2, name: 'Tout les Séniors' },
+                { id:3, name: 'Tout les Non-séniors' },
             ],
             types: [
                 {
                     id: 1,
                     name: "Standard",
                     value: 2.08,
-                    subtitle: "Ajouter 2,08 jours/employee"
+                    subtitle: "Ajouter 2,08 jours/employé"
                 },
                 {
                     id: 2,
-                    name: "Special",
+                    name: "Spécial",
                     value: 2.5,
-                    subtitle: "Ajouter 2,5 jours/employee"
+                    subtitle: "Ajouter 2,5 jours/employé"
                 },
                 {
                     id: 3,
-                    name: "Valuer specific",
+                    name: "Valeur spécifique",
                     value: null,
-                    subtitle: "Specifiez le nombre de jours a ajouter"
+                    subtitle: "Spécifiez le nombre de jours à ajouter"
                 },
             ]
             
