@@ -408,7 +408,7 @@ import { GetAllRegions } from "@/repositories/region.api"
             number: current.format('DD'),
             text: current.format('ddd'),
             date: current.format('YYYY-MM-DD')
-          }); 
+          })
           daysInMonth--; 
         } 
         this.date = arrDays.reverse();

@@ -82,7 +82,7 @@
 
         <v-list-item-content>
           <v-list-item-title class="item-title">{{center.address}}</v-list-item-title>
-          <v-list-item-subtitle>Address</v-list-item-subtitle>
+          <v-list-item-subtitle>Adresse</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
@@ -95,7 +95,7 @@
 
         <v-list-item-content>
           <v-list-item-title class="item-title">{{center.city}}</v-list-item-title>
-          <v-list-item-subtitle>City</v-list-item-subtitle>
+          <v-list-item-subtitle>Ville</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
@@ -108,7 +108,7 @@
 
         <v-list-item-content>
           <v-list-item-title class="item-title">{{center.zip_code}}</v-list-item-title>
-          <v-list-item-subtitle>Zip Code</v-list-item-subtitle>
+          <v-list-item-subtitle>Postal Code</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
