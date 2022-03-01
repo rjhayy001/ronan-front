@@ -257,6 +257,7 @@ export default {
                 this.$toast.success('successfully added holiday') 
                 this.$emit('success')
                 this.$emit('close')
+                this.$store.commit('toggleForceReload')
             }).catch(({ response }) => { 
                 this.$toast.error(response.data.message) 
             })

@@ -1,6 +1,9 @@
 <template>
     <v-dialog v-model="dialog" width="600" @click:outside="close" class="card-radius">
-        <v-card rounded>
+        <v-card rounded :loading="loading" :disabled="loading">
+            <template slot="progress">
+                <v-progress-linear color="orange" indeterminate></v-progress-linear>
+            </template>
             <v-toolbar dense flat class="py-4">
                 <v-toolbar-title>Edit Holiday</v-toolbar-title>
                 <v-spacer></v-spacer>
@@ -159,6 +162,7 @@
     </v-dialog>
 </template>
 <script>
+import { DeleteHoliday, Updateholiday } from '@/repositories/holidays.api'
 export default {
     props:{
         dialog: {
@@ -172,6 +176,7 @@ export default {
     },
     data(){
         return {
+            loading:false,
             editing:false,
             start_menu:false,
             end_menu:false,
@@ -184,6 +189,7 @@ export default {
     },
     methods: {
         initialize(){
+            console.log(this.data,'test')
             this.holiday = JSON.parse(JSON.stringify(this.data.holiday))
             this.employee = this.data.employee
             console.log(this.holiday)
@@ -192,10 +198,19 @@ export default {
             this.$emit('close')
         },
         destroy(){
-            alert('destroy')
+            this.loading = true
+            DeleteHoliday(this.holiday.id).then(({data}) =>  {
+                this.$arraysplicer(this.holiday, this.employee.holidays)
+                this.loading = false
+                this.close()
+                this.$toast.success(data.message)
+            })
         },
         save(){
-            alert('save')
+            Updateholiday(this.holiday.id, this.holiday).then(({data}) =>{
+                this.$toast.info(data.message)
+                this.close()
+            })
         }
     }
 }

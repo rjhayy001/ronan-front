@@ -12,3 +12,5 @@ export const GetPendingHolidays = () => axios.get(`${holiday}/all_pending`)
 
 export const DeclineHoliday = (payload) => axios.post(`${holiday}/decline_request`, payload)
 export const ApproveHoliday = (id) => axios.get(`${holiday}/approve_request/${id}`)
+export const DeleteHoliday = (id) => axios.delete(`${holiday}/${id}`)
+export const Updateholiday = (id, payload) => axios.put(`${holiday}/${id}`, payload)

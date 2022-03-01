@@ -25,7 +25,7 @@
                             <v-col cols="12">
                                 <v-text-field
                                     :rules="employee.first_names"
-                                    outlined
+                                    solo
                                     dense
                                     v-model="employee.first_name"
                                     label="Prenom"
@@ -34,7 +34,7 @@
                             <v-col cols="12">
                                 <v-text-field
                                     :rules="employee.last_names"
-                                    outlined
+                                    solo
                                     dense
                                     v-model="employee.last_name"
                                     label="Nom"
@@ -44,7 +44,7 @@
                             <v-col cols="12">
                                 <v-text-field
                                     :rules="employee.emails"
-                                    outlined
+                                    solo
                                     dense
                                     v-model="employee.email"
                                     label="Email*"
@@ -54,7 +54,7 @@
                             <v-col cols="12">
                                 <v-text-field
                                     :rules="employee.passwords"
-                                    outlined
+                                    solo
                                     dense
                                     v-model="employee.password"
                                     label="Mot de passe"
@@ -64,7 +64,7 @@
                             <v-col cols="12">
                                 <v-text-field
                                     :rules="employee.addresse"
-                                    outlined
+                                    solo
                                     dense
                                     v-model="employee.address"
                                     label="Adresse"
@@ -74,7 +74,7 @@
                             <v-col cols="12">
                                 <v-text-field
                                     :rules="employee.citys"
-                                    outlined
+                                    solo
                                     dense
                                     v-model="employee.city"
                                     label="Ville"
@@ -84,7 +84,7 @@
                             <v-col cols="12">
                                 <v-text-field
                                     :rules="employee.code_postal"
-                                    outlined
+                                    solo
                                     dense
                                     v-model="employee.zip_code"
                                     label="Code Postal"
@@ -94,7 +94,7 @@
                             <v-col cols="12">
                                 <v-text-field
                                     :rules="employee.number"
-                                    outlined
+                                    solo
                                     dense
                                     v-model="employee.mobile"
                                     label="Numéro de portable"
@@ -155,12 +155,12 @@
                                     </h5>
                                 </div>
                                 <v-select
-                                flat solo
+                                     
+                                    solo
                                     v-model="employee.role_id"
                                     :items="role"
                                     item-value="id"
                                     item-text="name"
-                                    :outlined="false"
                                     label="Item"
                                     required
                                 ></v-select>
@@ -170,6 +170,7 @@
                             large
                             @click="close"
                             depressed 
+                            height="50px"
                             color="rgb(238 238 238)"
                             width="46%" 
                             class="ma-2 btn-dialog"
@@ -178,6 +179,7 @@
                         </v-btn>
                         <v-btn
                             large
+                            height="50px"
                             width="46%"
                             depressed
                             dark

@@ -44,10 +44,6 @@ export default {
                     ],
                     code_confirmation: [
                         v => !!v || "Code de confirmation requis",
-                        v=> {
-                            const pattern = /^\d+$/;
-                            return pattern.test(v) || 'Chiffres uniquement'
-                        }
                     ]
                 },
                 old_password: [

@@ -113,6 +113,7 @@ import { GetPendingHolidays, DeclineHoliday, ApproveHoliday } from "@/repositori
           this.$toast.success('Leave Approved Successfully')
           this.$arraysplicer(item, this.pending_leaves)
           this.$emit('success')
+          this.$store.commit('toggleForceReload')
         })
       },
       reject(item){

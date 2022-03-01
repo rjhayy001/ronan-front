@@ -4,6 +4,14 @@
 }
 
 
+.center_hint{
+    font-size: 10px;
+    text-align: start;
+    color: red;
+    font-style: italic;
+}
+
+
 .work-half-morning{
     z-index:10 !important;
     position: relative;
@@ -25,7 +33,11 @@
 .work-full{
     background-color: #2196f3;
     z-index:1 !important;
-    position: relative;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    right: 0;
+    left: 0;
 }
 
 .holiday-full{
@@ -106,4 +118,7 @@
 .holiday {
     background:orange !important;
     color: white !important;
+}
+.css_td {
+    position: relative;
 }

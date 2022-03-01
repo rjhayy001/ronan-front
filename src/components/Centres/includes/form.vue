@@ -23,7 +23,7 @@
                                 dense
                                 v-model="center.name"
                                 prepend-inner-icon="mdi-rename-box"
-                                outlined
+                                solo
                             ></v-text-field>
                         </v-col>
                         <v-col
@@ -36,7 +36,7 @@
                                 dense
                                 v-model="center.address"
                                 prepend-inner-icon="mdi-google-street-view"
-                                outlined
+                                solo
                             ></v-text-field>
                         </v-col>
                         <v-col
@@ -49,7 +49,7 @@
                                 v-model="center.city"
                                 dense
                                 prepend-inner-icon="mdi-city"
-                                outlined
+                                solo
                             ></v-text-field>
                         </v-col>
                         <v-col
@@ -61,8 +61,8 @@
                                 :rules="centre.code_postal"
                                 v-model="center.zip_code"
                                 dense
+                                solo
                                 prepend-inner-icon="mdi-email-outline"
-                                outlined
                             ></v-text-field>
                         </v-col>
                         <div class="dialog-title my-2">
@@ -78,9 +78,9 @@
                                 placeholder="Numéro de contact"
                                 :rules="centre.number"
                                 v-model="center.mobile"
+                                solo
                                 dense
                                 prepend-inner-icon="mdi-phone-outline"
-                                outlined
                             ></v-text-field>
                         </v-col>
                         <div class="dialog-title my-2">
@@ -175,9 +175,10 @@ export default {
                     this.$emit('success')
                     this.$emit('close')
                 })
-            }else{
-                this.$toast.error('Do not leave empty field')
             }
+            // }else{
+            //     this.$toast.error('Do not leave empty field')
+            // }
         }
     }
 }
