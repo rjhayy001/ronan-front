@@ -11,7 +11,7 @@
                     width="100px"
                     dense
                     :hide-details="true"
-                    label="Search Center"
+                    label="Centre de recherche"
                     solo
                     v-model="search"
                     append-icon="mdi-magnify"

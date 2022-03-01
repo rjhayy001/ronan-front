@@ -7,7 +7,7 @@
             @close="add_employee_dialog=false"
         />
         <v-toolbar dense flat>
-            <v-toolbar-title class="title">List of employees affected</v-toolbar-title>
+            <v-toolbar-title class="title">Liste des employés affectés</v-toolbar-title>
         </v-toolbar>
 
         <v-data-table
@@ -28,7 +28,7 @@
         </v-data-table>
 
         <v-toolbar dense flat>
-            <v-toolbar-title class="title">List of employees</v-toolbar-title>
+            <v-toolbar-title class="title">Liste de tous les employés</v-toolbar-title>
         </v-toolbar>
 
         <v-data-table
