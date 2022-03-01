@@ -568,3 +568,14 @@ tbody tr {
   justify-content: center;
   margin: auto;
 }
+
+
+@media (max-width: 1440px) {
+  .subheader .sub-container .date-container .date-field {
+    margin: 15px 2em;
+  }
+
+  .field .sub-field div .row .select-data .v-input__control .v-input__slot {
+    margin: auto 0 auto auto;
+  }
+}

@@ -2,36 +2,77 @@
 export default {
     data() {
         return {
-            nameRules: [
-                v => !!v || 'Le nom est requis',
-            ],
-            passwordRules: [
-                v => !!v || 'Le mot de passe est requis',
-            ],
-            dateRules: [
-                v => !!v || 'La date est requise',
-            ],
-            emailRules: [
-                v => !!v || "L'e-mail est nécessaire",
-                v => /.+@.+\..+/.test(v) || "L'e-mail doit être valide",
-            ],
-            generalRules: {
-                firstName: [
-                   v => !!v || 'Le nom est requis', 
-                ],
-                lastName: [
-                    v => !!v || 'Le dernier est requis', 
-                ],
-                contact: {
-                    required: [
+            general: {
+                general_name: {
+                    firstName: [
+                       v => !!v || 'Le nom est requis',
+                       v => !v || /\S+.*/.test(v) || "Les espaces blancs ne sont pas valides",
+                    ],
+                    lastName: [
+                        v => !!v || 'Nom de famille requis', 
+                        v => !v || /\S+.*/.test(v) || "Les espaces blancs ne sont pas valides",
+                    ],
+                },
+                general_contact: {
+                    contact: [
                         v => !!v || 'Le dernier est requis', 
-                        v => {
+                    ],
+                },
+                general_mailing_address: {
+                    address: [
+                        v => !!v || 'Le rue est requis',
+                        v => !v || /\S+.*/.test(v) || "Les espaces blancs ne sont pas valides",
+                    ],
+                    code_postal: [
+                        v => !!v || "Le code postal est nécessaire",
+                        v=> {
                             const pattern = /^\d+$/;
                             return pattern.test(v) || 'Chiffres uniquement'
                         }
                     ],
-                    min: [
-                        v => v.length >= 8 || 'Min 8 characters',
+                    citys: [
+                        v => !!v || 'Le ville est requis',
+                        v => !v || /\S+.*/.test(v) || "Les espaces blancs ne sont pas valides",
+                    ],
+                },
+                general_date_birth: {
+                    birth_date: [
+                        v => !!v || 'Date de naissance requise',
+                    ],
+                }
+            },
+            security_connection: {
+                change_email: {
+                    new_email: [
+                        v => !!v || "Nouveau courriel requis",
+                        v => /.+@.+\..+/.test(v) || "L'e-mail doit être valide",
+                    ],
+                    code_confirmation: [
+                        v => !!v || "Code de confirmation requis",
+                        v=> {
+                            const pattern = /^\d+$/;
+                            return pattern.test(v) || 'Chiffres uniquement'
+                        }
+                    ]
+                },
+                change_password: {
+                    old_password: [
+                        v => !!v || "Ancien mot de passe requis",
+                    ],
+                    new_password: [
+                        v => !!v || "Nouveau mot de passe requis",
+                    ],
+                    confirm_password: [
+                        v => !!v || 'Confirmation du nouveau mot de passe requis',
+                        (v) => (v === this.current_new_password) || 'Le mot de passe doit correspondre',
+                    ],
+                },
+                administrator_key: {
+                    old_administrator_key: [
+                        v => !!v || "Ancienne clé d'administrateur requise",
+                    ],
+                    new_administrator_key: [
+                        v => !!v || "Nouvelle clé d'administrateur requise",
                     ]
                 }
             },
@@ -43,6 +84,19 @@ export default {
                     v => !!v || "Contenu de l'annonce requis", 
                 ],
             },
+            public_holiday: {
+                holiday_name: [
+                    v => !!v || 'Le nom est requis',
+                ],
+                holiday_date: [
+                    v => !!v || 'La date est requise',
+                ]
+            },
+            regions: {
+                regions_name: [
+                    v => !!v || 'Le nom est requis',
+                ]
+            },
             loginRules: {
                 email: [
                     v => !!v || "L'e-mail est nécessaire",
@@ -52,12 +106,18 @@ export default {
                     v => !!v || 'Le mot de passe est requis',
                 ],
                 code: [
-                    v => !!v || "Le code est nécessaire",
+                    v=> {
+                        const pattern=/\S+.*/;
+                        return pattern.test(v) || 'Le code est nécessaire'
+                    }
+                ],
+                confirm_password: [
+                    v => !!v || 'Le mot de passe est requis',
+                    (v) => (v === this.new_password) || 'Le mot de passe doit correspondre',
                 ]
             },
             centre: {
                 name: [ 
-                    // v => !!v || 'Le nom est requis',
                     v=> {
                         const pattern=/\S+.*/;
                         return pattern.test(v) || 'Le nom est requis'
@@ -91,10 +151,6 @@ export default {
                     v => !!v || "Le code postal est nécessaire",
                     v=> {
                         const pattern = /^\d+$/;
-                        return pattern.test(v) || 'Le code postal est nécessaire'
-                    },
-                    v=> {
-                        const pattern = /^\d+$/;
                         return pattern.test(v) || 'Chiffres uniquement'
                     }
                 ],
@@ -117,7 +173,6 @@ export default {
                     v => !!v || 'Le mot de passe est requis',
                 ],
                 emails: [
-                    // v => !!v || "L'e-mail est nécessaire",
                     v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || "L'e-mail doit être valide",
                 ],
                 street: [
@@ -144,9 +199,9 @@ export default {
                     }
                 ],
                 birth_date: [
-                    v => !!v || 'birthday required',
+                    v => !!v || 'Date de naissance requise',
                 ],
-            }
+            },
         }
     },
 }

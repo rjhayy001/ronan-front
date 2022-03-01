@@ -36,11 +36,11 @@
             value: 'id',
             width:'10%'
           },
-          { text: 'Name of employee', align: 'start', value: 'user.full_name' },
-          { text: 'date', align: 'start', value: 'date',  width:'20%' },
-          { text: 'Start Time', align: 'start', value: 'start_time',  width:'20%' },
-          { text: 'End Time', align: 'start', value: 'end_time',  width:'15%' },
-          { text: 'status', align: 'start', value: 'status',  width:'10%' },
+          { text: 'Nom de la employé', align: 'start', value: 'user.full_name' },
+          { text: 'Date', align: 'start', value: 'date',  width:'20%' },
+          { text: 'Heure de debut', align: 'start', value: 'start_time',  width:'20%' },
+          { text: 'Heure de fin', align: 'start', value: 'end_time',  width:'20%' },
+          { text: 'Statut', align: 'start', value: 'status',  width:'10%' },
         ],
       }
     },

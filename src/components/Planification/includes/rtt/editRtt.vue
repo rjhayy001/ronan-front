@@ -2,7 +2,7 @@
     <v-dialog v-model="dialog" width="600" @click:outside="close" class="card-radius">
         <v-card rounded>
             <v-toolbar dense flat class="py-4">
-                <v-toolbar-title>Edit Rtt</v-toolbar-title>
+                <v-toolbar-title>Mettre à jour RTT</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-icon @click="$emit('close')">mdi-close</v-icon>
             </v-toolbar>
@@ -30,7 +30,7 @@
                         xs="12"
                     >
                         <div>
-                            <p class="text-label">date</p>
+                            <p class="text-label">Date de mise à jour</p>
                             <v-menu
                                 ref="date"
                                 v-model="date"
@@ -65,7 +65,7 @@
                                     color="primary"
                                     @click="start_menu = false"
                                 >
-                                    Cancel
+                                    Annuler
                                 </v-btn>
                                 <v-btn
                                     text
@@ -78,7 +78,7 @@
                             </v-menu>
                         </div>
                         <div>
-                            <p class="text-label">start hour</p>
+                            <p class="text-label">Heure de début</p>
                             <v-menu
                                 ref="start_time"
                                 v-model="start_time"
@@ -113,7 +113,7 @@
                             </v-menu>
                         </div>
                         <div>
-                            <p class="text-label">end hour</p>
+                            <p class="text-label">Heure de fin</p>
                             <v-menu
                                 ref="end_time"
                                 v-model="end_time"

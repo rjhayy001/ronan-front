@@ -2,7 +2,7 @@
     <v-dialog v-model="dialog" width="600" @click:outside="close" class="card-radius">
         <v-card rounded>
             <v-toolbar dense flat class="py-4">
-                <v-toolbar-title>Edit Holiday</v-toolbar-title>
+                <v-toolbar-title>Mettre à jour les vacances</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-icon @click="$emit('close')">mdi-close</v-icon>
             </v-toolbar>
@@ -30,7 +30,7 @@
                         xs="12"
                     >
                         <div>
-                        <p class="text-label">start date</p>
+                        <p class="text-label">Date de début</p>
                         <v-menu
                             ref="start_date"
                             v-model="start_menu"
@@ -65,7 +65,7 @@
                                 color="primary"
                                 @click="start_menu = false"
                             >
-                                Cancel
+                                Annuler
                             </v-btn>
                             <v-btn
                                 text
@@ -78,7 +78,7 @@
                         </v-menu>
                         </div>
                         <div>
-                            <p class="text-label">end date</p>
+                            <p class="text-label">Date de fin</p>
                             <v-menu
                                 ref="end_date"
                                 v-model="end_menu"
@@ -114,7 +114,7 @@
                                     color="primary"
                                     @click="end_menu = false"
                                 >
-                                    Cancel
+                                    Annuler
                                 </v-btn>
                                 <v-btn
                                     text

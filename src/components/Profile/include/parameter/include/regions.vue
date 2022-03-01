@@ -77,7 +77,7 @@
                             >
                                 <v-text-field
                                     label="Nom"
-                                    :rules="nameRules"
+                                    :rules="regions.regions_name"
                                     v-model="payload.name"
                                     placeholder="Nouveau région nom"
                                     prepend-inner-icon="mdi-note-edit-outline"

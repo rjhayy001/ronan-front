@@ -87,9 +87,9 @@ import { GetPendingHolidays, DeclineHoliday, ApproveHoliday } from "@/repositori
             value: 'id',
             width:'10%'
           },
-          { text: 'Name of employee', align: 'start', value: 'user.full_name' },
-          { text: 'Start Date', align: 'start', value: 'start_date' },
-          { text: 'End Date', align: 'start', value: 'end_date' },
+          { text: 'Nom', align: 'start', value: 'user.full_name' },
+          { text: 'Date de debut', align: 'start', value: 'start_date' },
+          { text: 'Date de fin', align: 'start', value: 'end_date' },
           { text: 'Actions', align: 'start', value: 'action',  width:'10%' },
         ],
         selected_leave:{},

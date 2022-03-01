@@ -36,6 +36,7 @@
                     v-model="e2"
                     :items="selects"
                     menu-props="auto"
+                    hide-details="true"
                     solo
                     flat
                     height="47px"
@@ -102,7 +103,7 @@
         <div class="css_thead">
           <div class="css_tr">
             <div></div>
-            <div v-for="date in date" :key="date.text + date.number"  class="css_th">{{date.text}}</div>
+            <div v-for="date in date" :key="date.text + date.number"  class="css_th" style="text-transform: capitalize;">{{date.fr_text}}</div>
           </div>
           <div class="css_tr ">
             <div class="css_th sub_th border_table"></div>
@@ -391,7 +392,8 @@ import editHoliday from './includes/holiday/editHoliday.vue'
           arrDays.push({
             number: current.format('DD'),
             text: current.format('ddd'),
-            date: current.format('YYYY-MM-DD')
+            date: current.format('YYYY-MM-DD'),
+            fr_text: current.locale('fr').format('ddd'),
           }); 
           daysInMonth--; 
         } 

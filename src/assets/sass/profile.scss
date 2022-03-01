@@ -100,6 +100,7 @@
 .component_container .container .content {
     display: flex; 
     width: 100%;
+    background-color: transparent;
 }
 .component_container .container .content .title_name {
     margin-right: 50px; 
@@ -154,7 +155,8 @@
 
 .vertical_center .label {
     font-weight: 400;
-    width: 14%;
+    width: 17%;
+    line-height: 1.2;
 }
 
 .vertical_center .notification {
@@ -162,7 +164,7 @@
 }
 .vertical_center .notification .current_status {
     font-weight: 400; 
-    width: 45%; 
+    width: 50%; 
     color: #6d6d76;
 }
 .vertical_center .notification .assets {
@@ -181,7 +183,7 @@
 }
 
 .text_field_margin {
-    margin-right: 10px
+    margin: auto 10px auto auto
 }
 
 .if_true .note {
@@ -238,7 +240,8 @@
 }
 
 .if_false .container_action .edit_button .text {
-    font-weight: 400
+    font-weight: 400;
+    text-transform: initial;
 }
 
 .pass_text .v-input__control .v-input__slot {
@@ -444,7 +447,22 @@
       margin: 0!important;
   }
 
-
   .text_box .mdi:before, .text_box .mdi-set {
       font-size: 25px;
   }
+
+.parameter_field .vertical_center .v-input .v-input__control .v-input__slot {
+    margin-top: 20px;
+}
+
+.container_action .v-btn:before {
+    background-color: transparent!important;
+}
+
+/*.center_form .row .col .v-input .v-input__control .v-text-field__details{
+    display: none;
+}
+
+.center_form .row .col .error--text .v-input__control .v-text-field__details{
+    display: block!important;
+}*/

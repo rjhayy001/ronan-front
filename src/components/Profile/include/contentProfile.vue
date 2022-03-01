@@ -20,7 +20,7 @@
             </div>
             <div> 
                 <v-btn to="parameter/general" :ripple="false" id="no-background-hover" text solo type="button" style="color: #005075; box-shadow: none;">
-                    <h4 style="font-weight: 400">Editer</h4>
+                    <h4 style="font-weight: 400; text-transform:initial">Editer</h4>
                 </v-btn>
             </div>
         </div>
@@ -40,7 +40,7 @@
                             CONSUMABLE CONGÉS
                         </h3>
                         <h1 style="color:#005075">
-                            {{user.consumable_holidays}}
+                            {{user.consumable_holidays ? user.consumable_holidays : 0}}
                         </h1>
                     </div>
                     <div style="margin: 10px 0">
@@ -83,12 +83,12 @@
                     </div>
                 </v-tab-item>
                 <v-tab-item :key="2" value="rtt">
-                    <div style="margin: 20px 0">
+                    <div>
                         <table-rtt></table-rtt>
                     </div>
                 </v-tab-item>
                 <v-tab-item :key="3" value="conges">
-                    <div style="margin: 20px 0">
+                    <div>
                         <table-leave></table-leave>
                     </div>
                 </v-tab-item>
