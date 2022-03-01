@@ -5,16 +5,23 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: () => ({
-        user: {}
+        user: {},
+        forceReloadFlag: false
     }),
     mutations: {
         login(state, data) {
             state.user = data.user
         },
+        toggleForceReload(state, hint=true) {
+            state.forceReloadFlag = hint
+        },
     },
     getters :{
         user: state => {
           return state.user
+        },
+        forceReloadFlag: state => {
+          return state.forceReloadFlag
         }
-      },
+    },
 })

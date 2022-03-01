@@ -110,6 +110,7 @@ import { GetPendingRtts, DeclineRtt, ApproveRtt } from "@/repositories/rtt.api"
           this.$toast.success('Rtt Approved Successfully')
           this.$arraysplicer(item, this.pending_rtts)
           this.$emit('success')
+          this.$store.commit('toggleForceReload')
         })
       },
       reject(item){

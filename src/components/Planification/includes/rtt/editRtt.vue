@@ -180,6 +180,7 @@
     </v-dialog>
 </template>
 <script>
+import { UpdateRtt, DeleteRtt } from '@/repositories/rtt.api'
 export default {
     props:{
         dialog: {
@@ -214,10 +215,19 @@ export default {
             this.$emit('close')
         },
         destroy(){
-            alert('destroy')
+            DeleteRtt(this.rtt.id).then(() =>{
+                this.$toast.success("Successfully removed!");
+                this.$emit('success')
+                this.close()
+            })
         },
         save(){
-            alert('save')
+            UpdateRtt(this.rtt.id, this.rtt).then(({data}) => {
+                console.log(data, 'rtts')
+                this.$emit('success')
+                this.close()
+                this.$toast.success('successfully updated')
+            })
         }
     }
 }

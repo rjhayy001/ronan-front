@@ -32,7 +32,7 @@
         <v-text-field
             v-model="data.city"
             label="City"
-            outlined
+            
             clearable
             prepend-inner-icon="mdi-office-building"
         ></v-text-field>

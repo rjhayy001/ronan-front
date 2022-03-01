@@ -109,7 +109,7 @@ export default {
             this.$router.push({ name: "login"})
         }).catch((response) =>{
             console.log(response,'sad')
-            this.$toast.error('Invalid Token') 
+            this.$toast.error('Invalid Token ') 
         })
 
     },

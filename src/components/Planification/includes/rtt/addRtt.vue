@@ -224,6 +224,7 @@ export default {
                 this.$emit('success')
                 this.$emit('close')
                 this.$toast.success(data.message)
+                this.$store.commit('toggleForceReload')
             }).catch(({ response }) => { 
                 this.$toast.error(response.data.message) 
             })

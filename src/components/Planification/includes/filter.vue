@@ -40,7 +40,7 @@
         </v-list-item>
       </v-list>
       <v-divider></v-divider>
-      <!-- <v-list dense>
+      <v-list dense>
         <v-list-item class="drawer-list">
           <v-col class="list-list list1">
             <v-list-item-content>
@@ -48,40 +48,46 @@
             </v-list-item-content>
             <v-checkbox
               color="#005075"
-              v-model="viewEmployee"
+              v-model="view"
               hide-details
+              @change="changeView"
             ></v-checkbox>
           </v-col>
         </v-list-item>
-      </v-list> -->
+      </v-list>
     </v-navigation-drawer>
 </template>
 <script>
   import { GetRawRegions } from '@/repositories/region.api'
   export default {
-    props: ['drawer'],
+    props: ['drawer', 'employee_view'],
     data() {
       return {
           // drawer: false,
           regions: [],
           selectedRegion:[],
-          viewEmployee:false
+          viewEmployee:false,
+          view:''
       }
     },
      watch:{
         'selectedRegion': function(value) {
             this.$emit('filter', value)
-        }
+        },
     },
     created(){
       this.initialize()
     },
     methods: {
+      changeView(value){
+        this.$emit('changeView', value)
+      },
       initialize(){
         GetRawRegions().then(({data}) => {
           this.regions = data
           console.log(data,'test')
         })
+        this.view = this.employee_view
       },
       test(payload){
         if(payload===false){

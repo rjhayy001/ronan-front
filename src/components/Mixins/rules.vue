@@ -91,10 +91,6 @@ export default {
                     v => !!v || "Le code postal est nécessaire",
                     v=> {
                         const pattern = /^\d+$/;
-                        return pattern.test(v) || 'Le code postal est nécessaire'
-                    },
-                    v=> {
-                        const pattern = /^\d+$/;
                         return pattern.test(v) || 'Chiffres uniquement'
                     }
                 ],
