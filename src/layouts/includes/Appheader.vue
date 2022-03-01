@@ -8,7 +8,7 @@
         <div class="tabs">
             <v-tab class="subtabs" to="/">Planification</v-tab>
             <v-tab class="subtabs" to="/centres">Centres</v-tab>
-            <v-tab class="subtabs" to="/employees">Employees</v-tab>
+            <v-tab class="subtabs" to="/employees">Employés</v-tab>
         </div>
         <v-spacer></v-spacer>
         <div style="margin: auto 0">
@@ -74,7 +74,7 @@
                         <v-icon>
                             mdi-account
                         </v-icon> 
-                        Profile
+                        Profil
                     </v-list-item>
                     <v-list-item
                         dense
@@ -84,9 +84,9 @@
                         to="/parameter/general"
                     >
                         <v-icon>
-                            mdi-settings
+                            mdi-cog
                         </v-icon> 
-                        Les paramètres
+                        Les Paramètres
                     </v-list-item>
                     <v-list-item
                         dense
@@ -98,14 +98,14 @@
                         <v-icon color="red">
                             mdi-logout-variant
                         </v-icon> 
-                        Désconnecter
+                        Déconnecter
                     </v-list-item>
                 </v-list>
             </v-menu>
-        <profileDialog
-            :dialog="Profile"
-            @close="Profile=false"
-        ></profileDialog>
+            <profileDialog
+                :dialog="Profile"
+                @close="Profile=false"
+            ></profileDialog>
         <!-- <parameterDialog
             :dialog="Parameter"
             @close="Parameter=false"

@@ -1,7 +1,7 @@
 <template>
     <v-card rounded>
         <v-toolbar dense flat class="py-4">
-            <v-toolbar-title>Create Planification</v-toolbar-title>
+            <v-toolbar-title>Créer Planification</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-icon @click="$emit('close')">mdi-close</v-icon>
         </v-toolbar>
@@ -43,7 +43,7 @@
                 >
                 <v-form ref="addForm">
                     <div>
-                        <p class="text-label">start date</p>
+                        <p class="text-label">Date de début</p>
                         <v-menu
                             ref="start_date"
                             v-model="start_menu"
@@ -67,9 +67,9 @@
                             ></v-text-field>
                             </template>
                             <v-date-picker
-                            v-model="payload.start_date"
-                            no-title
-                            scrollable
+                                v-model="payload.start_date"
+                                no-title
+                                scrollable
                             >
                             <v-spacer></v-spacer>
                             <v-btn
@@ -77,7 +77,7 @@
                                 color="primary"
                                 @click="start_menu = false"
                             >
-                                Cancel
+                                ANNULER
                             </v-btn>
                             <v-btn
                                 text
@@ -104,7 +104,7 @@
                         ></v-select>
                     </div>
                      <div>
-                        <p class="text-label">end date</p>
+                        <p class="text-label">Date de fin</p>
                         <v-menu
                             ref="end_date"
                             v-model="end_menu"
@@ -139,7 +139,7 @@
                                 color="primary"
                                 @click="end_menu = false"
                             >
-                                Cancel
+                                ANNULER
                             </v-btn>
                             <v-btn
                                 text
@@ -210,9 +210,9 @@ export default {
 
             },
             items: [
-                {value: 1, text:'whole day'},
-                {value: 2, text:'half day morning'},
-                {value: 3, text:'half day afternoon'},
+                {value: 1, text:'Toute la journée'},
+                {value: 2, text:'Demi-journée-matin'},
+                {value: 3, text:'Demi-journée-après-midi'},
             ],
         }
     },

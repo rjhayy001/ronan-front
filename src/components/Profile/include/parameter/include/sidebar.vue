@@ -97,7 +97,7 @@
                     solo 
                 >
                     <v-icon>
-                        mdi-file-marker
+                        mdi-bank
                     </v-icon>
                     <h3 class="title">
                         Régions

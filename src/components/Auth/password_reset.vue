@@ -29,42 +29,49 @@
                         </v-avatar>
                     </div>
                     <div class="head_text">
-                        <h1>
+                        <h2>
                             Réinitialisation du mot de passe
-                        </h1>
-                        <h3>
+                        </h2>
+                        <h5>
                             Entrez code de validation qui vous a été envoyé et
                             fournissez un mot de passe correspondant
-                        </h3>
+                        </h5>
                     </div>
                 </div>
                 <div class="form_textfield mt-8">
                     <div class="login_field">
                         <v-text-field
-                            :rules="loginRules.code"      
+                            :rules="loginRules.code"  
+                            autocomplete="off"    
                             class="my-2"
                             outlined
                             v-model="token"
-                            prepend-inner-icon="mdi-email-outline"
+                            prepend-inner-icon="mdi-folder-eye-outline"
                             solo
                             placeholder="Entrer le code de validation"
                         ></v-text-field>
                         <v-text-field
-                            :rules="loginRules.password"      
+                            :rules="loginRules.password"
+                            
+                            :append-icon="set_new_password ? 'mdi-eye' : 'mdi-eye-off'"
+                            @click:append="set_new_password = !set_new_password"
+                            :type="set_new_password ? 'text' : 'password'"    
                             class="my-2"
                             outlined
-                            prepend-inner-icon="mdi-email-outline"
+                            prepend-inner-icon="mdi-lock-outline"
                             v-model="new_password"
                             solo
-                            type="password"
                             placeholder="Enter new Password"
                         ></v-text-field>
                         <v-text-field
-                            :rules="loginRules.password"      
+                            :rules="loginRules.confirm_password"
+                            :append-icon="confirm_set_new_password ? 'mdi-eye' : 'mdi-eye-off'"
+                            @click:append="confirm_set_new_password = !confirm_set_new_password"
+                            :type="confirm_set_new_password ? 'text' : 'password'"    
                             class="my-2"
-                            type="password"
                             outlined
-                            prepend-inner-icon="mdi-email-outline"
+                            v-model="confirm_password"
+                            prepend-inner-icon="mdi-lock-check-outline"
                             solo
                             placeholder="Confirm Password"
                         ></v-text-field>
@@ -91,27 +98,35 @@ import { ResetPassword } from "@/repositories/auth.api";
 export default {
   data() {
     return {
+        set_new_password: false,
+        confirm_set_new_password: false,
         token: '',
         new_password: '',
+        confirm_password: '',
     };
   },
   methods: {
     resetPassword(){
-        let payload = {
-            email: localStorage.getItem('email_to_reset'),
-            token: this.token,
-            password: this.new_password
+        this.$refs.form.validate()
+        if(this.$refs.form.validate() == true) {
+
+            let payload = {
+                email: localStorage.getItem('email_to_reset'),
+                token: this.token,
+                password: this.new_password
+            }
+
+            ResetPassword(payload).then(({data}) =>{
+                console.log(data, 'test')
+                this.$toast.success(data.message)
+                this.$router.push({ name: "login"})
+            }).catch((response) =>{
+                console.log(response,'sad')
+                this.$toast.error('Invalid Token') 
+            })
+        }else{
+            this.$toast.error('Do not leave empty field')
         }
-
-        ResetPassword(payload).then(({data}) =>{
-            console.log(data, 'test')
-            this.$toast.success(data.message)
-            this.$router.push({ name: "login"})
-        }).catch((response) =>{
-            console.log(response,'sad')
-            this.$toast.error('Invalid Token ') 
-        })
-
     },
     forgotpassword(){
         this.$router.push({ name: "forgotpassword"})

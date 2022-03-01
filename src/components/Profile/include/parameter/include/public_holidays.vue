@@ -18,7 +18,12 @@
             </v-btn>
         </div>
         <div class="content_padding">
-            <div v-for="(holiday, index) in holidays" :key="index" style="display: flex; ">
+            <div v-if="holidays==''" style="height: 80vh">
+                <div style="display:flex; justify-content:center; margin: auto; align-items: center; height: 100%; width: 100%">
+                    Aucune donnée disponible
+                </div>
+            </div>
+            <div v-else v-for="(holiday, index) in holidays" :key="index" style="display: flex; ">
                 <div class="parameter_data">
                     <div class="icon">
                         <h4 class="text_normal">
@@ -74,7 +79,7 @@
                                 cols="12"
                             >
                                 <v-text-field
-                                    :rules="nameRules"
+                                    :rules="public_holiday.holiday_name"
                                     v-model="payload.name"
                                     label="Nom"
                                     placeholder="Nouveau jour férié nom"
@@ -88,7 +93,7 @@
                                     ref="start_date"
                                     v-model="menu"
                                     :close-on-content-click="false"
-                                    :rules="dateRules"
+                                    :rules="public_holiday.holiday_date"
                                     transition="scale-transition"
                                     offset-y
                                     min-width="auto"
@@ -101,7 +106,7 @@
                                     </template>
                                     <v-date-picker
                                         v-model="payload.date"
-                                        :rules="dateRules"
+                                        :rules="public_holiday.holiday_date"
                                         no-title
                                         scrollable
                                         locale="fr"

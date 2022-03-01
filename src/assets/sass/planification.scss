@@ -247,7 +247,7 @@ tbody tr {
     display:flex;
     align-items: center;
     position: sticky;
-    top: 13.4%;
+    top: 12.4%;
   }
   
   .subheader .tags .tags-container {
@@ -567,4 +567,19 @@ tbody tr {
   display: flex;
   justify-content: center;
   margin: auto;
+}
+
+
+@media (max-width: 1440px) {
+  .subheader .sub-container .date-container .date-field {
+    margin: 15px 2em;
+  }
+
+  .field .sub-field div .row .select-data .v-input__control .v-input__slot {
+    margin: auto 0 auto auto;
+  }
+
+  .css_thead {
+    top: 13.6%;
+  }
 }

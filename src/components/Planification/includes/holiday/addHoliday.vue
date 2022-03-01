@@ -3,7 +3,7 @@
         transition="dialog-left-transition"
         v-model="dialog"
         class="menu_"
-        width="800px"
+        width="850px"
         @click:outside="$emit('close')"
     >
         <v-card 
@@ -20,7 +20,7 @@
                             <div class="ml-3">
                                 <h3
                                  style="letter-spacing:2px; color:#058cd1;">NOUVELLE DEMANDE DE CONGE</h3>
-                                <p style="font-weight:200;">Veullez remplir tous les champs ci-dessous et cliquez sur soumettre. Merci!</p>
+                                <p style="font-weight:600; font-size: 12px; color:#7e7e7e">Veuillez remplir tous les champs ci-dessous et cliquez sur soumettre. Merci!</p>
                             </div>
                         </div>
                         <v-col
@@ -52,7 +52,7 @@
                                 class="mb-1"
                             ></v-textarea>
                         </v-col>
-                        <v-col cols="8" class="py-2">
+                        <v-col cols="7" class="py-2">
                             <v-menu
                                 ref="start_date"
                                 v-model="start_menu"
@@ -65,7 +65,7 @@
                                 <template v-slot:activator="{ on, attrs }">
                                    <v-btn v-on="on" v-bind="attrs" width="100%" style="color:#909090; justify-content: initial;">
                                        <v-icon class="mr-2">mdi-calendar-outline</v-icon>
-                                       {{holiday.start_date ? holiday.start_date : 'choose start date'}}
+                                       {{holiday.start_date ? holiday.start_date : 'Date de début'}}
                                    </v-btn>
                                 </template>
                                 <v-date-picker
@@ -79,7 +79,7 @@
                                     color="primary"
                                     @click="start_menu = false"
                                 >
-                                    Cancel
+                                    ANNULER
                                 </v-btn>
                                 <v-btn
                                     text
@@ -91,7 +91,7 @@
                                 </v-date-picker>
                             </v-menu>
                         </v-col>
-                        <v-col cols="4" class="py-2">
+                        <v-col cols="5" class="py-2">
                             <v-select
                                 dense
                                 :items="items"
@@ -103,7 +103,7 @@
                                 class="text-capitalize"
                             ></v-select>
                         </v-col>
-                          <v-col cols="8" class="py-0">
+                          <v-col cols="7" class="py-0">
                             <v-menu
                                 ref="end_date"
                                 v-model="end_menu"
@@ -116,7 +116,7 @@
                                 <template v-slot:activator="{ on, attrs }">
                                    <v-btn v-on="on" v-bind="attrs" width="100%" style="color:#909090; justify-content: initial;">
                                        <v-icon class="mr-2">mdi-calendar-outline</v-icon>
-                                       {{holiday.end_date ? holiday.end_date : 'choose end date'}}
+                                       {{holiday.end_date ? holiday.end_date : 'Date de fin'}}
                                    </v-btn>
                                 </template>
                                 <v-date-picker
@@ -131,7 +131,7 @@
                                     color="primary"
                                     @click="end_menu = false"
                                 >
-                                    Cancel
+                                    ANNULER
                                 </v-btn>
                                 <v-btn
                                     text
@@ -143,7 +143,7 @@
                                 </v-date-picker>
                             </v-menu>
                         </v-col>
-                        <v-col cols="4" class="py-0">
+                        <v-col cols="5" class="py-0">
                             <v-select
                                 dense
                                 :items="items"
@@ -228,9 +228,9 @@ export default {
                 endDate_isHalf_day:0,
             },
             items: [
-                {value: 0, text:'whole day'},
-                {value: 1, text:'half day morning'},
-                {value: 2, text:'half day afternoon'},
+                {value: 0, text:'Toute la journée'},
+                {value: 1, text:'Demi-journée-Matin'},
+                {value: 2, text:'Demi-journée-Après-midi'},
             ],
             employees:[],
         };

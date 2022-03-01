@@ -7,20 +7,20 @@
         </div>
         <div>
             <div class="container">
-                <div class="content">
+                <v-card flat class="content">
                     <div class="title_name">
                         <h4 class="text_fw pad_subs">
                             Nom
                         </h4>
                     </div>
-                        <div 
+                        <v-form 
                             v-if="name" 
-                            class="if_true"
+                            class="if_true parameter_field"
                             ref="form"
                         >
                             <div>
                                 <h4 class="text">
-                                    Votre nom sera modifié lorse de l'enregistrement.
+                                    Votre nom sera modifié lors de l'enregistrement.
                                 </h4>
                             </div>
                             <div class="vertical_center">
@@ -28,7 +28,7 @@
                                     Prénom
                                 </h4>
                                 <v-text-field 
-                                    :rules="generalRules.firstName"
+                                    :rules="general.general_name.firstName"
                                     class="text_field_margin" 
                                     outlined 
                                     dense 
@@ -41,7 +41,7 @@
                                     Nom de famille
                                 </h4>
                                 <v-text-field 
-                                    :rules="generalRules.lastName"
+                                    :rules="general.general_name.lastName"
                                     class="text_field_margin" 
                                     outlined 
                                     dense 
@@ -70,7 +70,7 @@
                                     </h5>
                                 </v-btn>
                                 <v-btn 
-                                    @click="updateUser();name=false"
+                                    @click="updateUser('name')"
                                     class="btn" 
                                     color="white!important"
                                 >
@@ -79,7 +79,7 @@
                                     </h5>
                                 </v-btn>
                             </div>
-                        </div>
+                        </v-form>
 
                         <div 
                             v-if="!name"
@@ -106,20 +106,21 @@
                                 </v-btn>
                             </div>
                         </div>
-                </div>
+                </v-card>
             </div>
         </div>
         <div>
             <div class="container">
-                <div class="content">
+                <v-card flat class="content">
                     <div class="title_name">
                         <h4 class="text_fw pad_subs">
                             Contact
                         </h4>
                     </div>
-                    <div 
+                    <v-form 
                         v-if="contact" 
-                        class="if_true"
+                        class="if_true  parameter_field"
+                        ref="form"
                     >
                         <div>
                             <h4 class="text title_color">
@@ -139,6 +140,7 @@
                             </h4>
                             <v-text-field 
                                 class="text_field_margin" 
+                                :rules="general.general_contact.contact"
                                 outlined  
                                 dense 
                                 type="number"
@@ -160,14 +162,14 @@
                             <v-btn 
                                 color="white!important" 
                                 class="btn"
-                                @click="updateUser();contact=false"
+                                @click="updateUser('contact')"
                             >
                                 <h5 class="txt">
                                     Sauvegarder les modifications
                                 </h5>
                             </v-btn>
                         </div>
-                    </div>
+                    </v-form>
                     <div 
                         v-else 
                         class="if_false"
@@ -193,20 +195,21 @@
                             </v-btn>
                         </div>
                     </div>
-                </div>
+                </v-card>
             </div>
         </div>
         <div>
             <div class="container">
-                <div class="content">
+                <v-card flat class="content">
                     <div class="title_name">
                         <h4 class="text_fw pad_subs">
                             Adresse postale
                         </h4>
                     </div>
-                    <div 
+                    <v-form 
                         v-if="address" 
-                        class="if_true"
+                        class="if_true  parameter_field"
+                        ref="form"
                     >
                         <div>
                             <h4 class="text title_color">
@@ -224,6 +227,7 @@
                             </h4>
                             <v-text-field 
                                 class="text_field_margin"
+                                :rules="general.general_mailing_address.address"
                                 outlined 
                                 dense 
                                 v-model="updated_user.address"
@@ -236,6 +240,7 @@
                             </h4>
                             <v-text-field 
                                 class="text_field_margin" 
+                                :rules="general.general_mailing_address.code_postal"
                                 outlined 
                                 dense 
                                 v-model="updated_user.zip_code"
@@ -248,6 +253,7 @@
                             </h4>
                             <v-text-field 
                                 class="text_field_margin" 
+                                :rules="general.general_mailing_address.citys"
                                 outlined 
                                 dense 
                                 v-model="updated_user.city"
@@ -277,13 +283,14 @@
                             <v-btn 
                                 color="white!important" 
                                 class="btn"
+                                @click="updateUser('address')"
                             >
                                 <h5 class="txt">
                                     Sauvegarder les modifications
                                 </h5>
                             </v-btn>
                         </div>
-                    </div>
+                    </v-form>
                     <div 
                         v-else 
                         class="if_false"
@@ -309,20 +316,21 @@
                             </v-btn>
                         </div>
                     </div>
-                </div>
+                </v-card>
             </div>
         </div>
         <div>
             <div class="container">
-                <div class="content">
+                <v-card flat class="content">
                     <div class="title_name">
                         <h4 class="text_fw pad_subs">
                             Date de naissance
                         </h4>
                     </div>
-                    <div 
+                    <v-form 
                         v-if="birthday" 
-                        class="if_true"
+                        class="if_true parameter_field"
+                        ref="form"
                     >
                         <div>
                             <h4 class="text">
@@ -390,13 +398,14 @@
                             <v-btn 
                                 color="white!important" 
                                 class="btn"
+                                @click="updateUser('birthday')"
                             >
                                 <h5 class="txt">
                                     Sauvegarder les modifications
                                 </h5>
                             </v-btn>
                         </div>
-                    </div>
+                    </v-form>
                     <div 
                         v-else 
                         class="if_false"
@@ -422,7 +431,7 @@
                             </v-btn>
                         </div>
                     </div>
-                </div>
+                </v-card>
             </div>
         </div>
         <div>
@@ -490,17 +499,23 @@ export default {
             this.updated_user['image'] = ''
             this.updated_user['isSilent_onPush'] = this.updated_user.isSilent_onPush == 1 ? true : false
         },
-        updateUser(){
-            console.log(this.updated_user, 'test')
-            UpdateInfo(this.updated_user.id, this.updated_user).then(({data}) =>{
-                this.$store.state.user= this.updated_user
-                console.log(data, 'info')
-                this.$toast.success('Updated Succesfullly')
-                this.$nextTick(function () {
-                    this.initialize()
-                    this.$forceUpdate();
+        updateUser(hint = 'name'){
+            this.$refs.form.validate()
+            if(this.$refs.form.validate() == true) {
+                console.log(this.updated_user, 'test')
+                UpdateInfo(this.updated_user.id, this.updated_user).then(({data}) =>{
+                    this.$store.state.user= this.updated_user
+                    console.log(data, 'info')
+                    this.$toast.success('Updated Succesfullly')
+                    this.$nextTick(function () {
+                        this.initialize()
+                        this.$forceUpdate();
+                    })
+                    this[hint] =false
                 })
-            })
+            }else{
+                this.$toast.error('Do not leave empty field')
+            }
         }
     },
     created(){

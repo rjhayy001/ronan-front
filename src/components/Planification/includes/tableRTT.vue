@@ -84,10 +84,10 @@ import { GetPendingRtts, DeclineRtt, ApproveRtt } from "@/repositories/rtt.api"
             value: 'id',
             width:'10%'
           },
-          { text: 'Name of employee', align: 'start', value: 'user.full_name', width:'30%' },
+          { text: 'Nom', align: 'start', value: 'user.full_name', width:'30%' },
           { text: 'date', align: 'start', value: 'date', width:'30%'},
-          { text: 'Number of Hours', align: 'start', value: 'no_of_hrs', width:'20%'},
-          { text: 'action', align: 'start', value: 'action',  width:'10%' },
+          { text: "Nombre d'heures", align: 'start', value: 'no_of_hrs', width:'20%'},
+          { text: 'actions', align: 'start', value: 'action',  width:'10%' },
         ],
         selected_rtt:[],
         pending_rtts:[],

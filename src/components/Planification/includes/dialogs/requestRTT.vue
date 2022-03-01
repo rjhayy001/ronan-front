@@ -19,7 +19,7 @@
                             <div class="ml-3">
                                 <h3
                                  style="letter-spacing:2px; color:#058cd1;">NOUVELLE DEMANDE DE CONGE</h3>
-                                <p style="font-weight:200;">Veullez remplir tous les champs ci-dessous et cliquez sur soumettre. Merci!</p>
+                                <p style="font-weight:200; font-size:">Veullez remplir tous les champs ci-dessous et cliquez sur soumettre. Merci!</p>
                             </div>
                         </div>
                         <v-col

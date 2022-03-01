@@ -36,6 +36,7 @@
                     v-model="e2"
                     :items="selects"
                     menu-props="auto"
+                    hide-details="true"
                     solo
                     flat
                     height="47px"
@@ -407,8 +408,9 @@ import { GetAllRegions } from "@/repositories/region.api"
           arrDays.push({
             number: current.format('DD'),
             text: current.format('ddd'),
-            date: current.format('YYYY-MM-DD')
-          })
+            date: current.format('YYYY-MM-DD'),
+            // fr_text: current.locale('fr').format('ddd'),
+          }); 
           daysInMonth--; 
         } 
         this.date = arrDays.reverse();
