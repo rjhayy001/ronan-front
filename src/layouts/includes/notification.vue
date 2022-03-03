@@ -1,0 +1,41 @@
+<template>
+    <v-menu
+        bottom
+        left
+        offset-y
+    >
+        <template v-slot:activator="{ on, attrs }">
+            <v-btn
+                class="mx-2"
+                fab
+                dark
+                small
+                v-bind="attrs"
+                v-on="on"
+                color="primary"
+            >
+                <v-icon
+                    color="white"
+                >
+                    mdi-bell
+                </v-icon>          
+            </v-btn>
+        </template>
+        <v-list
+            dense
+            class="clicker"
+        >
+            <v-list-item
+                dense
+                class="text-capitalize"
+                style="gap:10px"
+                link
+            >
+                <v-icon>
+                    mdi-account
+                </v-icon> 
+                Profil
+            </v-list-item>
+        </v-list>
+    </v-menu>
+</template>
