@@ -1,5 +1,8 @@
 <template>
-    <v-tabs class="main_tabs">
+<div class="romel">
+
+
+    <v-tabs class="main_tabs" style="position:relative">
         <div class="tabs_img">
             <v-avatar class="logo_img">
                 <img src="@/assets/images/logo-securauto-150.png" alt="">
@@ -11,7 +14,7 @@
             <v-tab class="subtabs" to="/employees">Employés</v-tab>
         </div>
         <v-spacer></v-spacer>
-        <div style="margin: auto 0">
+        <div style="margin: auto 0;height: 100%; position:relative; display:flex; align-items:center">
             <v-btn
                 class="mx-2"
                 fab
@@ -106,16 +109,18 @@
                 :dialog="Profile"
                 @close="Profile=false"
             ></profileDialog>
-        <!-- <parameterDialog
-            :dialog="Parameter"
-            @close="Parameter=false"
-        ></parameterDialog> -->
+            <!-- <parameterDialog
+                :dialog="Parameter"
+                @close="Parameter=false"
+            ></parameterDialog> -->
         </div>
     </v-tabs>
+    </div>
 </template>
 
 <script>
 import profileDialog from '@/components/Profile/profile.vue'
+
 export default {
     components : {
         profileDialog,
@@ -123,6 +128,7 @@ export default {
 
     data(){
         return{
+            notify:false,
             Profile:false,
         }
     },
@@ -133,7 +139,7 @@ export default {
         logout(){
             localStorage.setItem('token', '')
             this.$router.push({ name: "login"})
-        }
+        },
     }
 }
 </script>

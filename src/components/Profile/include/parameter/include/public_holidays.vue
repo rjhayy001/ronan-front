@@ -61,7 +61,7 @@
                 >
                     <v-container class="">
                         <v-row class="dialog_content">
-                            <div class="head_content">
+                            <div class="head_content d-flex">
                                 <div>
                                     <v-icon class="icon" color="#005075">
                                         mdi-plus
@@ -189,11 +189,11 @@ export default {
                 CreateHolidays(this.payload).then(({data}) => {
                     this.$arrayupdater(data, this.holidays)
                     this.addHolidays = false
-                    this.$toast.success('added succesfullly')
+                    this.$toast.success('ajouté avec succès')
                     this.clear()
                 })
             }else{
-                this.$toast.error('Do not leave Empty Field')
+                this.$toast.error('Ne pas laisser de champ vide')
             }
         },
         clear() {
@@ -202,13 +202,13 @@ export default {
             this.payload.date=""
         },
         removeHolidays(holiday) {
-            let message = `Are you sure you want to DELETE HOLIDAY ${holiday.name} ?`
+            let message = `Etes-vous sûr de vouloir SUPPRIMER LES VACANCES ${holiday.name} ?`
             this.$root.$confirm(message,'#ff5252')
                 .then(result => {
                     if(result)(
                         RemoveHolidays(holiday.id).then(() =>{
                             this.$arraysplicer(holiday,this.holidays)
-                            this.$toast.success("Successfully removed!");
+                            this.$toast.success("Enlevé avec succès !");
                         })
                     )
                 })

@@ -29,9 +29,24 @@
 
         <v-toolbar dense flat>
             <v-toolbar-title class="title">Liste de tous les employés</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-text-field
+                class="my-2 mr-2 shrink"
+                small
+                width="100px"
+                style="width: 350px"
+                dense
+                :hide-details="true"
+                label="Rechercher un employé"
+                solo
+                v-model="search"
+                append-icon="mdi-magnify"
+                single-line 
+            ></v-text-field>
         </v-toolbar>
 
         <v-data-table
+            :search="search"
             class="ml-2 invi-head-table no-stripe"
             :headers="headers"
             :items="employees"
@@ -59,6 +74,7 @@ export default {
     },
     data(){
         return {
+            search:'',
             employees:[],
             loading_employees:false,
             add_employee_dialog:false,

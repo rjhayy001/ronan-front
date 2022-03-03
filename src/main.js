@@ -36,10 +36,16 @@ Vue.mixin(global_mixin)
 Vue.mixin(styling_mixin)
 Vue.mixin(image_mixin)
 Vue.mixin(rules_mixin)
-
 // moment.updateLocale('fr', {
-//   weekdaysShort : ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"]
+//   monthsShort : ["Janv", "Févr", "Mars", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"]
 // });
+moment.updateLocale('fr', {
+  monthsShort : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+});
+moment.updateLocale('fr', {
+  weekdaysShort : ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+});
+
 
 new Vue({
   vuetify,

@@ -116,7 +116,7 @@
                   <div v-else-if="$isHoliday(date.date)" class="holiday">
                     {{ date.number }}
                   </div>
-                  <div v-else :class="[date.text=='Sun' ? 'sunday': '']">
+                  <div v-else :class="[date.text=='Dim' ? 'sunday': '']">
                     {{ date.number }}
                   </div>
                 </div>
@@ -129,13 +129,13 @@
               </div>
               <div class="css_td" v-for="date in date" :key="date.number">
                 <div id="data" v-if="$isSameDate(date.date,currentDay)" class="currentDay">
-                  <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                  <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                 </div>
                 <div v-else-if="$isHoliday(date.date)" class="holiday">
                   <p class="date-hidden">.</p>
                 </div>
-                <div id="data" v-else-if="date.text=='Sun'" style="background-color:rgb(97 97 97)">
-                  <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                <div id="data" v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97)">
+                  <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                 </div>
               </div>
             </div>
@@ -146,13 +146,13 @@
                 </div>
                 <div class="css_td" v-for="date in date" :key="date.number">
                   <div id="data"  v-if="$isSameDate(date.date,currentDay)" class="currentDay">
-                    <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                    <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                   </div>
                   <div v-else-if="$isHoliday(date.date)" class="holiday">
                     <p class="date-hidden">.</p>
                   </div>
-                  <div id="data"  v-else-if="date.text=='Sun'" style="background-color:rgb(97 97 97); z-index: 5">
-                    <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                  <div id="data"  v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97); z-index: 5">
+                    <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                   </div>
                 </div>
               </div>
@@ -161,17 +161,17 @@
                   {{user.first_name}}, {{user.last_name}}
                 </div>
                 <div class="css_td position-relative" v-for="date in date" :key="date.number">
-                  <div id="data"  v-if="date.text=='Sun'" style="background-color:rgb(97 97 97)" >
-                    <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                  <div id="data"  v-if="date.text=='Dim'" style="background-color:rgb(97 97 97)" >
+                    <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                   </div>
                   <div id="data" v-else-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed pointer" @click="addWork(user,center,date.date)">
-                    <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                    <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                   </div>
                   <div v-else class="empty-day position-absolute-fixed" @click="addWork(user,center,date.date)">
-                    <p :style="date.text=='Sun' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                    <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                   </div>
                   <!-- for planning -->
-                  <template v-if="user.planning && date.text !='Sun'">
+                  <template v-if="user.planning && date.text !='Dim'">
                     <template v-for="(planning, plann_index) in user.planning">
                       <div 
                         v-if="$isBetween(
@@ -189,7 +189,7 @@
                     </template>
                   </template>
                   <!-- for employee holidays -->
-                  <template v-if="user.holidays && date.text !='Sun'">
+                  <template v-if="user.holidays && date.text !='Dim'">
                     <template v-for="(holiday, holi_index) in user.holidays">
                       <div 
                         @click="editHoliday(holiday, user)"
@@ -206,7 +206,7 @@
                     </template>
                   </template>
                   <!-- for rtts -->
-                  <template v-if="user.rtts && date.text !='Sun'">
+                  <template v-if="user.rtts && date.text !='Dim'">
                     <template v-for="(rtt, rtt_index) in user.rtts">
                       <div 
                         @click="editRtt(rtt, user)"
@@ -386,6 +386,7 @@ import { GetAllRegions } from "@/repositories/region.api"
       increment() {
         let updateIncrement = moment(this.month).add(1, 'M').format('MMM YYYY');
         this.month = updateIncrement;
+        console.log(this.month,"current")
         this.year=moment(this.month).format('YYYY');
         this.monthly= moment(this.month).format('MMM');
         this.month_digit =  moment(this.month).format('MM')
@@ -394,6 +395,7 @@ import { GetAllRegions } from "@/repositories/region.api"
       decrement() {
         let updateIncrement = moment(this.month).subtract(1, 'M').format('MMM YYYY');
         this.month = updateIncrement;
+        console.log(this.month,"current")
         this.year=moment(this.month).format('YYYY');
         this.monthly= moment(this.month).format('MMM');
         this.month_digit =  moment(this.month).format('MM')
