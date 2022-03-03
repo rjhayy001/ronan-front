@@ -14,33 +14,11 @@
             <v-tab class="subtabs" to="/employees">Employés</v-tab>
         </div>
         <v-spacer></v-spacer>
+       
         <div style="margin: auto 0;height: 100%; position:relative; display:flex; align-items:center">
-            <v-btn
-                class="mx-2"
-                fab
-                dark
-                small
-                color="primary"
-            >
-                <v-icon
-                    color="white"
-                >
-                    mdi-bell
-                </v-icon>          
-            </v-btn>
-            <!-- <v-btn                 
-                class="mx-2"
-                fab
-                dark
-                small
-                color="primary"
-            >
-                <v-icon
-                    color="white"
-                >
-                    mdi-account
-                </v-icon>          
-            </v-btn> -->
+            <div>
+                <notification/>
+            </div>
             <v-menu
                 bottom
                 left
@@ -109,10 +87,6 @@
                 :dialog="Profile"
                 @close="Profile=false"
             ></profileDialog>
-            <!-- <parameterDialog
-                :dialog="Parameter"
-                @close="Parameter=false"
-            ></parameterDialog> -->
         </div>
     </v-tabs>
     </div>
@@ -120,10 +94,11 @@
 
 <script>
 import profileDialog from '@/components/Profile/profile.vue'
-
+import notification from './notification.vue'
 export default {
     components : {
         profileDialog,
+        notification
     },
 
     data(){
