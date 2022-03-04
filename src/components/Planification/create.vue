@@ -1,6 +1,6 @@
 <template>
     <v-dialog v-model="dialog" width="700" @click:outside="close" class="card-radius">
-        <Plan @close="close" :data="data" :dialog="dialog"></Plan>
+        <Plan @close="close" :data="data" :dialog="dialog" @success="$emit('success')"></Plan>
     </v-dialog>
 </template>
 <script>

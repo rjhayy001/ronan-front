@@ -229,10 +229,12 @@ export default {
         save(){
             if(!this.checkForm()){
                 Insert(this.payload).then(({data}) =>{
-                    this.$arrayupdater(data.data, this.employee.planning)
-                    this.$toast.success(data.message)
+                    // this.$arrayupdater(data.data, this.employee.planning)
+                    // this.$toast.success(data.message)
+                    this.$emit('success')
                     this.$emit('close')
-                    console.log(data.data)
+                    // console.log(data.data)
+                    console.log(data, 'plss work')
                 })
             }
         },
