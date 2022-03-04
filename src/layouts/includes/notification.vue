@@ -3,6 +3,7 @@
         bottom
         left
         offset-y
+        min-height="300px"
         style="position: relative;left: 1430px;!important"
     >
         <template v-slot:activator="{ on, attrs }">
@@ -34,7 +35,7 @@
                 </v-badge>      
             </v-btn>
         </template>
-        <div style="background-color:#ffffff">
+        <div style="background-color:#ffffff; min-height: 500px; min-width: 430px">
             <v-subheader class="py-5 mb-3">
                 <p class="sub_title">Notifications</p>
                 <v-spacer></v-spacer>
@@ -70,7 +71,11 @@
                     </span>
                 </v-tooltip>
             </v-subheader>
+            <template v-if="loading">
+                <table-loader></table-loader>
+            </template>
             <v-list
+            v-else
                 dense
                 class="clicker"
                 style="width: 430px; min-height: 1vh; max-height: 80vh; overflow: auto;"
@@ -156,6 +161,7 @@ export default {
         return {
             value: 'congés',
             content: 0,
+            loading: false,
             notifications: [],
             pending_dialog2: false,
             dialog65:false,
@@ -177,6 +183,7 @@ export default {
         },
         getNotifications() {
             this.content = 0
+            this.loading=true
             GetAllNotifications().then(({data}) =>{
                 this.notifications = data
                 data.forEach(el => {
@@ -184,6 +191,7 @@ export default {
                         this.content++
                     }
                 })
+                this.loading=false
             })
         },
         openDialog(item) {
