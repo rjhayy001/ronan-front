@@ -1,7 +1,8 @@
 <template>
     <v-dialog
         transition="dialog-left-transition"
-        v-model="dialog"
+        :value="dialog"
+        persistent
         fullscreen
         class="menu_tab"
     >
@@ -71,7 +72,20 @@ export default {
     props:{
         dialog:{
             type:Boolean,
-            required:true
+            required:true,
+        },
+        hint:{
+            type:String,
+        },
+    },
+    watch:{
+        'tab':function(value){
+            console.log(value, 'asdasdasdsa')
+        },
+    },
+    created(){
+        if(this.hint != null) {
+            this.tab = this.hint
         }
     },
     data() {
@@ -85,11 +99,11 @@ export default {
       };
     },
     methods: {
-            close(){
-                this.$emit('close')
-            }
-        },
-  };
+        close(){
+            this.$emit('close')
+        }
+    },
+};
    
 </script>
 

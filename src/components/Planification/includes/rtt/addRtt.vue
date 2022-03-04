@@ -8,7 +8,7 @@
     >
         <v-card>
             <v-form>
-                <v-container>
+                <v-container style="height: 60vh">
                     <v-row style="padding: 30px">
                         <div style="display:flex">
                             <div>
@@ -157,25 +157,35 @@
                                 class="text-capitalize mb-4"
                             ></v-autocomplete>
                         </v-col>
-                        <v-btn 
-                            @click="$emit('close')" 
-                            height="50px" 
-                            color="rgb(238 238 238)"
-                            width="47%" 
-                            class="ma-2 btn-dialog"
-                        >
-                            ANNULER
-                        </v-btn>
-                        <v-btn
-                            width="47%"
-                            dark
-                            height="50px"
-                            color="#005075!important"
-                            class="btn-dialog ma-2"
-                            @click="saveRtt"
-                        >
-                            VALIDER
-                        </v-btn>
+                        <v-col v-if="error" style="position:absolute; bottom:60px;width: 750px">
+                            <v-icon class="ma-2" color="red">
+                                mdi-alert-circle
+                            </v-icon>
+                            <span style="color: red; font-weight: 100">
+                                Veuillez ne pas laisser de champs vides
+                            </span>
+                        </v-col>
+                        <v-col style="position:absolute; bottom:0;width: 750px">
+                            <v-btn 
+                                @click="$emit('close')" 
+                                height="50px" 
+                                color="rgb(238 238 238)"
+                                width="47%" 
+                                class="ma-2 btn-dialog"
+                            >
+                                ANNULER
+                            </v-btn>
+                            <v-btn
+                                width="47%"
+                                dark
+                                height="50px"
+                                color="#005075!important"
+                                class="btn-dialog ma-2"
+                                @click="saveRtt"
+                            >
+                                VALIDER
+                            </v-btn>
+                        </v-col>
                     </v-row>
                 </v-container>
             </v-form>
@@ -188,6 +198,7 @@ import { CreateRtt } from "@/repositories/rtt.api";
 export default {
     data(){
         return {
+            error:false,
             start_time_menu:false,
             end_time_menu:false,
             date:false,
@@ -212,6 +223,7 @@ export default {
     },
     methods: {
         initialize() {
+            this.error=false
             GetAllEmployees().then(({data}) => {
                 console.log(data)
                 this.employees = data
@@ -219,15 +231,30 @@ export default {
             })
         },
         saveRtt(){
-            CreateRtt(this.rtt).then(({data}) => {
-                console.log(data, 'test')
-                this.$emit('success')
-                this.$emit('close')
-                this.$toast.success(data.message)
-                this.$store.commit('toggleForceReload')
-            }).catch(({ response }) => { 
-                this.$toast.error(response.data.message) 
-            })
+            this.validate()
+            if(this.error == false){
+                CreateRtt(this.rtt).then(({data}) => {
+                    console.log(data, 'test')
+                    this.$emit('success')
+                    this.$emit('close')
+                    this.$toast.success(data.message)
+                    this.$store.commit('toggleForceReload')
+                }).catch(({response}) => { 
+                    this.$toast.error(response.data.message) 
+                })
+            }
+        },
+        validate() {
+            var comment = this.rtt.comment;
+            var date = this.rtt.date;
+            var start = this.rtt.start_time;
+            var end = this.rtt.end_time;
+            var id = this.rtt.user_id;
+            if(comment == '' || comment == null || date == '' || date == null || start == '' || start == null || end == '' || end == null || id == '' || id == null) {
+                this.error=true
+            }else{
+                this.error=false
+            }
         }
     }
 }
