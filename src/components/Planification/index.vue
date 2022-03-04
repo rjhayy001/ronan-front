@@ -256,11 +256,13 @@
       v-if="dialog2" 
       :dialog="dialog2" 
       @close="closeDialog"
+      @success="forceReload"
       :data="create_data"
     />
     <edit-plan
       v-if="edit_plan_dialog"
       :dialog="edit_plan_dialog"
+      @success="forceReload"
       @close="edit_plan_dialog=false"
       :data="edit_data"
     />

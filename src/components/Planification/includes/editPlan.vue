@@ -221,8 +221,8 @@ export default {
         },
         destroy(){
             Delete(this.planning.id).then(({data}) =>{
-                this.$arraysplicer(this.planning, this.employee.planning)
                 this.$toast.success(data.message)
+                this.$emit('success')
                 this.$emit('close')
             })
         }
