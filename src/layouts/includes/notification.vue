@@ -35,13 +35,38 @@
             </v-btn>
         </template>
         <div style="background-color:#ffffff">
-            <div style="background-color:transparent;width: 100%">
-                <div>
-                    <h3 class="px-3 pt-3 text-lg-h4">
-                        Notifications
-                    </h3>
-                </div>
-            </div>
+            <v-subheader class="py-5 mb-3">
+                <p class="sub_title">Notifications</p>
+                <v-spacer></v-spacer>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn icon class="mt-5" 
+                            v-bind="attrs"
+                            v-on="on">
+                            <v-icon>
+                            mdi-email-check-outline
+                            </v-icon>
+                        </v-btn>
+                    </template>
+                    <span>
+                        Tout marquer comme lu
+                    </span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn icon class="mt-5"                           
+                            v-bind="attrs"
+                            v-on="on">
+                            <v-icon>
+                            mdi-refresh
+                            </v-icon>
+                        </v-btn>
+                    </template>
+                    <span>
+                        Rafraichir
+                    </span>
+                </v-tooltip>
+            </v-subheader>
             <v-list
                 dense
                 class="clicker"
@@ -52,7 +77,7 @@
                     dense
                     class="text-capitalize d-flex"
                     link
-                    @click.prevent="openDialog()"
+                    @click.stop="openDialog(item)"
                 >   
                     <div class="d-flex" style="width: 100%; position: relative; padding: 10px 0; text-transform: initial">
                         <v-list-item-icon style="margin: auto 40px auto 10px">
@@ -75,6 +100,9 @@
                             <v-icon>
                                 mdi-check
                             </v-icon>
+                            <v-icon>
+                                mdi-email-outline
+                            </v-icon>
                         </div>
                     </div>
                 </v-list-item>
@@ -83,7 +111,7 @@
         <pending-application
             v-if="pending_dialog2" 
             :dialog="pending_dialog2" 
-            
+            :hint="value"
             @close="pending_dialog2=false"
             @success="$emit('success')"
         />
@@ -119,6 +147,7 @@ export default {
     },
     data() {
         return {
+            value: 'congés',
             content: 1,
             notifications: [],
             pending_dialog2: false,
@@ -139,9 +168,11 @@ export default {
                 console.log(this.notifications, "notifications")
             })
         },
-        openDialog() {
-            this.pending_dialog2 = true
-            console.log(this.pending_dialog2)
+        openDialog(item) {
+            this.value = item.type == "holiday_request" ? 'congés': 'rtt'
+            this.$nextTick(function (){
+                this.pending_dialog2 = true
+            })
         }
     }
 }

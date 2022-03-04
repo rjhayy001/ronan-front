@@ -74,6 +74,19 @@ export default {
             type:Boolean,
             required:true,
         },
+        hint:{
+            type:String,
+        },
+    },
+    watch:{
+        'tab':function(value){
+            console.log(value, 'asdasdasdsa')
+        },
+    },
+    created(){
+        if(this.hint != null) {
+            this.tab = this.hint
+        }
     },
     data() {
         return {
