@@ -167,12 +167,20 @@
                                 :hide-details="true"
                             ></v-autocomplete>
                         </v-col>
-                        <v-col v-if="error" style="position: absolute; bottom: 4em;     width: 20em;">
+                        <!-- <v-col v-if="error" style="position: absolute; bottom: 4em;     width: 20em;">
                             <v-icon color="red">
                                 mdi-alert-circle
                             </v-icon>
                             <span style="color:red;">
                                 Please dont leave empty fields.
+                            </span>
+                        </v-col> -->
+                        <v-col v-if="error" style="position: absolute; bottom: 60px">
+                            <v-icon class="ma-2" color="red">
+                                mdi-alert-circle
+                            </v-icon>
+                            <span style="color: red; font-weight: 100">
+                                Veuillez ne pas laisser de champs vides
                             </span>
                         </v-col>
                         <v-col style="position:absolute; bottom:0;width: 750px">
@@ -217,7 +225,7 @@ export default {
     },
     data() {
         return {
-            error:false,
+            error:true,
             is_loading:true,
             start_menu:false,
             end_menu:false,
@@ -252,15 +260,32 @@ export default {
             })
         },
         save(){
-            console.log(this.holiday)
-            createHoliday(this.holiday).then(() => {
-                this.$toast.success('successfully added holiday') 
-                this.$emit('success')
-                this.$emit('close')
-                this.$store.commit('toggleForceReload')
-            }).catch(({ response }) => { 
-                this.$toast.error(response.data.message) 
-            })
+            this.validate()
+            console.log(this.error,"status")
+            if(this.error == false) {
+                createHoliday(this.holiday).then(() => {
+                    this.$toast.success('successfully added holiday') 
+                    this.$emit('success')
+                    this.$emit('close')
+                    this.$store.commit('toggleForceReload')
+                }).catch(({response}) => { 
+                    this.$toast.error(response.data.message) 
+                })
+            }
+        },
+        validate() {
+            var request_name = this.holiday.request_name;
+            var reason = this.holiday.reason;
+            var start = this.holiday.start_date;
+            var start_isHalf = this.holiday.startDate_isHalf_day;
+            var end = this.holiday.end_date;
+            var end_isHalf = this.holiday.endDate_isHalf_day;
+            var id = this.holiday.user_id;
+            if(request_name == '' || request_name == null || reason == '' || reason == null || start == '' || start == null || start_isHalf == '' || start_isHalf == null || end == '' || end == null || end_isHalf == '' || end_isHalf == null || id == '' || id == null) {
+                this.error=true
+            }else{
+                this.error=false
+            }
         }
     }
 }
