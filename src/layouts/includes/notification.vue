@@ -42,7 +42,9 @@
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon class="mt-5" 
                             v-bind="attrs"
-                            v-on="on">
+                            v-on="on"
+                            @click="markAsRead"
+                        >
                             <v-icon>
                             mdi-email-check-outline
                             </v-icon>
@@ -56,6 +58,7 @@
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon class="mt-5"                           
                             v-bind="attrs"
+                            @click.stop="initialize"
                             v-on="on">
                             <v-icon>
                             mdi-refresh
@@ -79,7 +82,7 @@
                     link
                     @click.stop="openDialog(item)"
                 >   
-                    <div class="d-flex" style="width: 100%; position: relative; padding: 10px 0; text-transform: initial">
+                    <div :class="item.is_read.is_read == 0 ? 'unread-background': ''" style="display:flex;width: 100%; position: relative; padding: 10px 5px; text-transform: initial;">
                         <v-list-item-icon style="margin: auto 40px auto 10px">
                             <v-avatar max-width="none" height="40px" width="40px">
                                  <v-img :src="item.user.image"></v-img>
@@ -97,10 +100,10 @@
                             </div>
                         </div>
                         <div style="margin: auto 0 auto auto;">
-                            <v-icon>
+                            <v-icon v-if="item.is_read.is_read == 1">
                                 mdi-check
                             </v-icon>
-                            <v-icon>
+                            <v-icon v-else>
                                 mdi-email-outline
                             </v-icon>
                         </div>
@@ -133,13 +136,17 @@
     white-space: normal;
 }
 
+.unread-background{
+    background-color:#e1e1e1;
+}
+
 .clicker::-webkit-scrollbar {
   width: 5px;
 }
 </style>
 
 <script>
-import { GetAllNotifications } from "@/repositories/notifications.api"
+import { GetAllNotifications , MarkAllAsRead, MarkasRead } from "@/repositories/notifications.api"
 import pendingApplication from '../../components/Planification/includes/dialogs/pendingApplication.vue';
 export default {
     components:{
@@ -148,7 +155,7 @@ export default {
     data() {
         return {
             value: 'congés',
-            content: 1,
+            content: 0,
             notifications: [],
             pending_dialog2: false,
             dialog65:false,
@@ -162,13 +169,27 @@ export default {
         initialize() {
             this.getNotifications();
         },
+        markAsRead(){
+            MarkAllAsRead().then(({data}) => {
+                this.$toast.success(data.message)
+                this.getNotifications()
+            })
+        },
         getNotifications() {
+            this.content = 0
             GetAllNotifications().then(({data}) =>{
                 this.notifications = data
-                console.log(this.notifications, "notifications")
+                data.forEach(el => {
+                    if(el.is_read.is_read ==0 ){
+                        this.content++
+                    }
+                })
             })
         },
         openDialog(item) {
+            MarkasRead(item.id).then(() =>{
+                this.initialize()
+            })
             this.value = item.type == "holiday_request" ? 'congés': 'rtt'
             this.$nextTick(function (){
                 this.pending_dialog2 = true
