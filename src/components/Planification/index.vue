@@ -142,7 +142,16 @@
             <template v-for="(center, center_index) in region.centers">
               <div class="css_tr"  :key="'center' + center_index">
                 <div class="css_sd subheader_sd width_sd">
-                  {{center.name}}
+                  <div class="d-flex" style="position:relative">
+                    <div style="margin: auto;">
+                      {{center.name}}
+                      <v-btn icon style="position: absolute; right: 0; top: -5px; box-shadow: none; ">
+                        <v-icon>
+                          mdi-minus
+                        </v-icon>
+                      </v-btn>
+                    </div>
+                  </div>
                 </div>
                 <div class="css_td" v-for="date in date" :key="date.number">
                   <div id="data"  v-if="$isSameDate(date.date,currentDay)" class="currentDay">
