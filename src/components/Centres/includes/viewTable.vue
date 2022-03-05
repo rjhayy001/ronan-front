@@ -1,8 +1,7 @@
 <template>
     <v-card
-        class="mx-auto"
+        class="mx-auto center-tablelist"
         flat
-        style="background-color:#fafafa"
     >
         <v-list>
             <v-list-item 
@@ -17,12 +16,12 @@
                 </v-list-item-icon>
                 <v-list-item-content>
                     <v-list-item-title>
-                        <h3 style="font-weight: 400" class="text-uppercase">
+                        <h3 class="table-title text-uppercase">
                             {{center.name}}
                         </h3>
                     </v-list-item-title>
                     <v-list-item-title>
-                        <h5 style="font-weight: 400; color: gray" class="text-capitalize">
+                        <h5 class="table-title text-capitalize title-color">
                             {{center.address}}
                         </h5>
                     </v-list-item-title>
@@ -48,10 +47,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-.table_list:hover {
-  background-color: #f0f0f0;
-}
-</style>

@@ -1,5 +1,5 @@
 <template>
-    <v-card min-height="90vh" class="card-container">
+    <v-card min-height="90vh" class="center-card-container">
     <v-img
       :src="center.image"
       lazy-src="https://picsum.photos/id/11/10/6"
@@ -11,10 +11,7 @@
           <v-btn
             color="transparent"
             rounded
-            class="ml-2"
-            style="position: absolute;
-            left: 0;
-            top: 12px;"
+            class="ml-2 center-btn-absolute"
             width="130"
             @click="$router.go(-1)"
           >
@@ -36,7 +33,7 @@
           @click="editCenter"
         >
           <v-icon left>mdi-pencil</v-icon>
-          <span style="font-size:13px">Editer</span>
+          <span class="center-btn-action">Editer</span>
         </v-btn>
         <v-btn
           rounded
@@ -45,7 +42,7 @@
           @click="deleteCenter"
         >
           <v-icon left>mdi-delete</v-icon>
-          <span style="font-size:13px">Supprimer</span>
+          <span class="center-btn-action">Supprimer</span>
         </v-btn>
       </div>
     </div>
@@ -53,7 +50,7 @@
     <v-list>
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title style="font-size: 22px;color: #0486c2;">{{center.name}}</v-list-item-title>
+          <v-list-item-title class="center-detail-name">{{center.name}}</v-list-item-title>
           <v-list-item-subtitle>{{center.email ? center.email : 'undefined'}}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -67,7 +64,7 @@
           </v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title class="item-title">{{center.mobile}}</v-list-item-title>
+          <v-list-item-title class="center-item-title">{{center.mobile}}</v-list-item-title>
           <v-list-item-subtitle>Mobile</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -81,7 +78,7 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title class="item-title">{{center.address}}</v-list-item-title>
+          <v-list-item-title class="center-item-title">{{center.address}}</v-list-item-title>
           <v-list-item-subtitle>Adresse</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -94,7 +91,7 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title class="item-title">{{center.city}}</v-list-item-title>
+          <v-list-item-title class="center-item-title">{{center.city}}</v-list-item-title>
           <v-list-item-subtitle>Ville</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -107,7 +104,7 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title class="item-title">{{center.zip_code}}</v-list-item-title>
+          <v-list-item-title class="center-item-title">{{center.zip_code}}</v-list-item-title>
           <v-list-item-subtitle>Postal Code</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -123,7 +120,7 @@
 
         <v-list-item-content>
           <template v-if="!editing_region">
-            <v-list-item-title class="item-title">{{center.region.name}}</v-list-item-title>
+            <v-list-item-title class="center-item-title">{{center.region.name}}</v-list-item-title>
             <v-list-item-subtitle>Region</v-list-item-subtitle>
           </template>
           <template v-else>
@@ -151,7 +148,7 @@
 
         <v-list-item-content>
           <template v-if="!editing_manager">
-            <v-list-item-title class="item-title">{{center.manager ? center.manager.full_name : 'Non'}}</v-list-item-title>
+            <v-list-item-title class="center-item-title">{{center.manager ? center.manager.full_name : 'Non'}}</v-list-item-title>
             <v-list-item-subtitle>Manager</v-list-item-subtitle>
           </template>
           <template v-else>
@@ -280,15 +277,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-.btn-holder{
-  text-align: center;
-}
-.item-title{
-  font-size:15px !important;
-}
-.card-container{
-  position: sticky;
-    top: 85px;
-}
-</style>

@@ -4,7 +4,7 @@
             <v-subheader class="my-2">
                 <p class="sub_title">Liste de tous les employés</p>
                 <v-spacer></v-spacer>
-                 <v-text-field
+                <v-text-field
                     class="my-2 mr-2 shrink"
                     small
                     width="100px"
@@ -12,14 +12,12 @@
                     :hide-details="true"
                     label="Search Employee"
                     solo
-                  
                     append-icon="mdi-magnify"
                     single-line 
                     v-model="search"
                 ></v-text-field>
                 <v-btn depressed @click="view_list=!view_list">
                     <v-icon
-                    
                         color="black"
                     >
                     {{view_list ? 'mdi-format-list-bulleted' : 'mdi-view-compact'}}
