@@ -38,6 +38,7 @@
     z-index: 1;
     right: 0;
     left: 0;
+    bottom: 0;
 }
 
 .holiday-full{
@@ -46,6 +47,7 @@
     z-index: 1;
     right: 0;
     left: 0;
+    bottom: 0;
     background-color: #4caf50;
     z-index:1 !important;
 }
@@ -80,6 +82,7 @@
     z-index: 1;
     right: 0;
     left: 0;
+    bottom: 0;
 }
 
 .nat-holiday {
@@ -89,6 +92,7 @@
     z-index: 1;
     right: 0;
     left: 0;
+    bottom: 0;
 }
 
 .position-absolute-fixed{
@@ -96,6 +100,7 @@
     top: 0;
     right: 0;
     left: 0;
+    bottom: 0;
     color: white !important;
 }
 
@@ -107,6 +112,11 @@
     background-color: #7db5d0;
     opacity:0.8;
     z-index: 1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
     color:white;
   }
 
@@ -122,6 +132,12 @@
 .holiday {
     background:orange !important;
     color: white !important;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    right: 0;
+    left: 0;
+    bottom: 0;
 }
 .css_td {
     position: relative;
