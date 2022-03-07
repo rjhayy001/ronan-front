@@ -105,9 +105,18 @@
           <div class="css_thead">
             <div class="css_tr">
               <div style="position:relative">
-                  <v-icon style="position:absolute; right:10px; z-index:4; top: -6px">
-                    mdi-filter
-                  </v-icon>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-icon 
+                      style="position:absolute; right:10px; z-index:4; top: -6px"
+                      @click="toggleNoWorkEmployees"
+                      v-on="on"
+                    >
+                      mdi-filter
+                    </v-icon>
+                  </template>
+                  <span>toggle no work employes</span>
+                </v-tooltip>
               </div>
               <div v-for="date in date" :key="date.text + date.number"  class="css_th">{{date.text}}</div>
             </div>
@@ -380,6 +389,20 @@ import { GetAllRegions } from "@/repositories/region.api"
       this.initialize()
     },
     methods: {
+      initialize(){
+        this.getMonthyear();
+        this.getmonthly();
+        this.getNationalHoliday()
+        this.getData()
+      },
+      toggleNoWorkEmployees(){
+
+        this.regions.forEach(region => {
+          region.centers.forEach(center =>
+            this.test(center)
+          )
+        })
+      },
       test(center){
         let curr_center = this.center_storage.find(store => store.id === center.id);
         console.log(curr_center, 'curr')
@@ -403,12 +426,6 @@ import { GetAllRegions } from "@/repositories/region.api"
           })
         })
         center.users = data
-      },
-      initialize(){
-        this.getMonthyear();
-        this.getmonthly();
-        this.getNationalHoliday()
-        this.getData()
       },
       changeView(view) {
         this.employee_view = view
