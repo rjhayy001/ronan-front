@@ -104,7 +104,11 @@
           <div class="css_th"  style="border-bottom:none!important;"></div>
           <div class="css_thead">
             <div class="css_tr">
-              <div></div>
+              <div style="position:relative">
+                  <v-icon style="position:absolute; right:10px; z-index:4; top: -6px">
+                    mdi-filter
+                  </v-icon>
+              </div>
               <div v-for="date in date" :key="date.text + date.number"  class="css_th">{{date.text}}</div>
             </div>
             <div class="css_tr ">
