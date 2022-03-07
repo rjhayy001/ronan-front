@@ -230,6 +230,8 @@ export default {
             start_menu:false,
             end_menu:false,
             holiday:{
+                request_name: 'Demande congé',
+                reason: 'Raison congé',
                 startDate_isHalf_day:0,
                 start_date: this.$datePickerDate(moment()),
                 end_date: this.$datePickerDate(moment()),

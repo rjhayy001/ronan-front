@@ -10,6 +10,16 @@ export default {
         $arrayupdater(item, array_given) {
             array_given.unshift(item);
         },
+        $isOnArray(item, array_given){
+            let found = array_given.find(arr => arr.id === item.id);
+            let flag = false
+
+            if(found != undefined) {
+                flag = true
+            }
+
+            return flag
+        },
         $defaultDate(date){
             return moment(date).format('DD-MM-YYYY');
         },

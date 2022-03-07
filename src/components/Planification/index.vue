@@ -145,7 +145,22 @@
                 <div class="css_tr"  :key="'center' + center_index">
                   <div class="css_sd subheader_sd width_sd">
                     {{center.name}}
-                    <v-icon dark small @click="test(center)">mdi-account-multiple-remove-outline</v-icon>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-icon 
+                          style="position:absolute; right: 10px; top: 50%; bottom: 50%" 
+                          dark 
+                          v-on="on"
+                          small 
+                          @click="test(center)"
+                        >
+                          {{$isOnArray(center, center_storage) ? 'mdi-filter-off' : 'mdi-filter'}}
+                        </v-icon>
+                      </template>
+                      <span>
+                        {{$isOnArray(center, center_storage) ? 'show no work employee' : 'hide no work employee'}}
+                      </span>
+                    </v-tooltip>
                   </div>
                   <div class="css_td" v-for="date in date" :key="date.number">
                     <div id="data"  v-if="$isSameDate(date.date,currentDay)" class="currentDay">
