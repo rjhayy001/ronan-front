@@ -145,7 +145,7 @@
                 <div class="css_tr"  :key="'center' + center_index">
                   <div class="css_sd subheader_sd width_sd">
                     {{center.name}}
-                    <v-icon dark small @click="test(center)">mdi-heart-outline</v-icon>
+                    <v-icon dark small @click="test(center)">mdi-account-multiple-remove-outline</v-icon>
                   </div>
                   <div class="css_td" v-for="date in date" :key="date.number">
                     <div id="data"  v-if="$isSameDate(date.date,currentDay)" class="currentDay">
@@ -354,9 +354,7 @@ import { GetAllRegions } from "@/repositories/region.api"
             'Jours', 'Semaine', 'Mois' 
           ],
           national_holidays: [],
-          center_storage:{
-            id:0
-          }
+          center_storage:[]
       };
     },
     mounted() {
@@ -364,15 +362,15 @@ import { GetAllRegions } from "@/repositories/region.api"
     },
     methods: {
       test(center){
-        console.log(center.id === this.center_storage.id)
-        if(center.id === this.center_storage.id) {
-          console.log(this.center_storage.users, 'sad')
-          center.users = this.center_storage.users
-          this.center_storage = {}
+        let curr_center = this.center_storage.find(store => store.id === center.id);
+        console.log(curr_center, 'curr')
+
+        if(curr_center != undefined) {
+          center.users = curr_center.users
+          this.$arraysplicer(curr_center  , this.center_storage)
           return
         }
-        console.log(this.center_storage, 'else')
-        this.center_storage = JSON.parse(JSON.stringify(center))
+        this.center_storage.push(JSON.parse(JSON.stringify(center)))
         let start = moment(this.month).startOf('month').format("YYYY-MM-DD")
         let end = moment(this.month).endOf('month').format("YYYY-MM-DD")
         let data = []
