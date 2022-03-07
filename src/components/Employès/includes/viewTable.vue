@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="d-flex" style="padding-top: 20px">
+        <div class="d-flex">
             <div class="d-flex" style="margin-right: auto" >
                 <div style="margin: auto 0 auto 15px;">
                     <h4 style="font-weight: 400">
@@ -67,6 +67,8 @@
                         <v-list-item-title>
                             <h3 style="font-weight: 400">
                             {{item.full_name}}
+
+                            {{item}}
                             </h3>
                         </v-list-item-title>
                         <v-list-item-title>
