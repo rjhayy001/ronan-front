@@ -198,7 +198,7 @@
                     <div id="data" v-else-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed pointer" @click="addWork(user,center,date.date)">
                       <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                     </div>
-                    <div v-else class="empty-day position-absolute-fixed" @click="addWork(user,center,date.date)">
+                    <div v-else class="empty-day position-absolute-fixed" @click="addWork(user,center,date.date)" @contextmenu.prevent="testing">
                       <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                     </div>
                     <!-- for planning -->
@@ -313,6 +313,14 @@
       @close="edit_holiday_dialog=false"
       :data="edit_holiday_data"
     />
+    <!-- test menu -->
+    <v-menu v-model="right_menu.showMenu" :position-x="right_menu.x" :position-y="right_menu.y" absolute offset-y>
+      <v-list dense>
+        <v-list-item dense v-for="(item, index) in options" :key="index+'test'">
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
     <menu-button v-if="menu" @success="forceReload"/>
   </div>
 </template>
@@ -341,6 +349,11 @@ import { GetAllRegions } from "@/repositories/region.api"
     },
       data() {
         return {
+          right_menu:{
+            showMenu:false,
+            x:0,
+            y:0
+          },
           drag:false,
           employee_view:false,
           e2:'Jours',
@@ -376,6 +389,11 @@ import { GetAllRegions } from "@/repositories/region.api"
             { title: 'Semaine' },
             { title: 'Mois' },
           ],
+          options: [
+            {value:1, title: 'Absence' },
+            {value:2, title: 'Rtt' },
+            {value:3, title: 'Vacances' },
+          ],
           regions:[],
           loading: false,
           selects: [
@@ -389,6 +407,14 @@ import { GetAllRegions } from "@/repositories/region.api"
       this.initialize()
     },
     methods: {
+      testing(e){
+        this.right_menu.showMenu = false;
+        this.right_menu.x = e.clientX;
+        this.right_menu.y = e.clientY;
+        this.$nextTick(() => {
+          this.right_menu.showMenu = true;
+        });
+      },
       initialize(){
         this.getMonthyear();
         this.getmonthly();
