@@ -389,6 +389,30 @@ import { GetAllRegions } from "@/repositories/region.api"
       this.initialize()
     },
     methods: {
+      // test(center){
+      //   console.log(center.id === this.center_storage.id)
+      //   if(center.id === this.center_storage.id) {
+      //     console.log(this.center_storage.users, 'sad')
+      //     center.users = this.center_storage.users
+      //     this.center_storage = {}
+      //     return
+      //   }
+      //   console.log(this.center_storage, 'else')
+      //   this.center_storage = JSON.parse(JSON.stringify(center))
+      //   let start = moment(this.month).startOf('month').format("YYYY-MM-DD")
+      //   let end = moment(this.month).endOf('month').format("YYYY-MM-DD")
+      //   let data = []
+      //   center.users.forEach(user => {
+      //     user.planning.forEach(plan => {
+      //       if(this.$isBetween(start,end,plan.start_date)){
+      //         if(!data.some( u => u.id === user.id)){
+      //           data.push(user);
+      //         }
+      //       }
+      //     })
+      //   })
+      //   center.users = data
+      // },
       initialize(){
         this.getMonthyear();
         this.getmonthly();
