@@ -181,6 +181,15 @@
 .login_field .error--text .v-input__control .v-text-field__details{
     display: block!important;
 }
+
 .login_field .v-input .v-input__control .v-text-field__details{
     display: none;
+}
+
+.login-relative {
+    position:relative
+}
+
+.login-btn-valider {
+    padding-top: 2px
 }

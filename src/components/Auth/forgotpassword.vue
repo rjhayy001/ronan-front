@@ -24,7 +24,7 @@
             <template v-if="loading">
                 <table-loader></table-loader>
             </template>
-            <v-form v-else ref="form" class="login-form" style="position:relative">
+            <v-form v-else ref="form" class="login-form login-relative">
                 <div class="form_head">
                     <div class="head_avatar">
                         <v-avatar max-width="none" height="150px" width="150px">
@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="form_textfield mt-8">
-                    <div class="login_field" style="position:relative">
+                    <div class="login_field login-relative">
                         <v-text-field
                             :rules="loginRules.email"      
                             class="my-2"
@@ -60,7 +60,7 @@
                         </v-btn>
                     </div>
                 </div>
-                <div class="action_login" style="padding-top: 2px">
+                <div class="action_login login-btn-valider">
                     <div class="mt-5 text-center">
                         <v-btn class="val-btn" @click="sendToken" width="100%" rounded color="primary" dark x-large>
                             Valider

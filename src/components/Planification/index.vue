@@ -142,13 +142,13 @@
               </div>
               <div class="css_td" v-for="date in date" :key="date.number">
                 <div id="data" v-if="$isSameDate(date.date,currentDay)" class="currentDay">
-                  <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                  <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden position-absolute-fixed ">.</p>
                 </div>
                 <div v-else-if="$isHoliday(date.date)" class="holiday">
                   <p class="date-hidden">.</p>
                 </div>
-                <div id="data" v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97)">
-                  <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                <div id="data" v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97)" class="position-absolute-fixed">
+                  <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden ">.</p>
                 </div>
               </div>
             </div>
@@ -182,7 +182,7 @@
                     <div v-else-if="$isHoliday(date.date)" class="holiday">
                       <p class="date-hidden">.</p>
                     </div>
-                    <div id="data"  v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97); z-index: 5">
+                    <div id="data"  v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97); " class="position-absolute-fixed">
                       <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                     </div>
                   </div>
@@ -192,7 +192,7 @@
                     {{user.first_name}}, {{user.last_name}}
                   </div>
                   <div class="css_td position-relative" v-for="date in date" :key="date.number">
-                    <div id="data"  v-if="date.text=='Dim'" style="background-color:rgb(97 97 97)" >
+                    <div id="data"  v-if="date.text=='Dim'" style="background-color:rgb(97 97 97)" class="position-absolute-fixed" >
                       <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                     </div>
                     <div id="data" v-else-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed pointer" @click="addWork(user,center,date.date)">
@@ -230,7 +230,7 @@
                             date.date
                           ) && holiday.status == 1" 
                           :key="holi_index + 'holiasd'" 
-                          :class="['holiday-full pointer',$checkHolidayFullDate(holiday, date) ]"
+                          :class="['holiday-full pointer position-absolute-fixed',$checkHolidayFullDate(holiday, date) ]"
                         >
                           <p class="date-hidden" >.</p>
                         </div>
