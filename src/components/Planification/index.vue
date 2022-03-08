@@ -104,7 +104,20 @@
           <div class="css_th"  style="border-bottom:none!important;"></div>
           <div class="css_thead">
             <div class="css_tr">
-              <div></div>
+              <div style="position:relative">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-icon 
+                      style="position:absolute; right:10px; z-index:4; top: -6px"
+                      @click="toggleNoWorkEmployees"
+                      v-on="on"
+                    >
+                      mdi-filter
+                    </v-icon>
+                  </template>
+                  <span>toggle no work employes</span>
+                </v-tooltip>
+              </div>
               <div v-for="date in date" :key="date.text + date.number"  class="css_th">{{date.text}}</div>
             </div>
             <div class="css_tr ">
@@ -129,13 +142,13 @@
               </div>
               <div class="css_td" v-for="date in date" :key="date.number">
                 <div id="data" v-if="$isSameDate(date.date,currentDay)" class="currentDay">
-                  <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                  <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden position-absolute-fixed ">.</p>
                 </div>
                 <div v-else-if="$isHoliday(date.date)" class="holiday">
                   <p class="date-hidden">.</p>
                 </div>
-                <div id="data" v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97)">
-                  <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                <div id="data" v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97)" class="position-absolute-fixed">
+                  <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden ">.</p>
                 </div>
               </div>
             </div>
@@ -145,7 +158,22 @@
                 <div class="css_tr"  :key="'center' + center_index">
                   <div class="css_sd subheader_sd width_sd">
                     {{center.name}}
-                    <v-icon dark small @click="test(center)">mdi-account-multiple-remove-outline</v-icon>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-icon 
+                          style="position:absolute; right: 10px; top: 50%; bottom: 50%" 
+                          dark 
+                          v-on="on"
+                          small 
+                          @click="test(center)"
+                        >
+                          {{$isOnArray(center, center_storage) ? 'mdi-filter-off' : 'mdi-filter'}}
+                        </v-icon>
+                      </template>
+                      <span>
+                        {{$isOnArray(center, center_storage) ? 'show no work employee' : 'hide no work employee'}}
+                      </span>
+                    </v-tooltip>
                   </div>
                   <div class="css_td" v-for="date in date" :key="date.number">
                     <div id="data"  v-if="$isSameDate(date.date,currentDay)" class="currentDay">
@@ -154,7 +182,7 @@
                     <div v-else-if="$isHoliday(date.date)" class="holiday">
                       <p class="date-hidden">.</p>
                     </div>
-                    <div id="data"  v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97); z-index: 5">
+                    <div id="data"  v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97); " class="position-absolute-fixed">
                       <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                     </div>
                   </div>
@@ -164,7 +192,7 @@
                     {{user.first_name}}, {{user.last_name}}
                   </div>
                   <div class="css_td position-relative" v-for="date in date" :key="date.number">
-                    <div id="data"  v-if="date.text=='Dim'" style="background-color:rgb(97 97 97)" >
+                    <div id="data"  v-if="date.text=='Dim'" style="background-color:rgb(97 97 97)" class="position-absolute-fixed" >
                       <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                     </div>
                     <div id="data" v-else-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed pointer" @click="addWork(user,center,date.date)">
@@ -202,7 +230,7 @@
                             date.date
                           ) && holiday.status == 1" 
                           :key="holi_index + 'holiasd'" 
-                          :class="['holiday-full pointer',$checkHolidayFullDate(holiday, date) ]"
+                          :class="['holiday-full pointer position-absolute-fixed',$checkHolidayFullDate(holiday, date) ]"
                         >
                           <p class="date-hidden" >.</p>
                         </div>
@@ -361,6 +389,20 @@ import { GetAllRegions } from "@/repositories/region.api"
       this.initialize()
     },
     methods: {
+      initialize(){
+        this.getMonthyear();
+        this.getmonthly();
+        this.getNationalHoliday()
+        this.getData()
+      },
+      toggleNoWorkEmployees(){
+
+        this.regions.forEach(region => {
+          region.centers.forEach(center =>
+            this.test(center)
+          )
+        })
+      },
       test(center){
         let curr_center = this.center_storage.find(store => store.id === center.id);
         console.log(curr_center, 'curr')
@@ -384,12 +426,6 @@ import { GetAllRegions } from "@/repositories/region.api"
           })
         })
         center.users = data
-      },
-      initialize(){
-        this.getMonthyear();
-        this.getmonthly();
-        this.getNationalHoliday()
-        this.getData()
       },
       changeView(view) {
         this.employee_view = view

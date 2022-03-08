@@ -22,7 +22,7 @@
                     </v-list-item-title>
                     <v-list-item-title>
                         <h5 class="table-title text-capitalize title-color">
-                            {{center.address}}
+                            {{center.address ? center.address : 'NON DÉFINI'}}
                         </h5>
                     </v-list-item-title>
                 </v-list-item-content>
