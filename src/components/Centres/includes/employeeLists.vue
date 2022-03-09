@@ -7,7 +7,7 @@
             @close="add_employee_dialog=false"
         />
         <v-toolbar dense flat>
-            <v-toolbar-title class="title">Liste des employés affectés</v-toolbar-title>
+            <v-toolbar-title class="center-employeelist-title">Liste des employés affectés</v-toolbar-title>
         </v-toolbar>
 
         <v-data-table
@@ -28,13 +28,12 @@
         </v-data-table>
 
         <v-toolbar dense flat>
-            <v-toolbar-title class="title">Liste de tous les employés</v-toolbar-title>
+            <v-toolbar-title class="center-employeelist-title">Liste de tous les employés</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-text-field
-                class="my-2 mr-2 shrink"
+                class="my-2 mr-2 shrink employeelist-field"
                 small
                 width="100px"
-                style="width: 350px"
                 dense
                 :hide-details="true"
                 label="Rechercher un employé"
@@ -105,14 +104,14 @@ export default {
             let payload = {
                 user_id: item.id
             }
-            let message = `Are you sure you want to REMOVE ${item.first_name}, ${item.last_name} to the center ?`
+            let message = `Êtes-vous sûr de vouloir SUPPRIMER ${item.first_name}, ${item.last_name} vers le centre ?`
             this.$root
             .$confirm(message,'#008dd1')
             .then(result => {
                 if(result)(
                     RemoveEmployee(this.center.id, payload).then(() => {
                         this.$arraysplicer(item,this.center.users)
-                        this.$toast.success("Successfully removed!");
+                        this.$toast.success("Enlevé avec succès !");
                     })
                 )
             })
@@ -127,14 +126,3 @@ export default {
     }
 }
 </script>
-<style scoped>
-.title{
-    color: #0486c2 !important;
-    font-size: 19px !important;
-    font-weight: 300;
-}
-.test .v-data-table__wrapper{
-    border-top-left-radius: 25px !important;
-    border-top-right-radius: 25px !important;
-}
-</style>

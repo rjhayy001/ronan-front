@@ -4,7 +4,7 @@
             <v-subheader class="my-2">
                 <p class="sub_title">Liste de tous les employés</p>
                 <v-spacer></v-spacer>
-                 <v-text-field
+                <v-text-field
                     class="my-2 mr-2 shrink"
                     small
                     width="100px"
@@ -12,14 +12,12 @@
                     :hide-details="true"
                     label="Search Employee"
                     solo
-                  
                     append-icon="mdi-magnify"
                     single-line 
                     v-model="search"
                 ></v-text-field>
                 <v-btn depressed @click="view_list=!view_list">
                     <v-icon
-                    
                         color="black"
                     >
                     {{view_list ? 'mdi-format-list-bulleted' : 'mdi-view-compact'}}
@@ -132,94 +130,6 @@ export default {
          close(){
             this.$emit('close')
         }
-        // addEmployee(){
-        //     addEmployee(this.employee).then(res=>{
-        //         console.log(res)
-        //         this.dialog = false
-        //     })
-        // },
-    //     searchEmployee(key){
-    //       if (this.timer) {
-    //       clearTimeout(this.timer);
-    //       this.timer = null;
-    //     }
-    //         this.timer = setTimeout(() => {
-    //         getEmployee({name:key}).then((response) => {
-    //             this.users = response.data 
-    //             this.loading = false
-    //         }).catch((errors) => {
-    //             console.log(errors)
-    //         });
-    //         },800);
-    //   },
     }
 }
 </script>
-<style scoped>
-.theme--light.v-btn.v-btn--has-bg {
-    background-color: white!important;
-}
-.sub_title {
-    margin: auto 0; 
-    font-size: 20px; 
-    font-weight: bold;
-}
-
-.row {
-    padding: 15px;
-}
-
-.dialog-header {
-    display:flex;
-    flex-direction: column;
-    padding:0 12px; 
-    width:100%;
-}
-
-.dialog-title {
-     padding:0 12px;
-     width: 100%;
-}
-
-.underline-bottom {
-    border-bottom: solid 1px gray; 
-    margin-bottom: 5px;
-}
-
-.underline-top {
-    border-top: solid 1px gray; 
-    margin-bottom: 5px;
-}
-
-.btn-dialog {
-    margin-left: 12px!important;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-}
-
-.theme--light.v-btn.v-btn--has-bg {
-    background-color: white!important;
-}
-
-.col-12 {
-    padding: 0 12px;
-}
-
-.subheader{
-    margin-top: 16px;
-}
-
-table>thead.v-data-table-header>tr>th,
-thead .v-data-table__checkbox>.v-icon {
-    background-color: #FF5722 !important;
-    color: #fff !important;
-    text-transform: capitalize !important;
-}
-.scroll {
-   overflow-y: scroll
-}
-
-
-
-
-
-</style>

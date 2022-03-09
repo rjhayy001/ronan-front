@@ -221,6 +221,9 @@ export default {
         dialog:{
             type:Boolean,
             required:true
+        },
+        data:{
+            type: Object,
         }
     },
     data() {
@@ -236,6 +239,7 @@ export default {
                 start_date: this.$datePickerDate(moment()),
                 end_date: this.$datePickerDate(moment()),
                 endDate_isHalf_day:0,
+                user_id:null
             },
             items: [
                 {value: 0, text:'Toute la journée'},
@@ -245,7 +249,19 @@ export default {
             employees:[],
         };
     },
-
+    watch:{
+       "data.showMenu": {
+        handler(val) {
+            if(!val){
+                this.holiday.user_id = this.data.user.id
+                this.holiday.start_date = this.$datePickerDate(this.data.date)
+                this.holiday.end_date = this.$datePickerDate(this.data.date)
+                console.log(this.data.user)
+            }
+        },
+        deep: true,
+      },
+    },
     created(){
         this.initialize();
     },
@@ -258,7 +274,9 @@ export default {
             GetAllEmployees().then(({data}) => {
                 console.log(data)
                 this.employees = data
-                this.holiday.user_id = this.employees[0].id
+                if(!this.data){
+                    this.holiday.user_id = this.employees[0].id
+                }
             })
         },
         save(){
@@ -279,11 +297,9 @@ export default {
             var request_name = this.holiday.request_name;
             var reason = this.holiday.reason;
             var start = this.holiday.start_date;
-            var start_isHalf = this.holiday.startDate_isHalf_day;
             var end = this.holiday.end_date;
-            var end_isHalf = this.holiday.endDate_isHalf_day;
             var id = this.holiday.user_id;
-            if(request_name == '' || request_name == null || reason == '' || reason == null || start == '' || start == null || start_isHalf == '' || start_isHalf == null || end == '' || end == null || end_isHalf == '' || end_isHalf == null || id == '' || id == null) {
+            if(request_name == '' || request_name == null || reason == '' || reason == null || start == '' || start == null || end == '' || end == null ||  id == '' || id == null) {
                 this.error=true
             }else{
                 this.error=false

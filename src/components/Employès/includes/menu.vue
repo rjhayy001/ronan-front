@@ -1,5 +1,5 @@
 <template>
-    <div style="position: fixed; z-index: 2; bottom: 10px; right: 10px;">
+    <div class="employee_menu-btn">
         <v-btn class="mx-2" 
             fab
             dark
@@ -11,7 +11,7 @@
                 {{view_list ? 'mdi-window-close' : 'mdi-plus'}}
             </v-icon>
         </v-btn>
-        <div v-if="button" style="position: fixed;">
+        <div v-if="button" class="position-fixed">
            
         </div>
     </div>

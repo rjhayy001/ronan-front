@@ -12,7 +12,7 @@
                             <v-img :src="employee.image"></v-img>
                         </v-list-item-avatar>
                         <v-list-item-content>
-                        <v-list-item-title class="item-title">{{employee.first_name}}, {{employee.last_name}}</v-list-item-title>
+                        <v-list-item-title class="addtoCenter-item-title">{{employee.first_name}}, {{employee.last_name}}</v-list-item-title>
                         <v-list-item-subtitle>{{employee.email}}</v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>
@@ -87,18 +87,3 @@ export default {
     }
 }
 </script>
-<style scoped>
-.btn-holder{
-  text-align: center;
-}
-.item-title{
-  font-size:18px !important;
-}
-.card-container{
-  position: sticky;
-    top: 85px;
-}
-.info-text {
-    font-style: italic;
-}
-</style>

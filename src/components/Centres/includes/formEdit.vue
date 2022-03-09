@@ -4,7 +4,7 @@
             <v-form ref="form" lazy-validation>
                 <v-container class="center_form">
                     <v-row class="row">
-                        <div class="dialog-header mb-2" style="display:flex; flex-direction:row">
+                        <div class="dialog-header mb-2 flex-row">
                             <div>
                                 <v-icon size="50px" color="primary">
                                     mdi-alert-circle

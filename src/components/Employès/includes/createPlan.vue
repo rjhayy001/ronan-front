@@ -2,7 +2,7 @@
 <v-dialog v-model="dialog2" width="700" persistent>
     <v-card rounded>
         <v-toolbar dense flat class="py-4">
-            <v-toolbar-title>Create Planification</v-toolbar-title>
+            <v-toolbar-title>Créer une planification</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-icon @click="$emit('close')">mdi-close</v-icon>
         </v-toolbar>
@@ -12,7 +12,7 @@
                     md="5"
                     xs="12"
                 >
-                    <div style="display:grid " class="text-center">
+                    <div class="text-center employee_createplan">
                         <div>
                             <v-avatar size="100">
                                 <img
@@ -21,18 +21,18 @@
                                 >
                             </v-avatar>
                         </div>
-                        <span class="emp-name mt-2">{{employee.full_name}}</span>
-                        <span class="emp-email">{{employee.email}}</span>
+                        <span class="employee_createplan-emp-name mt-2">{{employee.full_name}}</span>
+                        <span class="employee_createplan-emp-email">{{employee.email}}</span>
                         <v-list dense class="text-left mt-4">
                             <v-list-item>
                                 <v-list-item-icon>
-                                <v-icon style="opacity:0.5;">
+                                <v-icon class="employee_createplan_icon">
                                     mdi-bank
                                 </v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-content>
-                                <v-list-item-title class="item-title">{{center.name}}</v-list-item-title>
-                                <v-list-item-subtitle class="item-sub">{{center.region.name}}</v-list-item-subtitle>
+                                <v-list-employee_createplan-item-title class="employee_createplan-item-title">{{center.name}}</v-list-employee_createplan-item-title>
+                                <v-list-employee_createplan-item-subtitle class="employee_createplan-item-sub">{{center.region.name}}</v-list-employee_createplan-item-subtitle>
                                 </v-list-item-content>
                             </v-list-item>
                         </v-list>
@@ -44,7 +44,7 @@
                 >
                 <v-form ref="addForm">
                     <div>
-                        <p class="text-label">start date</p>
+                        <p class="employee_createplan-text-label">date de début</p>
                         <v-menu
                             ref="start_date"
                             v-model="start_menu"
@@ -76,7 +76,7 @@
                                 color="primary"
                                 @click="start_menu = false"
                             >
-                                Cancel
+                                Annuler
                             </v-btn>
                             <v-btn
                                 text
@@ -89,7 +89,7 @@
                         </v-menu>
                     </div>
                     <div>
-                        <p class="text-label">taper</p>
+                        <p class="employee_createplan-text-label">taper</p>
                         <v-select
                             dense
                             :items="items"
@@ -102,7 +102,7 @@
                         ></v-select>
                     </div>
                      <div>
-                        <p class="text-label">end date</p>
+                        <p class="employee_createplan-text-label">Date de fin</p>
                         <v-menu
                             ref="end_date"
                             v-model="end_menu"
@@ -135,7 +135,7 @@
                                 color="primary"
                                 @click="end_menu = false"
                             >
-                                Cancel
+                                Annuler
                             </v-btn>
                             <v-btn
                                 text
@@ -148,7 +148,7 @@
                         </v-menu>
                     </div>
                     <div>
-                        <p class="text-label">taper</p>
+                        <p class="employee_createplan-text-label">taper</p>
                         <v-select
                             dense
                             :items="items"
@@ -209,9 +209,9 @@ export default {
 
             },
             items: [
-                {value: 1, text:'whole day'},
-                {value: 2, text:'half day morning'},
-                {value: 3, text:'half day afternoon'},
+                {value: 1, text:'Toute la journée'},
+                {value: 2, text:'Demi-journée-Matin'},
+                {value: 3, text:'Demi-journée-Après-midi'},
             ],
         }
     },
@@ -245,29 +245,3 @@ export default {
     }
 }
 </script>
-<style scoped>
-.text-label{
-    margin-bottom: 3px;
-    text-transform: capitalize;
-    letter-spacing:1.2px;
-    font-size: 15px;
-}
-.item-title{
-  font-size:17px !important;
-  text-transform: uppercase;
-  letter-spacing:1px;
-  width: 160px !important;
-
-}
-.item-sub{
-    letter-spacing:1px;
-  font-size:12px !important;
-    text-transform: capitalize;
-}
-.emp-email{
-    opacity:0.5;
-}
-.emp-name{
-    letter-spacing:1px;
-}
-</style>

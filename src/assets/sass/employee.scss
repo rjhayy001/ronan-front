@@ -1,10 +1,128 @@
 .employee_form .row .col .v-input .v-input__control .v-text-field__details{
     display: none;
 }
+
 .employee_form .row .col .error--text .v-input__control .v-text-field__details{
     display: block!important;
 }
 
 .employee_form .row .col {
     margin: 3px 0;
+}
+
+.employee_absence-icon {
+    font-size:30px;
+}
+
+.employee_absence-h3 {
+    color:#005075;
+}
+
+.employee_absence-icon_action {
+    font-size:30px;
+    margin-top:15px;
+}
+
+.employee_create-icon {
+    padding-left: 10px
+}
+
+.createEmployee {
+    width: 100%; 
+    height:500px; 
+    padding: 5px 0; 
+    overflow-y:hidden!important;
+}
+
+.createEmployee:hover {
+    overflow-y:scroll!important;
+}
+
+.employee_create-text-birthday {
+    margin: auto auto auto 20px!important
+}
+
+.employee_create-mobile-icon {
+    height: 20px; 
+    width: 30px
+}
+.employee_create-mobile-icon img{
+    height: 20px; 
+    width: 30px
+}
+.employee_create-mobile-text {
+    margin-top: 3px; 
+    margin-left: 5px; 
+    color:black!important
+}
+
+.employee_createplan_icon {
+    opacity:0.5;
+}
+.employee_createplan {
+    display:grid;
+}
+
+.employee_createplan-text-label{
+    margin-bottom: 3px;
+    text-transform: capitalize;
+    letter-spacing:1.2px;
+    font-size: 15px;
+}
+
+.employee_createplan-item-title{
+    font-size:17px !important;
+    text-transform: uppercase;
+    letter-spacing:1px;
+    width: 160px !important;
+  
+  }
+
+  .employee_createplan-item-sub{
+    letter-spacing:1px;
+  font-size:12px !important;
+    text-transform: capitalize;
+}
+
+.employee_createplan-emp-email{
+    opacity:0.5;
+}
+
+.employee_createplan-emp-name{
+    letter-spacing:1px;
+}
+
+.employee_menu-btn {
+    position: fixed; 
+    z-index: 2; 
+    bottom: 10px; 
+    right: 10px;
+}
+
+.width_employe-view {
+    width: 5.5em;
+}
+
+.employee_view_gap {
+    gap: 5px
+}
+
+.employee_paginate-count {
+    color:#3fa6d9;
+}
+
+.employee_view_background {
+    background-color:#fafafa
+}
+
+.employee_view-color-text {
+    color: gray;
+}
+
+.employee_view_background .table_list:hover {
+    background-color: #f0f0f0;
+}
+
+.employee_show-size {
+    font-size: 18px;
 }

@@ -53,7 +53,7 @@
                         icon
                         @click="addAttendance"
                     >
-                        <v-icon color="success" class="float-end" style="font-size:30px;">mdi-check</v-icon>
+                        <v-icon color="success" class="float-end employee_absence-icon">mdi-check</v-icon>
                     </v-btn>
                 </v-col>
             </v-row>
@@ -61,12 +61,12 @@
         <v-sheet elevation="0" width="100%" v-for="(attendance, index) in data" :key="index">
             <v-row>
                 <v-col cols="10">
-                    <h3 style="color:#005075">{{$DateWithMonthTextfr(attendance.date)}}</h3>
+                    <h3 class="employee_absence-h3">{{$DateWithMonthTextfr(attendance.date)}}</h3>
                     <p>{{attendance.status_text || capitalize}}</p>
                 </v-col>
                 <v-col cols="2">
-                    <v-icon @click="approve(attendance.id,attendance.status,attendance.date)" v-if="attendance.status == 0" color="success" class="float-end" style="font-size:30px;margin-top:15px">mdi-check</v-icon>
-                    <v-icon @click="deleteAttendance(attendance.id)" v-else color="error" class="float-end" style="font-size:30px;margin-top:15px">mdi-delete</v-icon>
+                    <v-icon @click="approve(attendance.id,attendance.status,attendance.date)" v-if="attendance.status == 0" color="success" class="float-end employee_absence-icon_action">mdi-check</v-icon>
+                    <v-icon @click="deleteAttendance(attendance.id)" v-else color="error" class="float-end employee_absence-icon_action">mdi-delete</v-icon>
                 </v-col>
             </v-row>
         </v-sheet>

@@ -9,3 +9,87 @@
 .center_form .row .col {
     margin: 2px 0;
 }
+
+.center-btn-back {
+    position: absolute;
+    left: 0;
+    top: 12px;
+}
+
+.center-btn-action {
+    font-size:13px
+}
+
+.center-detail-name {
+    font-size: 22px;
+    color: #0486c2;
+}
+
+.center-item-title{
+    font-size:15px !important;
+}
+
+.center-card-container{
+    position: sticky!important;
+    top: 85px;
+}
+
+.employeelist-field {
+    width: 350px
+}
+
+.center-employeelist-title {
+    color: #0486c2 !important;
+    font-size: 19px !important;
+    font-weight: 300;
+}
+
+.center_form .row {
+    padding: 15px;
+}
+
+.center_form .row .dialog-header {
+    display:flex;
+    flex-direction: column;
+    padding:0 12px; 
+    width:100%;
+}
+
+.center_form .row .dialog-header .dialog-title {
+    padding:0 12px;
+    width: 100%;
+}
+
+.center_form.row .dialog-header .underline-bottom {
+    border-bottom: solid 1px gray; 
+    margin-bottom: 5px;
+}
+
+.center_form .row .btn-dialog {
+    margin-left: 12px!important;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.center-tablelist {
+    background-color:#fafafa;
+}
+
+.table_list .table-title {
+    font-weight: 400
+}
+
+.table_list .title-color {
+    color: gray
+}
+
+.table_list:hover {
+    background-color: #f0f0f0;
+}
+
+.addtoCenter-item-title{
+    font-size:18px !important;
+}
+
+.info-text {
+    font-style: italic;
+}
