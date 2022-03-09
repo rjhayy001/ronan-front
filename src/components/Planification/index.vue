@@ -198,7 +198,7 @@
                     <div id="data" v-else-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed pointer" @click="addWork(user,center,date.date)">
                       <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                     </div>
-                    <div v-else class="empty-day position-absolute-fixed" @click="addWork(user,center,date.date)">
+                    <div v-else class="empty-day position-absolute-fixed" @click="addWork(user,center,date.date)" @contextmenu.prevent="testing($event,date)">
                       <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                     </div>
                     <!-- for planning -->
@@ -313,11 +313,44 @@
       @close="edit_holiday_dialog=false"
       :data="edit_holiday_data"
     />
+    <!-- test menu -->
+    <v-menu v-model="right_menu.showMenu" :position-x="right_menu.x" :position-y="right_menu.y" absolute offset-y>
+      <v-list dense>
+        <v-list-item  @click="clickItem(item.value)" dense v-for="(item, index) in options" :key="index+'test'">
+          <v-list-item-title v-model="option_selects">{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
     <menu-button v-if="menu" @success="forceReload"/>
+    <!-- addAbsence -->
+    <add-absence
+    style="z-index: 5; position: absolute"
+      v-if="option_selects == 1"
+      :dialog="absence_dialog"
+    />
+    <!-- addRTT -->
+    <add-rtt
+      v-if="option_selects == 2"
+      :dialog="rtt_dialog"
+      @close="rtt_dialog=false"
+      @success="forceReload"
+    />
+    <!-- addHoliday -->
+    <add-holiday
+      v-if="option_selects == 3"
+      :dialog="holiday_dialog"
+      :data="right_menu"
+      @close="holiday_dialog=false"
+      @success="forceReload"
+    />
+
   </div>
 </template>
 <script>
 // import draggable from 'vuedraggable'
+import addRtt from "./includes/rtt/addRtt.vue"
+import addHoliday from "./includes/holiday/addHoliday.vue"
+import addAbsence from "../Employès/includes/absence.vue"
 import { GetAllHolidays } from "@/repositories/holidays.api"
 import filterPlanning from './includes/filter.vue';
 import menuButton from './includes/menu.vue';
@@ -337,10 +370,21 @@ import { GetAllRegions } from "@/repositories/region.api"
       editRtt,
       editHoliday,
       employeeView,
+      addRtt,
+      addHoliday,
+      addAbsence,
       // draggable
     },
       data() {
         return {
+          rtt_dialog: false,
+          holiday_dialog: false,
+          right_menu:{
+            showMenu:false,
+            x:0,
+            y:0,
+            date:'',
+          },
           drag:false,
           employee_view:false,
           e2:'Jours',
@@ -376,43 +420,53 @@ import { GetAllRegions } from "@/repositories/region.api"
             { title: 'Semaine' },
             { title: 'Mois' },
           ],
+          options: [
+            {value:1, title: 'Absence' },
+            {value:2, title: 'Rtt' },
+            {value:3, title: 'Vacances' },
+          ],
           regions:[],
           loading: false,
           selects: [
             'Jours', 'Semaine', 'Mois' 
           ],
           national_holidays: [],
-          center_storage:[]
+          center_storage:[],
+          option_selects: '',
       };
     },
     mounted() {
       this.initialize()
     },
     methods: {
-      // test(center){
-      //   console.log(center.id === this.center_storage.id)
-      //   if(center.id === this.center_storage.id) {
-      //     console.log(this.center_storage.users, 'sad')
-      //     center.users = this.center_storage.users
-      //     this.center_storage = {}
-      //     return
-      //   }
-      //   console.log(this.center_storage, 'else')
-      //   this.center_storage = JSON.parse(JSON.stringify(center))
-      //   let start = moment(this.month).startOf('month').format("YYYY-MM-DD")
-      //   let end = moment(this.month).endOf('month').format("YYYY-MM-DD")
-      //   let data = []
-      //   center.users.forEach(user => {
-      //     user.planning.forEach(plan => {
-      //       if(this.$isBetween(start,end,plan.start_date)){
-      //         if(!data.some( u => u.id === user.id)){
-      //           data.push(user);
-      //         }
-      //       }
-      //     })
-      //   })
-      //   center.users = data
-      // },
+
+      testing(e,date){
+        console.log(date,"value e")
+        this.right_menu.showMenu = false;
+        this.right_menu.x = e.clientX;
+        this.right_menu.y = e.clientY;
+        this.right_menu.date = date.date
+        console.log(this.right_menu.date,"date")
+        this.$nextTick(() => {
+          this.right_menu.showMenu = true;
+        });
+      },
+      clickItem(item){
+        this.option_selects = item
+          console.log(this.option_selects, "option")
+          alert(item)
+        if(this.option_selects==1) {
+          this.absence_dialog=true
+        }
+        else if(this.option_selects==2) {
+          this.rtt_dialog=true
+        }
+        else if(this.option_selects==3) {
+          this.holiday_dialog=true
+        }else{
+          alert("error")
+        }
+      },
       initialize(){
         this.getMonthyear();
         this.getmonthly();

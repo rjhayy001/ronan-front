@@ -221,7 +221,11 @@ export default {
         dialog:{
             type:Boolean,
             required:true
-        }
+        },
+        // data:{
+        //     required: true,
+        //     type: Object,
+        // }
     },
     data() {
         return {
@@ -249,6 +253,10 @@ export default {
     created(){
         this.initialize();
     },
+    // mounted() {
+    //     this.holiday.start_date=this.data.date;
+    //     this.holiday.end_date=this.data.date
+    // },
     methods: {
         closeDialog() {
             this.$emit('close');
@@ -279,11 +287,9 @@ export default {
             var request_name = this.holiday.request_name;
             var reason = this.holiday.reason;
             var start = this.holiday.start_date;
-            var start_isHalf = this.holiday.startDate_isHalf_day;
             var end = this.holiday.end_date;
-            var end_isHalf = this.holiday.endDate_isHalf_day;
             var id = this.holiday.user_id;
-            if(request_name == '' || request_name == null || reason == '' || reason == null || start == '' || start == null || start_isHalf == '' || start_isHalf == null || end == '' || end == null || end_isHalf == '' || end_isHalf == null || id == '' || id == null) {
+            if(request_name == '' || request_name == null || reason == '' || reason == null || start == '' || start == null || end == '' || end == null ||  id == '' || id == null) {
                 this.error=true
             }else{
                 this.error=false
