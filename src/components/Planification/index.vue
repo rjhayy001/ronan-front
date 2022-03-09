@@ -198,7 +198,7 @@
                     <div id="data" v-else-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed pointer" @click="addWork(user,center,date.date)">
                       <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                     </div>
-                    <div v-else class="empty-day position-absolute-fixed" @click="addWork(user,center,date.date)" @contextmenu.prevent="testing($event,date)">
+                    <div v-else class="empty-day position-absolute-fixed" @click="addWork(user,center,date.date)" @contextmenu.prevent="testing($event,date,user)">
                       <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                     </div>
                     <!-- for planning -->
@@ -384,6 +384,7 @@ import { GetAllRegions } from "@/repositories/region.api"
             x:0,
             y:0,
             date:'',
+            user:{}
           },
           drag:false,
           employee_view:false,
@@ -440,12 +441,13 @@ import { GetAllRegions } from "@/repositories/region.api"
     },
     methods: {
 
-      testing(e,date){
+      testing(e,date, user){
         console.log(date,"value e")
         this.right_menu.showMenu = false;
         this.right_menu.x = e.clientX;
         this.right_menu.y = e.clientY;
         this.right_menu.date = date.date
+        this.right_menu.user = user
         console.log(this.right_menu.date,"date")
         this.$nextTick(() => {
           this.right_menu.showMenu = true;
@@ -453,8 +455,7 @@ import { GetAllRegions } from "@/repositories/region.api"
       },
       clickItem(item){
         this.option_selects = item
-          console.log(this.option_selects, "option")
-          alert(item)
+        console.log(this.option_selects, "option")
         if(this.option_selects==1) {
           this.absence_dialog=true
         }

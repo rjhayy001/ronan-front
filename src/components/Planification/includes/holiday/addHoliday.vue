@@ -222,10 +222,9 @@ export default {
             type:Boolean,
             required:true
         },
-        // data:{
-        //     required: true,
-        //     type: Object,
-        // }
+        data:{
+            type: Object,
+        }
     },
     data() {
         return {
@@ -240,6 +239,7 @@ export default {
                 start_date: this.$datePickerDate(moment()),
                 end_date: this.$datePickerDate(moment()),
                 endDate_isHalf_day:0,
+                user_id:null
             },
             items: [
                 {value: 0, text:'Toute la journée'},
@@ -249,14 +249,22 @@ export default {
             employees:[],
         };
     },
-
+    watch:{
+       "data.showMenu": {
+        handler(val) {
+            if(!val){
+                this.holiday.user_id = this.data.user.id
+                this.holiday.start_date = this.$datePickerDate(this.data.date)
+                this.holiday.end_date = this.$datePickerDate(this.data.date)
+                console.log(this.data.user)
+            }
+        },
+        deep: true,
+      },
+    },
     created(){
         this.initialize();
     },
-    // mounted() {
-    //     this.holiday.start_date=this.data.date;
-    //     this.holiday.end_date=this.data.date
-    // },
     methods: {
         closeDialog() {
             this.$emit('close');
@@ -266,7 +274,9 @@ export default {
             GetAllEmployees().then(({data}) => {
                 console.log(data)
                 this.employees = data
-                this.holiday.user_id = this.employees[0].id
+                if(!this.data){
+                    this.holiday.user_id = this.employees[0].id
+                }
             })
         },
         save(){
