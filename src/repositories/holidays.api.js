@@ -9,6 +9,7 @@ export const RemoveHolidays = (id,payload) => axios.delete(`${resource}/${id}`, 
 let holiday = '/holidays'
 export const GetEmployeeHolidays = () => axios.get(`${holiday}/logged`)
 export const GetPendingHolidays = () => axios.get(`${holiday}/all_pending`)
+export const RequestHoliday = (payload) => axios.post(`${holiday}`, payload)
 
 export const DeclineHoliday = (payload) => axios.post(`${holiday}/decline_request`, payload)
 export const ApproveHoliday = (id) => axios.get(`${holiday}/approve_request/${id}`)

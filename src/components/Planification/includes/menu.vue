@@ -6,7 +6,6 @@
             color="#005075"
             @click="view_list=!view_list"
             @click.prevent="click()"
-            :disabled="!$canAccess()"
         >
             <v-icon>
                 {{view_list ? 'mdi-window-close' : 'mdi-menu'}}

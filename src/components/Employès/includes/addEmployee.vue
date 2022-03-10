@@ -234,6 +234,7 @@ export default {
                 zip_code: '',
                 mobile: '',
                 birth_date: ''  ,
+                work_days:5,
                 role_id: {
                     id:3,
                     name:'3 - Admin'
