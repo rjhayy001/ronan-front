@@ -39,7 +39,7 @@
                         </v-col>
                        <v-col
                             cols="12"
-                        >
+                        >modal
                             <v-textarea
                                 placeholder="Raison"
                                 solo

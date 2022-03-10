@@ -207,7 +207,7 @@ export default {
                 date:'',
                 start_time:'',
                 end_time:'',
-                user_id:'',
+                user_id:null,
                 comment:''
             },
             employees:[],
@@ -217,7 +217,21 @@ export default {
         dialog:{
             type:Boolean,
             required:true
+        },
+        data:{
+            type: Object,
         }
+    },
+    watch: {
+        "data.showMenu": {
+            handler(val) {
+                if(!val){
+                    this.rtt.user_id = this.data.user.id
+                    this.rtt.date = this.data.date
+                }
+            },
+            deep: true,
+        },
     },
     created(){
         this.initialize();
@@ -232,6 +246,9 @@ export default {
                 if(!this.$canAccess()){
                     let user = this.$store.getters['user']
                     this.rtt.user_id  = user.id
+                }
+                else if(!this.data){
+                    this.rtt.user_id = this.employees[0].id
                 }
             })
         },

@@ -25,6 +25,7 @@ export const GetUserDemand = (userId) => axios.get(`/demands/${userId}`)
 export const UpdateUserDemand = (payload) => axios.post('/holidays/update_demands', payload)
 //attendances
 export const AddEmployeeAttendance = (payload) => axios.post(`/attendances`, payload)
+export const GetEmployeeAttendance = () => axios.get(`/attendances`)
 export const UpdateEmployeeAttendance = (id, payload) => axios.put(`/attendances/${id}`, payload)
 export const DeleteEmployeeAttendance = (id) => axios.delete(`/attendances/${id}`)
 
