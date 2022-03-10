@@ -158,7 +158,7 @@
                         <v-col cols="12" class="mt-2">
                             <v-autocomplete
                                 dense
-                                :disabled="!$canAccess"
+                                :disabled="!$canAccess()"
                                 :items="employees"
                                 solo
                                 v-model="holiday.user_id"
@@ -217,6 +217,7 @@
 import moment from 'moment'
 import { GetAllEmployees } from "@/repositories/employee.api";
 import { createHoliday } from "@/repositories/planning.api";
+import { RequestHoliday } from "@/repositories/holidays.api";
 export default {
     props:{
         dialog:{
@@ -288,14 +289,25 @@ export default {
             this.validate()
             console.log(this.error,"status")
             if(this.error == false) {
-                createHoliday(this.holiday).then(() => {
-                    this.$toast.success('successfully added holiday') 
-                    this.$emit('success')
-                    this.$emit('close')
-                    this.$store.commit('toggleForceReload')
-                }).catch(({response}) => { 
-                    this.$toast.error(response.data.message) 
-                })
+                if(this.$canAccess()){
+                    alert('admin')
+                    createHoliday(this.holiday).then(() => {
+                        this.$toast.success('successfully added holiday') 
+                        this.$emit('success')
+                        this.$emit('close')
+                        this.$store.commit('toggleForceReload')
+                    }).catch(({response}) => { 
+                        this.$toast.error(response.data.message) 
+                    })
+                }else{
+                    alert('eampolouee')
+                    RequestHoliday(this.holiday).then(({data}) => {
+                        console.log(data)
+                        this.$toast.success('successfully added holiday')
+                        this.$emit('success')
+                        this.$emit('close')
+                    })
+                }
             }
         },
         validate() {

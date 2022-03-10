@@ -442,6 +442,9 @@ import { GetAllRegions } from "@/repositories/region.api"
     methods: {
 
       testing(e,date, user){
+        if(!this.$canAccess()){
+          return
+        }
         console.log(date,"value e")
         this.right_menu.showMenu = false;
         this.right_menu.x = e.clientX;

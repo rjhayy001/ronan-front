@@ -147,6 +147,7 @@
                         <v-col cols="12" class="pt-2">
                             <v-autocomplete
                                 dense
+                                :disabled="!$canAccess()"
                                 :items="employees"
                                 solo
                                 large
@@ -194,7 +195,7 @@
 </template>
 <script>
 import { GetAllEmployees } from "@/repositories/employee.api";
-import { CreateRtt } from "@/repositories/rtt.api";
+import { CreateRtt, RequestRtt } from "@/repositories/rtt.api";
 export default {
     data(){
         return {
@@ -228,20 +229,33 @@ export default {
                 console.log(data)
                 this.employees = data
                 this.rtt.user_id = this.employees[0].id
+                if(!this.$canAccess()){
+                    let user = this.$store.getters['user']
+                    this.rtt.user_id  = user.id
+                }
             })
         },
         saveRtt(){
             this.validate()
             if(this.error == false){
-                CreateRtt(this.rtt).then(({data}) => {
-                    console.log(data, 'test')
-                    this.$emit('success')
-                    this.$emit('close')
-                    this.$toast.success(data.message)
-                    this.$store.commit('toggleForceReload')
-                }).catch(({response}) => { 
-                    this.$toast.error(response.data.message) 
-                })
+                if(this.$canAccess()){
+                    CreateRtt(this.rtt).then(({data}) => {
+                        console.log(data, 'test')
+                        this.$emit('success')
+                        this.$emit('close')
+                        this.$toast.success(data.message)
+                        this.$store.commit('toggleForceReload')
+                    }).catch(({response}) => { 
+                        this.$toast.error(response.data.message) 
+                    })
+                }
+                else{
+                    RequestRtt(this.rtt).then(({data}) => {
+                        this.$emit('success')
+                        this.$emit('close')
+                        this.$toast.success(data.message)
+                    })
+                }
             }
         },
         validate() {
