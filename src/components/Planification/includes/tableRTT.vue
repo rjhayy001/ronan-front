@@ -10,9 +10,11 @@
       <template v-slot:item.date="{ item }">
         {{$DateWithMonthTextfr(item.date)}}
       </template>
-      <template v-slot:item.action="{ item }">
-        <v-icon color="success" class="mr-4" @click="approve(item)">mdi-check</v-icon>
-        <v-icon color="error" @click="reject(item)">mdi-cancel</v-icon>
+      <template v-slot:item.action="{ item }" >
+        <div v-if="$canAccess()">
+          <v-icon color="success" class="mr-4" @click="approve(item)">mdi-check</v-icon>
+          <v-icon color="error" @click="reject(item)">mdi-cancel</v-icon>
+        </div>
       </template>
     </v-data-table>
     <!-- reject dialog -->
