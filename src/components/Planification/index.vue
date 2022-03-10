@@ -198,7 +198,7 @@
                     <div id="data" v-else-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed pointer" @click="addWork(user,center,date.date)">
                       <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                     </div>
-                    <div v-else class="empty-day position-absolute-fixed" @click="addWork(user,center,date.date)" @contextmenu.prevent="testing($event,date,user)">
+                    <div v-else class="empty-day position-absolute-fixed" @click="addWork(user,center,date.date)" @contextmenu.prevent="testing($event,date,user,center)">
                       <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                     </div>
                     <!-- for planning -->
@@ -251,17 +251,17 @@
                     </template>
                     <!-- for national holidays -->
                     <template v-for="(nat_holiday, nat_index) in national_holidays">
-                        <div 
-                          v-if="$isSameDate(
-                            nat_holiday.date,
-                            date.date
-                          )" 
-                          :key="nat_index + 'nat_holiday'" 
-                          :class="['nat-holiday','pointer']"
-                        >
-                          <p class="date-hidden" >.</p>
-                        </div>
-                      </template>
+                      <div 
+                        v-if="$isSameDate(
+                          nat_holiday.date,
+                          date.date
+                        )" 
+                        :key="nat_index + 'nat_holiday'" 
+                        :class="['nat-holiday','pointer']"
+                      >
+                        <p class="date-hidden" >.</p>
+                      </div>
+                    </template>
                   </div>
                 </div>
               </template>
@@ -324,14 +324,16 @@
     <menu-button v-if="menu" @success="forceReload"/>
     <!-- addAbsence -->
     <add-absence
-    style="z-index: 5; position: absolute"
       v-if="option_selects == 1"
       :dialog="absence_dialog"
+      :data="right_menu"
+      @close="absence_dialog=false"
     />
     <!-- addRTT -->
     <add-rtt
       v-if="option_selects == 2"
       :dialog="rtt_dialog"
+      :data="right_menu"
       @close="rtt_dialog=false"
       @success="forceReload"
     />
@@ -350,7 +352,7 @@
 // import draggable from 'vuedraggable'
 import addRtt from "./includes/rtt/addRtt.vue"
 import addHoliday from "./includes/holiday/addHoliday.vue"
-import addAbsence from "../Employès/includes/absence.vue"
+import addAbsence from "./includes/absence/addAbsence.vue"
 import { GetAllHolidays } from "@/repositories/holidays.api"
 import filterPlanning from './includes/filter.vue';
 import menuButton from './includes/menu.vue';
@@ -377,6 +379,7 @@ import { GetAllRegions } from "@/repositories/region.api"
     },
       data() {
         return {
+          absence_dialog:false,
           rtt_dialog: false,
           holiday_dialog: false,
           right_menu:{
@@ -384,7 +387,8 @@ import { GetAllRegions } from "@/repositories/region.api"
             x:0,
             y:0,
             date:'',
-            user:{}
+            user:{},
+            center:{}
           },
           drag:false,
           employee_view:false,
@@ -440,14 +444,14 @@ import { GetAllRegions } from "@/repositories/region.api"
       this.initialize()
     },
     methods: {
-
-      testing(e,date, user){
+      testing(e,date, user, center){
         console.log(date,"value e")
         this.right_menu.showMenu = false;
         this.right_menu.x = e.clientX;
         this.right_menu.y = e.clientY;
         this.right_menu.date = date.date
         this.right_menu.user = user
+        this.right_menu.center = center
         console.log(this.right_menu.date,"date")
         this.$nextTick(() => {
           this.right_menu.showMenu = true;
@@ -474,8 +478,8 @@ import { GetAllRegions } from "@/repositories/region.api"
         this.getNationalHoliday()
         this.getData()
       },
-      toggleNoWorkEmployees(){
 
+      toggleNoWorkEmployees(){
         this.regions.forEach(region => {
           region.centers.forEach(center =>
             this.test(center)
@@ -517,6 +521,7 @@ import { GetAllRegions } from "@/repositories/region.api"
       getNationalHoliday(){
         GetAllHolidays().then(({data}) =>{
           this.national_holidays = data
+          console.log(this.national_holidays, "holiday")
         })
       },
       getData(){
@@ -614,6 +619,17 @@ import { GetAllRegions } from "@/repositories/region.api"
         let flag = false
         this.national_holidays.forEach(hol => {
           if(this.$isSameDate(hol.date,date)){
+            flag = true
+          }
+        })
+        return flag
+      },
+      $isAbsence(date){
+        let flag = false
+
+        this.absences.forEach(absen => {
+          if(this.$isSameDate(absen.date,date)){
+            console.log(absen.date, date, "datasss")
             flag = true
           }
         })

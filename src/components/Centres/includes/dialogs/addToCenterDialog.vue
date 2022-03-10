@@ -56,6 +56,12 @@
 <script>
 import { AddEmployee } from '@/repositories/center.api'
 export default {
+    data() {
+        return {
+            centers:[],
+            users:[]
+        }
+    },
     props:{
         dialog:{
             required: true,
@@ -70,20 +76,33 @@ export default {
             required: true,
         }
     },
+    created() {
+        this.initialize()
+    },
     methods:{
+        initialize() {
+            this.centers=this.center.users
+        },
         addEmployee(){
-            let payload = {
-                center_id: this.center.id,
-                users: this.employee.id
-            }
-
-            AddEmployee(payload).then(response =>{
-                console.log(response,'response')
-                this.$arrayupdater(this.employee, this.center.users)
-                this.$emit('close')
-                this.$toast.success("Successfully added!");
+            this.centers.forEach(item => {
+                this.users.push(item.id);
             })
-        }
+            if(this.users.indexOf(this.employee.id) !== -1){
+                this.$toast.error('User is Already Exist') 
+                 this.$emit('close')
+            } else{
+                let payload = {
+                    center_id: this.center.id,
+                    users: this.employee.id
+                }
+                AddEmployee(payload).then(response =>{
+                    console.log(response,'response')
+                    this.$arrayupdater(this.employee, this.center.users)
+                    this.$emit('close')
+                    this.$toast.success("Successfully added!");
+                })
+            }
+        },
     }
 }
 </script>

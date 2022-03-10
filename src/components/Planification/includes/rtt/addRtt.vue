@@ -206,7 +206,7 @@ export default {
                 date:'',
                 start_time:'',
                 end_time:'',
-                user_id:'',
+                user_id:null,
                 comment:''
             },
             employees:[],
@@ -216,7 +216,21 @@ export default {
         dialog:{
             type:Boolean,
             required:true
+        },
+        data:{
+            type: Object,
         }
+    },
+    watch: {
+        "data.showMenu": {
+            handler(val) {
+                if(!val){
+                    this.rtt.user_id = this.data.user.id
+                    this.rtt.date = this.data.date
+                }
+            },
+            deep: true,
+        },
     },
     created(){
         this.initialize();
@@ -227,7 +241,9 @@ export default {
             GetAllEmployees().then(({data}) => {
                 console.log(data)
                 this.employees = data
-                this.rtt.user_id = this.employees[0].id
+                if(!this.data){
+                    this.rtt.user_id = this.employees[0].id
+                }
             })
         },
         saveRtt(){
