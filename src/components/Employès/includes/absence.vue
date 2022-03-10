@@ -90,8 +90,12 @@ export default {
             modal: false,
             add: false,
             key: 0,
-            addDone: false
+            addDone: false,
+            data2:{}
         }
+    },
+    mounted() {
+        console.log(this.data,"attendance")
     },
     methods:{
         addAttendance(){

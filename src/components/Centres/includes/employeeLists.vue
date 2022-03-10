@@ -117,10 +117,11 @@ export default {
                     })
                 )
             })
-           
         },
         addEmployee(item){
+            console.log(item, "itemselect")
             this.selected_employee = item
+            console.log(this.selected_employee.id, "dataselect")
             this.$nextTick(function () {
                 this.add_employee_dialog = true
             })

@@ -185,6 +185,22 @@
                                 </div>
                                 </template>
                             </template>
+                            <!-- absents -->
+                            <template v-if="employee.absents && date.text !='Dim'">
+                                <template v-for="(nat_holiday, nat_index) in employee.absents">
+                                    <div 
+                                    v-if="$isSameDate(
+                                        nat_holiday.date,
+                                        date.date
+                                    )" 
+                                    :key="nat_index + 'nat_holiday'" 
+                                    :class="['nat-holiday','pointer']"
+                                    style="background-color:red !important;"
+                                    >
+                                    <p class="date-hidden" >.</p>
+                                    </div>
+                                </template>
+                            </template>
                         </div>
                     </div>
                 </div>

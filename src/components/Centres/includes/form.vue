@@ -171,7 +171,7 @@ export default {
             this.$refs.form.validate()
             if(this.$refs.form.validate() == true) {
                 CreateCenter(this.center).then(() => {
-                    this.$toast.success('uccessfully created center')
+                    this.$toast.success('Centre créé avec succès')
                     this.$emit('success')
                     this.$emit('close')
                 })
