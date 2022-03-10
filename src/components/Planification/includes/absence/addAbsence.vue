@@ -22,7 +22,7 @@
                                 <p style="font-weight:600; font-size: 12px; color:#7e7e7e">Veuillez remplir tous les champs ci-dessous et cliquez sur soumettre. Merci!</p>
                             </div>
                         </div>
-                        <v-col cols="7" class="py-2">
+                        <v-col cols="12" class="py-2">
                             <v-menu
                                 ref="start_date"
                                 v-model="start_menu"
