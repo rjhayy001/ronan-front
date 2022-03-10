@@ -19,6 +19,7 @@
         >
             <template v-slot:item.action="{ item }">
                 <v-icon 
+                    v-if="$canAccess()"
                     color="error"
                     @click="removeEmployee(item)"
                 >
@@ -27,7 +28,7 @@
             </template>
         </v-data-table>
 
-        <v-toolbar dense flat>
+        <v-toolbar v-if="$canAccess()" dense flat>
             <v-toolbar-title class="center-employeelist-title">Liste de tous les employés</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-text-field
@@ -45,6 +46,7 @@
         </v-toolbar>
 
         <v-data-table
+            v-if="$canAccess()"
             :search="search"
             class="ml-2 invi-head-table no-stripe"
             :headers="headers"

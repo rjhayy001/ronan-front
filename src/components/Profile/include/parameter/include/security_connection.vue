@@ -281,7 +281,7 @@
                 </div>
             </div>
             <div>
-                <div class="container">
+                <div class="container" v-if="$canAccess()">
                     <div class="content">
                         <div class="title_name">
                             <h4 class="text_fw pad_subs">

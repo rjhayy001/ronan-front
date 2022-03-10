@@ -166,7 +166,8 @@
                         ></v-select>
                     </div>
                     <div>
-                        <v-btn 
+                        <v-btn
+                            v-if="$canAccess()"
                             class="float-right mt-4" 
                             small color="primary" 
                             dark 
@@ -174,6 +175,7 @@
                         >
                             valider
                         </v-btn>
+                        <v-btn v-else class="float-right mt-4"  disabled small color="primary"> valider</v-btn>
                     </div>
                 </v-form>
                 </v-col>

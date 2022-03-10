@@ -158,6 +158,7 @@
                         <v-col cols="12" class="mt-2">
                             <v-autocomplete
                                 dense
+                                :disabled="!$canAccess"
                                 :items="employees"
                                 solo
                                 v-model="holiday.user_id"
@@ -274,7 +275,11 @@ export default {
             GetAllEmployees().then(({data}) => {
                 console.log(data)
                 this.employees = data
-                if(!this.data){
+                if(!this.$canAccess()){
+                    let user = this.$store.getters['user']
+                    this.holiday.user_id = user.id
+                }
+                else if(!this.data){
                     this.holiday.user_id = this.employees[0].id
                 }
             })

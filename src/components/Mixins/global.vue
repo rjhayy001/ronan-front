@@ -30,6 +30,16 @@ export default {
         //     return moment(date).format('DD MMMM YYYY');
         // },
 
+        $canAccess(){
+            let flag = false
+            let user = this.$store.getters['user']
+            if(user.role_id != 3){
+                 flag = true
+            }
+
+            return flag
+        },
+
         $DateWithMonthTextfr(date){
             return moment(date).locale('fr').format('DD MMMM YYYY');
         },

@@ -11,7 +11,7 @@
         <div class="tabs">
             <v-tab class="subtabs" to="/">Planification</v-tab>
             <v-tab class="subtabs" to="/centres">Centres</v-tab>
-            <v-tab class="subtabs" to="/employees">Employés</v-tab>
+            <v-tab v-if="$canAccess()" class="subtabs" to="/employees">Employés</v-tab>
         </div>
         <v-spacer></v-spacer>
        
