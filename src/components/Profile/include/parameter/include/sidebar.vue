@@ -36,7 +36,7 @@
                 </v-btn>
             </div>
             <div class="sidebar_border-bottom"></div>
-            <div>
+            <div v-if="$canAccess()">
                 <v-btn 
                     class="sidebar_button"
                     to="/parameter/management" 
@@ -53,7 +53,7 @@
                     </h3>
                 </v-btn>
             </div>
-            <div>
+            <div v-if="$canAccess()">
                 <v-btn 
                     class="sidebar_button"
                     to="/parameter/advertise" 
@@ -70,7 +70,7 @@
                     </h3>
                 </v-btn>
             </div>
-            <div>
+            <div v-if="$canAccess()">
                 <v-btn 
                     class="sidebar_button"
                     to="/parameter/holidays" 
@@ -87,7 +87,7 @@
                     </h3>
                 </v-btn>
             </div>
-            <div>
+            <div v-if="$canAccess()">
                 <v-btn 
                     class="sidebar_button"
                     to="/parameter/Regions" 

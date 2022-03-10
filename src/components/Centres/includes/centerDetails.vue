@@ -24,7 +24,7 @@
     </v-img>
 
     <div>
-      <div class="text-center mt-4 ">
+      <div class="text-center mt-4 " v-if="$canAccess()">
         <v-btn 
           class="mr-4 text-body-1"  
           rounded
@@ -136,7 +136,7 @@
           </template>
         </v-list-item-content>
 
-        <v-list-item-action>
+        <v-list-item-action v-if="$canAccess()">
           <v-icon color="primary" v-if="!editing_region" @click="editing_region=true">mdi-pencil</v-icon>
           <v-icon color="primary" v-else @click="saveRegion">mdi-download</v-icon>
         </v-list-item-action>
@@ -164,7 +164,7 @@
           </template>
         </v-list-item-content>
 
-        <v-list-item-action>
+        <v-list-item-action v-if="$canAccess()">
           <v-btn icon>
           <v-icon color="primary" v-if="!editing_manager" @click="editing_manager=true">mdi-pencil</v-icon>
           <v-icon color="primary" v-else @click="editManager">mdi-download</v-icon>
@@ -203,6 +203,7 @@ export default {
     },
   },
   created(){
+    this.initialize()
   },
   methods:{
     test(){

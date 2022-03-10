@@ -32,7 +32,7 @@
                     {{view_list ? 'mdi-format-list-bulleted' : 'mdi-view-compact'}}
                     </v-icon>          
                 </v-btn>
-                <v-btn depressed  @click="dialog = true" icon class="mr-2">
+                <v-btn depressed v-if="$canAccess()"  @click="dialog = true" icon class="mr-2">
                     <v-icon
                         color="black"
                     >

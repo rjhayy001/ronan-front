@@ -184,6 +184,7 @@
                             class="float-right mt-4" 
                             small color="primary" 
                             dark 
+                            :disabled="!$canAccess"
                             @click="save"
                         >
                             valider
