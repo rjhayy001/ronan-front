@@ -5,6 +5,7 @@ export const GetAllCenters = () => axios.get(`${resource}`)
 export const GetCenterInfo = (id) => axios.get(`${resource}/${id}`)
 export const CreateCenter = (payload) => axios.post(`${resource}`, payload)
 export const UpdateCenter = (id, payload) => axios.put(`${resource}/${id}`, payload)
+export const DeleteCenter = (id) => axios.delete(`${resource}/${id}`)
 
 
 //employee

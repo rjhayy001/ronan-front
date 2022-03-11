@@ -13,6 +13,9 @@
             rounded
             class="ml-2 center-btn-absolute"
             width="130"
+            style="top: 13px;
+    position: absolute;
+    left: 0;"
             @click="$router.go(-1)"
           >
             <v-icon left >mdi-chevron-left</v-icon>
@@ -64,7 +67,7 @@
           </v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title class="center-item-title">{{center.mobile}}</v-list-item-title>
+          <v-list-item-title class="center-item-title">{{center.mobile ? center.mobile : 'undefined'}}</v-list-item-title>
           <v-list-item-subtitle>Mobile</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -78,7 +81,7 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title class="center-item-title">{{center.address}}</v-list-item-title>
+          <v-list-item-title class="center-item-title">{{center.address ? center.address : 'undefined'}}</v-list-item-title>
           <v-list-item-subtitle>Adresse</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -91,7 +94,7 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title class="center-item-title">{{center.city}}</v-list-item-title>
+          <v-list-item-title class="center-item-title">{{center.city ? center.city : 'undefined'}}</v-list-item-title>
           <v-list-item-subtitle>Ville</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -104,7 +107,7 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title class="center-item-title">{{center.zip_code}}</v-list-item-title>
+          <v-list-item-title class="center-item-title">{{center.zip_code ? center.zip_code : 'undefined'}}</v-list-item-title>
           <v-list-item-subtitle>Postal Code</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -179,7 +182,7 @@
 <script>
 import editForm from '../edit.vue'
 import { GetRawRegions } from "@/repositories/region.api"
-import { updateCenterRegion, AssignManager } from "@/repositories/center.api"
+import { updateCenterRegion, AssignManager, DeleteCenter } from "@/repositories/center.api"
 import { GetAllEmployees } from "@/repositories/employee.api";
 export default {
       components: {
@@ -250,7 +253,10 @@ export default {
           .$confirm(message,'#ff5252')
           .then(result => {
               if(result)(
-                  alert('NO FUNCTIONALITY USED')
+                 DeleteCenter(this.center.id).then(({data}) => {
+                   this.$toast.success(data)
+                   this.$router.push({name: 'Centres'})
+                 })
               )
           })
     },

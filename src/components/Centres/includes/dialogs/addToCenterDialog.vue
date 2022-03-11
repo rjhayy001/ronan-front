@@ -4,7 +4,7 @@
         width="700"
         persistent
     >
-        <v-card>
+        <v-card class="pa-5">
            <div class="mx-5">
                 <v-list dense>
                     <v-list-item>

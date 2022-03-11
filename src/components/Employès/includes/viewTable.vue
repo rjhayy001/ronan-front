@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="d-flex">
+        <!-- <div class="d-flex">
             <div class="d-flex mr-auto">
                 <div class="my-auto mr-0 ml-5">
                     <h4 class="font-weight-light">
@@ -48,12 +48,62 @@
                     </v-btn>
                 </div>
             </div>
-        </div>
+        </div> -->
         <v-card
             class="mx-auto employee_view_background"
             flat
         >
-            <v-list>
+            <v-data-table
+                :headers="headers"
+                :items="employees"
+                :search="search"
+                hide-default-header
+                hide-default-footer
+                item-key="name"
+                :items-per-page="-1"
+                class="elevation-1"
+            >
+                <template v-slot:body="{ items }">
+                    <tbody>
+                        <tr v-for="item in items" :key="item.name"
+                             @click="$router.push({name: 'view_employee', params: { id: item.id },})"
+                        >
+                            <td>
+                                <v-list-item class="table_list">
+                                    <v-list-item-icon class="my-auto ml-3 mr-2">
+                                        <v-avatar max-width="none" height="40px" width="40px">
+                                            <img src="@/assets/images/logo-securauto-150.png" alt="">
+                                        </v-avatar>
+                                    </v-list-item-icon>
+                                    <v-list-item-content>
+                                        <v-list-item-title>
+                                            <h3 class="font-weight-bold">
+                                            {{item.full_name}}
+                                            </h3>
+                                        </v-list-item-title>
+                                        <v-list-item-title>
+                                            <h5 class="font-weight-light employee_view-color-text">
+                                            {{item.address  ? item.address : 'null'}}
+                                            </h5>
+                                        </v-list-item-title>
+                                        <v-list-item-title class="d-flex employee_view_gap">
+                                            <h5  class="font-weight-light employee_view-color-text">
+                                            {{item.zip_code ? item.zip_code : 'null'}} {{item.city ? item.city : 'null'}}
+                                            </h5>
+                                        </v-list-item-title>
+                                        <v-list-item-title>
+                                            <h5  class="font-weight-light employee_view-color-text">
+                                            {{item.mobile ? item.mobile : 'null'}}
+                                            </h5>
+                                        </v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                            </td>
+                        </tr>
+                    </tbody>
+                </template>
+            </v-data-table>
+            <!-- <v-list>
                 <v-list-item class="table_list" v-for="(item, index) in employees" :key="index+item.id+'employeelist'"
                     @click="$router.push({name: 'view_employee', params: { id: item.id },})"
                 >
@@ -85,7 +135,7 @@
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
-            </v-list>
+            </v-list> -->
         </v-card>
     </div>
 </template>
@@ -95,14 +145,27 @@ export default {
         employees: {
             required: true,
             type: Array
+        },
+        search: {
+            required:true,
+            type:String
         }
     },
     data(){
         return{
             e2:'100',
             selects: [
-            '100', '200', '300', '400', '500' 
-          ],
+                '100', '200', '300', '400', '500' 
+            ],
+            headers: [
+                { text: '', value: 'logo', width: '10%', align: 'center' },
+                { text: 'Prenom', value: 'first_name', width: '15%'},
+                { text: 'Nom', value: 'last_name', width: '15%'},
+                { text: 'Numèro de contact', value: 'mobile', width: '15%'},
+                { text: 'Addresse', value: 'address', width: '20%'},
+                { text: 'Email', value: 'email', width: '15%'},
+                { text: 'actif', value: 'is_active', width: '10%'},
+            ],
         }
     },
 }
