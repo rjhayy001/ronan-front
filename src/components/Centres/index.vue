@@ -53,6 +53,7 @@
                 <ViewTable
                     v-if="!view_list"
                     :centers="centers"
+                    :search="search"
                 />
         </template>
         <table-loader v-else></table-loader>

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
 @import 'icons.scss';
 @import 'style.scss';
 @import 'planification.scss';
@@ -8,10 +9,8 @@
 @import 'center.scss';
 @import 'employee.scss';
 
-
-
 .v-application {
-  font-family: monospace!important;
+  
 }
 
 .main_tabs .v-item-group .v-slide-group__wrapper .tabs .theme--light.v-tabs>.v-tabs-bar .v-tab--disabled, .theme--light.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active), .theme--light.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active)>.v-btn, .theme--light.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active)>.v-icon{

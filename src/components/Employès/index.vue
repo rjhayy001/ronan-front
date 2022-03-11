@@ -55,6 +55,7 @@
             <ViewTable
                 v-if="!view_list"
                 :employees="employees"
+                :search="search"
             />
         </template>
         <table-loader v-else></table-loader>

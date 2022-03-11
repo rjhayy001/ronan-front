@@ -139,6 +139,7 @@ export default {
     display:flex; 
     padding: 0 5px;
     transition: 0;
+    font-family: 'Rubik', sans-serif !important;
 }
 
 .subtabs.v-tab.v-tab--active{
