@@ -53,7 +53,7 @@
     <v-list>
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="center-detail-name">{{center.name}}</v-list-item-title>
+          <v-list-item-title class="center-detail-name">{{center.name ? center.name : 'undefined' }}</v-list-item-title>
           <v-list-item-subtitle>{{center.email ? center.email : 'undefined'}}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -123,7 +123,7 @@
 
         <v-list-item-content>
           <template v-if="!editing_region">
-            <v-list-item-title class="center-item-title">{{center.region.name}}</v-list-item-title>
+            <v-list-item-title class="center-item-title">{{center.region ? center.region.name : 'undefined'}}</v-list-item-title>
             <v-list-item-subtitle>Region</v-list-item-subtitle>
           </template>
           <template v-else>
@@ -139,7 +139,7 @@
           </template>
         </v-list-item-content>
 
-        <v-list-item-action v-if="$canAccess()">
+        <v-list-item-action v-if="$canAccess()" style="align-self:start;">
           <v-icon color="primary" v-if="!editing_region" @click="editing_region=true">mdi-pencil</v-icon>
           <v-icon color="primary" v-else @click="saveRegion">mdi-download</v-icon>
         </v-list-item-action>
@@ -167,7 +167,7 @@
           </template>
         </v-list-item-content>
 
-        <v-list-item-action v-if="$canAccess()">
+        <v-list-item-action v-if="$canAccess()" style="align-self:start;">
           <v-btn icon>
           <v-icon color="primary" v-if="!editing_manager" @click="editing_manager=true">mdi-pencil</v-icon>
           <v-icon color="primary" v-else @click="editManager">mdi-download</v-icon>
