@@ -194,7 +194,7 @@
     </v-dialog>
 </template>
 <script>
-import { GetAllEmployees } from "@/repositories/employee.api";
+import { GetFilteredEmployee } from "@/repositories/employee.api";
 import { CreateRtt, RequestRtt } from "@/repositories/rtt.api";
 export default {
     data(){
@@ -239,7 +239,7 @@ export default {
     methods: {
         initialize() {
             this.error=false
-            GetAllEmployees().then(({data}) => {
+            GetFilteredEmployee().then(({data}) => {
                 console.log(data)
                 this.employees = data
                 this.rtt.user_id = this.employees[0].id

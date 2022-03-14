@@ -184,7 +184,7 @@
 
 <script>
 // import moment from 'moment'
-import { GetAllEmployees } from "@/repositories/employee.api";
+import { GetFilteredEmployee } from "@/repositories/employee.api";
 export default {
     props:{
         dialog:{
@@ -216,7 +216,7 @@ export default {
             this.$emit('close');
         },
         initialize() {
-            GetAllEmployees().then(({data}) => {
+            GetFilteredEmployee().then(({data}) => {
                 console.log(data)
                 this.employees = data
             })
