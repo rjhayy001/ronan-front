@@ -134,6 +134,7 @@
                                 class="float-right mt-4" 
                                 icon
                                 @click="destroy"
+                                :disabled="!$canAccess()"
                             >
                                 <v-icon>mdi-delete-outline</v-icon>
                             </v-btn>
@@ -142,6 +143,7 @@
                                 v-if="!editing"
                                 @click="editing=true"
                                 icon
+                                :disabled="!$canAccess()"
                             >
                                 <v-icon>mdi-pencil-outline</v-icon>
                             </v-btn>

@@ -183,7 +183,7 @@
 import editForm from '../edit.vue'
 import { GetRawRegions } from "@/repositories/region.api"
 import { updateCenterRegion, AssignManager, DeleteCenter } from "@/repositories/center.api"
-import { GetAllEmployees } from "@/repositories/employee.api";
+import { GetFilteredEmployee } from "@/repositories/employee.api";
 export default {
       components: {
         editForm,
@@ -229,7 +229,7 @@ export default {
       })
     },
     getEmployees(){
-      GetAllEmployees().then(({data}) => {
+      GetFilteredEmployee().then(({data}) => {
         this.employees = data
         console.log(this.employees,"employee")
       })

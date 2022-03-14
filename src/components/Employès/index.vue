@@ -67,7 +67,7 @@
     </div>
 </template>
 <script>
-import { GetAllEmployees} from "@/repositories/employee.api";
+import { GetFilteredEmployee } from "@/repositories/employee.api";
 // import addEmploDialog from "@/components/"
 import ViewTable from './includes/viewTable.vue'
 import  addEmployee from "./includes/addEmployee.vue"
@@ -119,8 +119,17 @@ export default {
         },
         initialize(){
             this.loading = true
-            GetAllEmployees().then(({data}) => {
-                // console.log(data)
+            // GetAllEmployees().then(({data}) => {
+            //     // console.log(data)
+            //     this.employees = data
+            //     this.loading = false
+            // })
+
+            this.FilteredEmployees()
+        },
+        FilteredEmployees(){
+            GetFilteredEmployee().then(({data}) => {
+                console.log(data, 'filtered')
                 this.employees = data
                 this.loading = false
             })
