@@ -16,3 +16,5 @@ export const AssignManager = (payload) => axios.post(`${resource}/assign_manager
 
 // regions
 export const updateCenterRegion = (id,payload) => axios.post(`${resource}/update_region/${id}`, payload)
+
+export const  GetSearchView = (payload) => axios.get(`${resource}/search`, payload)
