@@ -133,11 +133,12 @@ export default {
                 date: this.absence.start_date,
                 user_id: this.absence.user_id,
                 center_id: this.data.center.center_id,
-                status: 0
+                status: 1
             }
             AddEmployeeAttendance(datas).then((data) =>{
                 this.$toast.success(data.data.message)
                 this.$emit('close')
+                this.$emit('success')
             })
         },
     },
