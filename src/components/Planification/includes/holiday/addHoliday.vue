@@ -158,7 +158,7 @@
                         <v-col cols="12" class="mt-2">
                             <v-autocomplete
                                 dense
-                                :disabled="!$canAccess()"
+                                v-if="$canAccess()"
                                 :items="employees"
                                 solo
                                 v-model="holiday.user_id"
