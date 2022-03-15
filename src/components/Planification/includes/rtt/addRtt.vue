@@ -147,7 +147,7 @@
                         <v-col cols="12" class="pt-2">
                             <v-autocomplete
                                 dense
-                                :disabled="!$canAccess()"
+                                v-if="$canAccess()"
                                 :items="employees"
                                 solo
                                 large
