@@ -10,6 +10,7 @@
                     small
                     width="100px"
                     dense
+                    :search="search"
                     :hide-details="true"
                     label="Centre de recherche"
                     solo
