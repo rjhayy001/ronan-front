@@ -158,7 +158,7 @@
                         <v-col cols="12" class="mt-2">
                             <v-autocomplete
                                 dense
-                                :disabled="!$canAccess()"
+                                v-if="$canAccess()"
                                 :items="employees"
                                 solo
                                 v-model="holiday.user_id"
@@ -215,7 +215,7 @@
 
 <script>
 import moment from 'moment'
-import { GetAllEmployees } from "@/repositories/employee.api";
+import { GetFilteredEmployee } from "@/repositories/employee.api";
 import { createHoliday } from "@/repositories/planning.api";
 import { RequestHoliday } from "@/repositories/holidays.api";
 export default {
@@ -273,7 +273,7 @@ export default {
         },
         initialize() {
             this.error=false
-            GetAllEmployees().then(({data}) => {
+            GetFilteredEmployee().then(({data}) => {
                 console.log(data)
                 this.employees = data
                 if(!this.$canAccess()){

@@ -102,7 +102,7 @@
 </template>
 <script>
 import moment from 'moment'
-import { GetAllEmployees, AddEmployeeAttendance } from "@/repositories/employee.api";
+import { GetFilteredEmployee, AddEmployeeAttendance } from "@/repositories/employee.api";
 export default {
     data(){
         return{
@@ -120,7 +120,7 @@ export default {
     methods:{
         initialize() {
             this.error=false
-            GetAllEmployees().then(({data}) => {
+            GetFilteredEmployee().then(({data}) => {
                 console.log(data)
                 this.employees = data
                 if(!this.data){

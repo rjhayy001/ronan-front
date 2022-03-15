@@ -40,6 +40,20 @@ export default {
             return flag
         },
 
+        $notifColor(item){
+            let colors = [
+                {value: 0, color: 'green', hint: 'Basse'},
+                {value: 1, color: 'orange', hint: 'Moyenne'},
+                {value: 2, color: 'red', hint: 'Haute'},
+            ]
+
+            let selected = colors.find(color => {
+                return item.data.type === color.value
+            })
+
+            return selected
+        },
+
         $DateWithMonthTextfr(date){
             return moment(date).locale('fr').format('DD MMMM YYYY');
         },

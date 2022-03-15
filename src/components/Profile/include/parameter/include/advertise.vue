@@ -98,6 +98,7 @@
                                     <v-btn large
                                         :loading="isSelecting" 
                                         @click="handleFileImport"
+                                        :disabled="data.type.value == 0"
                                         style="text-transform: none; width: 100%; background-color:#e0e0e0!important;">
                                         Choisissez l'image
                                     </v-btn>
@@ -156,7 +157,7 @@
 </template>
 
 <script>
-import { GetAllEmployeesSort } from "@/repositories/employee.api";
+import { GetFilteredEmployee } from "@/repositories/employee.api";
 import { CreateNotice } from "@/repositories/notice.api";
 export default {
     data(){
@@ -207,7 +208,7 @@ export default {
     methods: {
         initialize(){
             this.loading = true
-            GetAllEmployeesSort().then(({data}) => {
+            GetFilteredEmployee().then(({data}) => {
                 console.log(data)
                 this.employees = data
                 this.loading = false

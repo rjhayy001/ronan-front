@@ -5,6 +5,8 @@
         offset-y
         min-height="300px"
         style="position: relative;left: 1430px;!important"
+        close-on-content-click
+        v-model="model"
     >
         <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -96,6 +98,7 @@
                         <div>
                             <div class="font-weight-bold" style="font-size: 18px">
                                 {{item.title}}
+                                <span v-if="item.type == 'notice'" :style="{ color: $notifColor(item).color , fontSize: '13px', fontStyle: 'italic' }"> ({{$notifColor(item).hint}}) </span>
                             </div>
                             <div style="font-size: 14px" class="ellipse two-lines font-weight-medium">
                                 {{item.message}}
@@ -116,6 +119,11 @@
                 </v-list-item>
             </v-list>
         </div>
+        <notice-dialog 
+            :dialog="notice_dialog"
+            :data="notice_data"
+            @close="notice_dialog=false"
+        />
         <pending-application
             v-if="pending_dialog2" 
             :dialog="pending_dialog2" 
@@ -125,6 +133,88 @@
         />
     </v-menu>
 </template>
+<script>
+import noticeDialog from './notice_dialog.vue'
+import { GetAllNotifications , MarkAllAsRead, MarkasRead } from "@/repositories/notifications.api"
+import pendingApplication from '../../components/Planification/includes/dialogs/pendingApplication.vue';
+export default {
+    components:{
+        pendingApplication,
+        noticeDialog
+    },
+    data() {
+        return {
+            notice_dialog: false,
+            notice_data : {},
+            value: 'congés',
+            content: 0,
+            loading: false,
+            notifications: [],
+            pending_dialog2: false,
+            dialog65:false,
+            model:false,
+        }
+    },
+    mounted() {
+        this.initialize()
+    },
+    methods: {
+        initialize() {
+            this.getNotifications();
+        },
+        markAsRead(){
+            MarkAllAsRead().then(({data}) => {
+                this.$toast.success(data.message)
+                this.getNotifications()
+            })
+        },
+        
+        getNotifications() {
+            this.content = 0
+            this.loading=true
+            GetAllNotifications().then(({data}) =>{
+                console.log(data,'notifs')
+                this.notifications = data
+                data.forEach(el => {
+                    if(el.is_read.is_read ==0 ){
+                        this.content++
+                    }
+                })
+                this.loading=false
+            })
+        },
+        openDialog(item) {
+            if(item.type === 'notice'){
+                if(item.data.type === 0){
+                    return
+                }
+
+                this.notice_data = item
+
+                // MarkasRead(item.id).then(() =>{
+                //     this.initialize()
+                // })
+
+                this.$nextTick(function () {
+                    this.notice_dialog = true
+                })
+
+                this.model = false
+
+                return
+            }
+                MarkasRead(item.id).then(() =>{
+                    this.initialize()
+                })
+                this.value = item.type == "holiday_request" ? 'congés': 'rtt'
+                this.$nextTick(function (){
+                    this.pending_dialog2 = true
+                    this.model = false
+                })
+        }
+    }
+}
+</script>
 
 <style scoped>
 .ellipse {
@@ -149,60 +239,3 @@
   width: 5px;
 }
 </style>
-
-<script>
-import { GetAllNotifications , MarkAllAsRead, MarkasRead } from "@/repositories/notifications.api"
-import pendingApplication from '../../components/Planification/includes/dialogs/pendingApplication.vue';
-export default {
-    components:{
-        pendingApplication,
-    },
-    data() {
-        return {
-            value: 'congés',
-            content: 0,
-            loading: false,
-            notifications: [],
-            pending_dialog2: false,
-            dialog65:false,
-
-        }
-    },
-    mounted() {
-        this.initialize()
-    },
-    methods: {
-        initialize() {
-            this.getNotifications();
-        },
-        markAsRead(){
-            MarkAllAsRead().then(({data}) => {
-                this.$toast.success(data.message)
-                this.getNotifications()
-            })
-        },
-        getNotifications() {
-            this.content = 0
-            this.loading=true
-            GetAllNotifications().then(({data}) =>{
-                this.notifications = data
-                data.forEach(el => {
-                    if(el.is_read.is_read ==0 ){
-                        this.content++
-                    }
-                })
-                this.loading=false
-            })
-        },
-        openDialog(item) {
-            MarkasRead(item.id).then(() =>{
-                this.initialize()
-            })
-            this.value = item.type == "holiday_request" ? 'congés': 'rtt'
-            this.$nextTick(function (){
-                this.pending_dialog2 = true
-            })
-        }
-    }
-}
-</script>
