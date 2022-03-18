@@ -201,13 +201,9 @@
                                     <v-icon>mdi-phone-outline</v-icon> {{center.mobile}}
                                 </v-card-subtitle>
                             </v-img>
-                            <v-card-subtitle v-if="center.manager" class="center-card-end">
+                            <v-card-subtitle class="center-card-end">
                                 Superviseur :
-                                <p class="center-card-end-val">{{center.manager}}</p>
-                            </v-card-subtitle>
-                            <v-card-subtitle v-else class="center-card-end">
-                                Superviseur :
-                                <p class="center-card-end-val">NON DEFINI</p>
+                                <p class="center-card-end-val">{{center.manager ? center.manager.full_name : 'NON DEFINI'}}</p>
                             </v-card-subtitle>
                         </div>
                     </v-card>
