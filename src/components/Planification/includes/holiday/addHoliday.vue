@@ -253,16 +253,19 @@ export default {
     },
     watch:{
        "data.showMenu": {
-        handler(val) {
-            if(!val){
-                this.holiday.user_id = this.data.user.id
-                this.holiday.start_date = this.$datePickerDate(this.data.date)
-                this.holiday.end_date = this.$datePickerDate(this.data.date)
-                console.log(this.data.user)
-            }
+            handler(val) {
+                if(!val){
+                    this.holiday.user_id = this.data.user.id
+                    this.holiday.start_date = this.$datePickerDate(this.data.date)
+                    this.holiday.end_date = this.$datePickerDate(this.data.date)
+                    console.log(this.data.user)
+                }
+            }, 
+            deep: true,
         },
-        deep: true,
-      },
+        "holiday.start_date"(val){
+            this.holiday.end_date = val
+        }
     },
     created(){
         this.initialize();
@@ -290,12 +293,12 @@ export default {
             console.log(this.error,"status")
             if(this.error == false) {
                 if(this.$canAccess()){
-                    alert('admin')
+                    console.log(this.holiday.start_date, "holiday value")
                     createHoliday(this.holiday).then(() => {
+                        this.$store.commit('UPDATE_NEW',true)
                         this.$toast.success('successfully added holiday') 
                         this.$emit('success')
                         this.$emit('close')
-                        this.$store.commit('toggleForceReload')
                     }).catch(({response}) => { 
                         this.$toast.error(response.data.message) 
                     })
@@ -322,6 +325,6 @@ export default {
                 this.error=false
             }
         }
-    }
+    },
 }
 </script>

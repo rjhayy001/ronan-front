@@ -173,7 +173,6 @@ export default {
             this.content = 0
             this.loading=true
             GetAllNotifications().then(({data}) =>{
-                console.log(data,'notifs')
                 this.notifications = data
                 data.forEach(el => {
                     if(el.is_read.is_read ==0 ){

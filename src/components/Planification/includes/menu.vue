@@ -61,7 +61,6 @@
             @close="holiday_dialog=false"
             @success="$emit('success')"
         />
-
         <add-rtt
             v-if="rtt_dialog"
             :dialog="rtt_dialog"

@@ -44,7 +44,7 @@
                     >
                     <v-form ref="addForm">
                         <div>
-                            <p class="text-label">start date</p>
+                            <p class="planning_text-label">start date</p>
                             <v-menu
                                 ref="start_date"
                                 v-model="start_menu"
@@ -92,7 +92,7 @@
                             </v-menu>
                         </div>
                         <div>
-                            <p class="text-label">end date</p>
+                            <p class="planning_text-label">end date</p>
                             <v-menu
                                 ref="end_date"
                                 v-model="end_menu"
@@ -236,12 +236,7 @@ export default {
 }
 </script>
 <style scoped>
-.text-label{
-    margin-bottom: 3px;
-    text-transform: capitalize;
-    letter-spacing:1.2px;
-    font-size: 15px;
-}
+
 .item-title{
   font-size:17px !important;
   text-transform: uppercase;
