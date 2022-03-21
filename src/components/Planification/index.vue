@@ -91,7 +91,14 @@
         />
       </div>
       <div style="margin: 40px 0 0 0" v-else>
-        <planning-mois/>
+        <planning-mois
+          :selected="selected"
+          :reqYear="currentReqyear"
+          :success="updateReload"
+          @test="updateReload= false"
+          :filter="filter"
+          @currentmonthyear="monthyear"
+        />
       </div>
     </template>
      <!-- employee view -->
@@ -130,6 +137,7 @@ import tagsPlanning from './includes/tags/tags.vue';
       return {
         emp_view:false,
         currentReqweek: moment(),
+        currentReqyear: moment(),
         drawer: false,
         menu: true,
         monthIndex : this.month - 1,
@@ -157,9 +165,13 @@ import tagsPlanning from './includes/tags/tags.vue';
         this.getMonthyear();
       },
       getMonthyear(){
-        this.month;
-        this.year;
-        this.monthIndex;
+        if(this.selected==3){
+          this.month=moment().format('YYYY');
+        }else{
+          this.month;
+          this.year;
+          this.monthIndex;
+        }
       },
       increment() {
         if(this.selected==1) {
@@ -169,7 +181,9 @@ import tagsPlanning from './includes/tags/tags.vue';
           let updateCurrentweek = moment(this.currentReqweek).add(1, 'weeks').startOf('isoWeek')
           this.currentReqweek = updateCurrentweek;
         }else{
-          console.log("sad2")
+          let updateCurrentMonth = moment(this.currentReqyear).add(1, 'Y');
+          this.currentReqyear = updateCurrentMonth;
+          this.month=moment(this.currentReqyear).format('YYYY')
         }
       },
       decrement() {
@@ -180,7 +194,9 @@ import tagsPlanning from './includes/tags/tags.vue';
           let updateCurrentweek = moment(this.currentReqweek).subtract(1, 'weeks').startOf('isoWeek')
           this.currentReqweek = updateCurrentweek;
         }else {
-          console.log("sad2")
+          let updateCurrentMonth = moment(this.currentReqyear).subtract(1, 'Y');
+          this.currentReqyear = updateCurrentMonth;
+          this.month=moment(this.currentReqyear).format('YYYY')
         }
       },
       test(view){

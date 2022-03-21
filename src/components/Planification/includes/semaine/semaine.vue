@@ -235,8 +235,8 @@
             :data="edit_rtt_data"
         />
         <create-plan 
-            v-if="dialog2" 
-            :dialog="dialog2" 
+            v-if="add_plan_dialog" 
+            :dialog="add_plan_dialog" 
             @close="closeDialog"
             @success="forceReload"
             :data="create_data"
@@ -304,28 +304,9 @@ export default {
   },
     data() {
         return {
-            date:[],
-            regions:[],
-            center_storage:[],
-            loading: false,
-            currentWeek: moment(),
-            currentDay: moment().format('YYYY-MM-DD'),
-            month: moment().format('MMM YYYY'),
-            edit_holiday_dialog: false,
-            edit_holiday_data:{},
-            dialog2: false,
-            create_data:{
-                date:'',
-                employee:{},
-                center:{}
-            },
-            edit_rtt_dialog: false,
-            edit_rtt_data:{},
-            edit_plan_dialog:false,
-            edit_data: {},
-            delete_absent_dialog: false,
-            absent_data:{},
-            national_holidays: [],
+            absence_dialog:false,
+            rtt_dialog:false,
+            holiday_dialog:false,
             right_menu:{
                 showMenu:false,
                 x:0,
@@ -334,17 +315,36 @@ export default {
                 user:{},
                 center:{}
             },
+            employee_view:false,
+            edit_holiday_dialog: false,
+            edit_holiday_data:{},
+            edit_rtt_dialog: false,
+            edit_rtt_data:{},
+            delete_absent_dialog: false,
+            absent_data:{},
+            edit_plan_dialog:false,
+            edit_data: {},
+            add_plan_dialog: false,
+            create_data:{
+                date:'',
+                employee:{},
+                center:{}
+            },
+            currentDay: moment().format('YYYY-MM-DD'),
+            drawer:false,
             option_selects: '',
-            absence_dialog:false,
-            rtt_dialog:false,
-            holiday_dialog:false,
             options: [
                 {value:1, title: 'Absence' },
                 {value:2, title: 'Rtt' },
                 {value:3, title: 'Vacances' },
             ],
-            drawer:false,
-            employee_view:false,
+            regions:[],
+            loading: false,
+            center_storage:[],
+            date:[],
+            national_holidays: [],
+            currentWeek: moment(),
+            month: moment().format('MMM YYYY'),
         }
     },
     created() {
@@ -467,11 +467,11 @@ export default {
                 date:date
             }
             this.$nextTick(function () {
-                this.dialog2 = true
+                this.add_plan_dialog = true
             })
         },
         closeDialog(){
-            this.dialog2 = false
+            this.add_plan_dialog = false
         },
         forceReload(){
             GetAllRegions().then(({data}) => {

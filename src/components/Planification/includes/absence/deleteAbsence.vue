@@ -115,7 +115,6 @@
     </v-dialog>
 </template>
 <script>
-// import moment from 'moment'
 import { DeleteEmployeeAttendance, UpdateEmployeeAttendance } from "@/repositories/employee.api";
 export default {
         props:{

@@ -326,7 +326,6 @@ export default {
         user:{},
         center:{}
       },
-      //   drag:false,
       employee_view:false,
       edit_holiday_dialog: false,
       edit_holiday_data:{},
@@ -336,6 +335,7 @@ export default {
       absent_data:{},
       edit_plan_dialog:false,
       edit_data: {},
+      add_plan_dialog: false,
       create_data:{
         date:'',
         employee:{},
@@ -343,13 +343,7 @@ export default {
       },
       currentDay: moment().format('YYYY-MM-DD'),
       drawer: false,
-      add_plan_dialog: false,
-      menu: true,
-      monthIndex : this.month - 1,
-      month: moment().format('MMM YYYY'),
-      year: moment(this.month).format('YYYY'),
-      month_digit:moment(this.month).format('MM'),
-      date:[],
+      option_selects: '',
       options: [
         { value:1, title: 'Absence' },
         { value:2, title: 'Rtt' },
@@ -357,9 +351,14 @@ export default {
       ],
       regions:[],
       loading: false,
-      national_holidays: [],
       center_storage:[],
-      option_selects: '',
+      date:[],
+      national_holidays: [],
+      menu: true,
+      monthIndex : this.month - 1,
+      month: moment().format('MMM YYYY'),
+      year: moment(this.month).format('YYYY'),
+      month_digit:moment(this.month).format('MM'),
     };
   },
   created() {
