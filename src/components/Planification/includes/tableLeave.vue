@@ -106,7 +106,6 @@ import { GetPendingHolidays, DeclineHoliday, ApproveHoliday } from "@/repositori
       initialize(){
          GetPendingHolidays().then(({data}) => {
           this.pending_leaves = data
-          console.log(data, 'holidays')
         })
       },
       approve(item){

@@ -63,13 +63,11 @@
     props: ['drawer', 'employee_view'],
     data() {
       return {
-          // drawer: false,
           regions: [],
           selectedRegion:[],
           viewEmployee:false,
           view:'',
           drawerStatus: this.drawer
-          
       }
     },
      watch:{
@@ -90,13 +88,11 @@
       initialize(){
         GetRawRegions().then(({data}) => {
           this.regions = data
-          console.log(data,'test')
         })
         this.view = this.employee_view
       },
       test(payload){
         if(payload===false){
-          console.log(payload)
           this.$emit('close')
         }
       }

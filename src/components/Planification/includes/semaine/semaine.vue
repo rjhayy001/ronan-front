@@ -165,13 +165,14 @@
                                         </template>
                                         <!-- absents -->
                                         <template v-if="user.absents && date.text !='Dim'">
-                                            <template v-for="(nat_holiday, nat_index) in user.absents">
+                                            <template v-for="(absent, absent_index) in user.absents">
                                                 <div 
-                                                    v-if="$isSameDate(
-                                                    nat_holiday.date,
+                                                v-if="$isSameDate(
+                                                    absent.date,
                                                     date.date
                                                     )" 
-                                                    :key="nat_index + 'nat_holiday'" 
+                                                    @click="absentClick(absent, user)"
+                                                    :key="absent_index + 'nat_holiday'" 
                                                     :class="['nat-holiday','pointer']"
                                                     style="background-color:red !important;"
                                                 >
@@ -247,12 +248,11 @@
             @close="edit_plan_dialog=false"
             :data="edit_data"
         />
-        <filter-planning 
-            @filter="filter2"
-            @changeView="changeView"
-            :employee_view="employee_view"
-            :drawer="drawer" 
-            @close="drawer = false"
+        <delete-absence
+            v-if="delete_absent_dialog"
+            :dialog="delete_absent_dialog"
+            :data="absent_data"
+            @close="delete_absent_dialog=false"
         />
     </div>
 </template>
@@ -260,7 +260,7 @@
 import moment from 'moment'
 import { GetAllRegions } from "@/repositories/region.api"
 import { GetAllHolidays } from "@/repositories/holidays.api"
-import filterPlanning from '../filter.vue';
+// import filterPlanning from '../filter.vue';
 import addHoliday from '../holiday/addHoliday.vue'
 import editHoliday from '../holiday/editHoliday.vue'
 import addRtt from "../rtt/addRtt.vue"
@@ -269,9 +269,10 @@ import editRtt from '../rtt/editRtt.vue'
 import employeeView from '../../employee_view/index.vue'
 import editPlan from '../../edit.vue';
 import addAbsence from "../absence/addAbsence.vue"
+import deleteAbsence from "../absence/deleteAbsence.vue"
 export default {
     components:{
-        filterPlanning,
+        // filterPlanning,
         addHoliday,
         addRtt,
         editHoliday,
@@ -279,7 +280,8 @@ export default {
         editPlan,
         editRtt,
         addAbsence,
-        employeeView
+        employeeView,
+        deleteAbsence
     },
     props: {
         selected: {
@@ -291,9 +293,14 @@ export default {
             required: true,
         },
         filter: {
-            type: Function,
-            required: true,
-        }
+            type: Array,
+        },
+        employee_view2: {
+            type: [Boolean, Object]
+        },
+        success: {
+            type: Boolean,
+        },
   },
     data() {
         return {
@@ -314,9 +321,11 @@ export default {
             },
             edit_rtt_dialog: false,
             edit_rtt_data:{},
-            national_holidays: [],
             edit_plan_dialog:false,
             edit_data: {},
+            delete_absent_dialog: false,
+            absent_data:{},
+            national_holidays: [],
             right_menu:{
                 showMenu:false,
                 x:0,
@@ -343,7 +352,7 @@ export default {
     },
     methods: {
         initialize() {
-            this.getmonthly()
+            this.getweekly()
             this.getData()
             this.getNationalHoliday()
             console.log(this.selected,"selected")
@@ -409,12 +418,13 @@ export default {
             })
             center.users = data
         },
-        getmonthly() { 
+        getweekly() { 
             var currentDate = this.currentWeek;
             console.log(currentDate,"currentdate")
             var weekStart = currentDate.clone().startOf('isoWeek');
-            console.log(weekStart, "currendatefetch")
-
+            console.log(moment(weekStart).add(i, 'days').format("YYYY-MM-DD"), "currendatefetch")
+            this.CurrentMonthYear=moment(weekStart).add(i, 'days').format("YYYY-MM-DD")
+            this.$emit('currentmonthyear', this.CurrentMonthYear)
             var days = [];
             for (var i = 0; i <= 6; i++) {
                 days.push({
@@ -428,9 +438,17 @@ export default {
         getData(){
             this.loading = true
             GetAllRegions().then(({data}) => {
-                console.log(data, 'regions')
                 this.regions = data
                 this.loading = false
+            })
+        },
+        absentClick(absent, employee) {
+            this.absent_data = {
+                absent:absent,
+                employee:employee
+            }
+            this.$nextTick(function () {
+                this.delete_absent_dialog = true
             })
         },
         editHoliday(holiday, employee){
@@ -472,7 +490,6 @@ export default {
         getNationalHoliday(){
             GetAllHolidays().then(({data}) =>{
                 this.national_holidays = data
-                console.log(this.national_holidays, "holiday")
             })
         },
         $isHoliday(date){
@@ -495,8 +512,6 @@ export default {
             })
         },
         filter2(filters){
-            alert("semaine")
-                console.log(filters,"fill")
             if(filters.length){
                 this.loading = true
                 let storage =[]
@@ -516,7 +531,7 @@ export default {
                 this.initialize()
             }
         },
-        changeView(view) {
+        changeView2(view) {
             this.employee_view = view
         },
     },
@@ -525,15 +540,38 @@ export default {
             handler(val) {
                 this.currentWeek = val
                 console.log(this.currentDay,"reqweek")
-                this.getmonthly()
+                this.getweekly()
             },
             deep: true,
         },
         "filter": {
             handler(val) {
                 console.log(val,"filter")
+                this.filter2(val)
             }
-        }
+        },
+        "employee_view2": {
+            handler(val) {
+                console.log(val,"filter")
+                this.changeView2(val)
+            }
+        },
+        'success': {
+            handler(val) {
+                if(val){
+                    console.log("sadsss")
+                    this.forceReload()
+                    this.$emit('test')
+                }
+            }
+        },
+        '$store.getters.newDataIndex'(newVal) {
+            if(newVal) {
+                console.log(newVal,"JoursStore")
+                this.$store.commit('UPDATE_NEW',false)
+                this.forceReload()
+            }
+        },
     }
 }
 </script>

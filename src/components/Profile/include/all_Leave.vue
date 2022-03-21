@@ -47,7 +47,6 @@ import { GetEmployeeHolidays } from "@/repositories/holidays.api"
       initialize(){
         GetEmployeeHolidays().then(({data}) => {
           this.holidays = data
-          console.log(data, 'holidays')
         })
       },
       statusColor(status){
