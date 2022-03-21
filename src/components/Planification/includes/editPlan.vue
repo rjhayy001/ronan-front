@@ -30,7 +30,7 @@
                                 </v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-content>
-                                <v-list-item-title class="item-title">{{center.name}}</v-list-item-title>
+                                <v-list-item-title class="planning_item-title">{{center.name}}</v-list-item-title>
                                 <v-list-item-subtitle class="item-sub">{{center.region.name}}</v-list-item-subtitle>
                                 </v-list-item-content>
                             </v-list-item>
@@ -43,7 +43,7 @@
                 >
                 <v-form ref="addForm">
                     <div>
-                        <p class="text-label">Date de début</p>
+                        <p class="planning_text-label">Date de début</p>
                         <v-menu
                             ref="start_date"
                             v-model="start_menu"
@@ -91,7 +91,7 @@
                         </v-menu>
                     </div>
                      <div>
-                        <p class="text-label">Date de fin</p>
+                        <p class="planning_text-label">Date de fin</p>
                         <v-menu
                             ref="end_date"
                             v-model="end_menu"
@@ -233,19 +233,6 @@ export default {
 }
 </script>
 <style scoped>
-.text-label{
-    margin-bottom: 3px;
-    text-transform: capitalize;
-    letter-spacing:1.2px;
-    font-size: 15px;
-}
-.item-title{
-  font-size:17px !important;
-  text-transform: uppercase;
-  letter-spacing:1px;
-  width: 160px !important;
-
-}
 .item-sub{
     letter-spacing:1px;
   font-size:12px !important;

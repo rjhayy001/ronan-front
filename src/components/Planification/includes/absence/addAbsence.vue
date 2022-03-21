@@ -136,6 +136,7 @@ export default {
                 status: 1
             }
             AddEmployeeAttendance(datas).then((data) =>{
+                this.$store.commit('UPDATE_NEW',true)
                 this.$toast.success(data.data.message)
                 this.$emit('close')
                 this.$emit('success')

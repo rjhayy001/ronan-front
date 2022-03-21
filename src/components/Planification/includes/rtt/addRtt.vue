@@ -7,7 +7,7 @@
         @click:outside="$emit('close')"
     >
         <v-card>
-            <v-form>
+            <v-form ref="form" lazy-validation>
                 <v-container style="height: 60vh">
                     <v-row style="padding: 30px">
                         <div style="display:flex">
@@ -232,6 +232,9 @@ export default {
             },
             deep: true,
         },
+        "rtt.start_time"(val) {
+            this.rtt.end_time = val
+        }
     },
     created(){
         this.initialize();
@@ -242,26 +245,27 @@ export default {
             GetFilteredEmployee().then(({data}) => {
                 console.log(data)
                 this.employees = data
-                this.rtt.user_id = this.employees[0].id
                 if(!this.$canAccess()){
+                    console.log(data) 
                     let user = this.$store.getters['user']
                     this.rtt.user_id  = user.id
                 }
                 else if(!this.data){
                     this.rtt.user_id = this.employees[0].id
                 }
+
             })
         },
         saveRtt(){
             this.validate()
             if(this.error == false){
                 if(this.$canAccess()){
+                    console.log(this.rtt, "rtt value")
                     CreateRtt(this.rtt).then(({data}) => {
-                        console.log(data, 'test')
                         this.$emit('success')
                         this.$emit('close')
+                        this.$store.commit('UPDATE_NEW',true)
                         this.$toast.success(data.message)
-                        this.$store.commit('toggleForceReload')
                     }).catch(({response}) => { 
                         this.$toast.error(response.data.message) 
                     })
@@ -286,7 +290,7 @@ export default {
             }else{
                 this.error=false
             }
-        }
+        },
     }
 }
 </script>

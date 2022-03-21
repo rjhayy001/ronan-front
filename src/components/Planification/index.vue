@@ -53,7 +53,7 @@
                   elevation="0"
                   width="200px"
                   height="47px"
-                  @click.stop="drawer=true"
+                  @click="drawer =true"
                 >
                   <v-icon 
                     class="filter-icon"
@@ -67,659 +67,164 @@
           </div>
         </div>
       </div>
-      <div class="tags">
-        <div class="tags-container">
-          <div class="container">
-            <div class="tags-color travaille"></div>
-            <div class="tags-name">Travaillé</div>
-          </div>
-          <div class="container">
-            <div class="tags-color absence"></div>
-            <div class="tags-name">Absence</div>
-          </div>
-          <div class="container">
-            <div class="tags-color conflit"></div>
-            <div class="tags-name">Conflit</div>
-          </div>
-          <div class="container">
-            <div class="tags-color vacances"></div>
-            <div class="tags-name">Vacances</div>
-          </div>
-          <div class="container">
-            <div class="tags-color rtt"></div>
-            <div class="tags-name">RTT</div>
-          </div>
-          <div class="container">
-            <div class="tags-color dimanche"></div>
-            <div class="tags-name">Dimanche</div>
-          </div>
-          <div class="container">
-            <div class="tags-color jour"></div>
-            <div class="tags-name">Jour férié</div>
-          </div>
-        </div>
-      </div>
+      <tags-planning/>
     </v-subheader>
     <!-- center view -->
-    <div v-if="selected==1">
-      <template v-if="!employee_view">
-        <div class="table_scroll" v-if="!loading">
-          <div class="css_table css_table2">
-            <div class="css_th"  style="border-bottom:none!important;"></div>
-            <div class="css_thead">
-              <div class="css_tr">
-                <div style="position:relative">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on }">
-                      <v-icon 
-                        style="position:absolute; right:10px; z-index:4; top: -6px"
-                        @click="toggleNoWorkEmployees"
-                        v-on="on"
-                      >
-                        mdi-filter
-                      </v-icon>
-                    </template>
-                    <span>toggle no work employes</span>
-                  </v-tooltip>
-                </div>
-                <div v-for="date in date" :key="date.text + date.number"  class="css_th">{{date.text}}</div>
-              </div>
-              <div class="css_tr ">
-                <div class="css_th sub_th border_table"></div>
-                  <div  v-for="date in date" :key="date.number" class="css_th sub_th" style="background-color:white;">
-                    <div v-if="$isSameDate(date.date,currentDay)" class="currentDay">
-                      {{ date.number }}
-                    </div>
-                    <div v-else-if="$isHoliday(date.date)" class="holiday">
-                      {{ date.number }}
-                    </div>
-                    <div v-else :class="[date.text=='Dim' ? 'sunday': '']">
-                      {{ date.number }}
-                    </div>
-                  </div>
-              </div>
-            </div>
-            <div class="css_tbody" v-for="(region, index) in regions" :key="index + region.id">
-              <div class="css_tr">
-                <div class="css_sd header_sd width_sd">
-                  {{region.name}}
-                </div>
-                <div class="css_td" v-for="date in date" :key="date.number">
-                  <div id="data" v-if="$isSameDate(date.date,currentDay)" class="currentDay">
-                    <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden position-absolute-fixed ">.</p>
-                  </div>
-                  <div v-else-if="$isHoliday(date.date)" class="holiday">
-                    <p class="date-hidden">.</p>
-                  </div>
-                  <div id="data" v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97)" class="position-absolute-fixed">
-                    <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden ">.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- <draggable v-model="region.centers" group="centers" @start="drag=true" @end="drag=false"> -->
-                <template v-for="(center, center_index) in region.centers">
-                  <div class="css_tr"  :key="'center' + center_index">
-                    <div class="css_sd subheader_sd width_sd">
-                      {{center.name}}
-                      <v-tooltip bottom>
-                        <template v-slot:activator="{ on }">
-                          <v-icon 
-                            style="position:absolute; right: 10px; top: 50%; bottom: 50%" 
-                            dark 
-                            v-on="on"
-                            small 
-                            @click="test(center)"
-                          >
-                            {{$isOnArray(center, center_storage) ? 'mdi-filter-off' : 'mdi-filter'}}
-                          </v-icon>
-                        </template>
-                        <span>
-                          {{$isOnArray(center, center_storage) ? 'show no work employee' : 'hide no work employee'}}
-                        </span>
-                      </v-tooltip>
-                    </div>
-                    <div class="css_td" v-for="date in date" :key="date.number">
-                      <div id="data"  v-if="$isSameDate(date.date,currentDay)" class="currentDay">
-                        <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                      </div>
-                      <div v-else-if="$isHoliday(date.date)" class="holiday">
-                        <p class="date-hidden">.</p>
-                      </div>
-                      <div id="data"  v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97); " class="position-absolute-fixed">
-                        <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="css_tr" v-for="(user, user_index) in center.users" :key="user.id+user_index+center.name+user_index+center.id">
-                    <div class="css_sd content_sd width_sd">
-                      {{user.first_name}}, {{user.last_name}}
-                    </div>
-                    <div class="css_td position-relative" v-for="date in date" :key="date.number">
-                      <div id="data"  v-if="date.text=='Dim'" style="background-color:rgb(97 97 97)" class="position-absolute-fixed" >
-                        <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                      </div>
-                      <div id="data" v-else-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed pointer" @click="addWork(user,center,date.date)">
-                        <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                      </div>
-                      <div v-else class="empty-day position-absolute-fixed" @click="addWork(user,center,date.date)" @contextmenu.prevent="testing($event,date,user,center)">
-                        <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                      </div>
-                      <!-- for planning -->
-                      <template v-if="user.planning && date.text !='Dim'">
-                        <template v-for="(planning, plann_index) in user.planning">
-                          <div 
-                            v-if="$isBetween(
-                              planning.start_date, 
-                              planning.end_date, 
-                              date.date
-                            )" 
-                            :key="plann_index + 'asdplann'" 
-                            :class="['work-full pointer', $checkWorkFullDate(planning, date)]"
-                            :style="planning.is_conflict == 1 ? 'background:#6a1b9a !important' : ''"
-                            @click="editWork(user, center, planning)"
-                          >
-                            <p class="date-hidden" >.</p>
-                          </div>
-                        </template>
-                      </template>
-                      <!-- for employee holidays -->
-                      <template v-if="user.holidays && date.text !='Dim'">
-                        <template v-for="(holiday, holi_index) in user.holidays">
-                          <div 
-                            @click="editHoliday(holiday, user)"
-                            v-if="$isBetween(
-                              holiday.start_date, 
-                              holiday.end_date, 
-                              date.date
-                            ) && holiday.status == 1" 
-                            :key="holi_index + 'holiasd'" 
-                            :class="['holiday-full pointer position-absolute-fixed',$checkHolidayFullDate(holiday, date) ]"
-                          >
-                            <p class="date-hidden" >.</p>
-                          </div>
-                        </template>
-                      </template>
-                      <!-- for rtts -->
-                      <template v-if="user.rtts && date.text !='Dim'">
-                        <template v-for="(rtt, rtt_index) in user.rtts">
-                          <div 
-                            @click="editRtt(rtt, user)"
-                            v-if="$isSameDate(date.date, rtt.date)&& rtt.status == 1" 
-                            :key="rtt_index + 'rttasd'" 
-                            :class="['rtt-full','pointer']"
-                          >
-                            <p class="date-hidden" >.</p>
-                          </div>
-                        </template>
-                      </template>
-                      <!-- for national holidays -->
-                      <template v-for="(nat_holiday, nat_index) in national_holidays">
-                        <div 
-                          v-if="$isSameDate(
-                            nat_holiday.date,
-                            date.date
-                          )" 
-                          :key="nat_index + 'nat_holiday'" 
-                          :class="['nat-holiday','pointer']"
-                        >
-                          <p class="date-hidden" >.</p>
-                        </div>
-                      </template>
-                      <!-- absents -->
-                      <template v-if="user.absents && date.text !='Dim'">
-                        <template v-for="(nat_holiday, nat_index) in user.absents">
-                          <div 
-                            v-if="$isSameDate(
-                              nat_holiday.date,
-                              date.date
-                            )" 
-                            :key="nat_index + 'nat_holiday'" 
-                            :class="['nat-holiday','pointer']"
-                            style="background-color:red !important;"
-                          >
-                            <p class="date-hidden" >.</p>
-                          </div>
-                        </template>
-                      </template>
-                    </div>
-                  </div>
-                </template>
-              <!-- </draggable> -->
-            </div>
-          </div>
-        </div>
-        <table-loader v-else></table-loader>
-      </template>
-      <!-- employee view -->
+    <template v-if="!emp_view">
+      <div v-if="selected==1">
+        <planning-jours
+          :selected="selected"
+          :reqDaily="month"
+          :success="updateReload"
+          @test="updateReload= false"
+          :filter="filter"
+        />
+      </div>
+      <div style="margin: 40px 0 0 0"  v-else-if="selected==2">
+        <planning-semaine
+          :selected="selected"
+          :reqWeek="currentReqweek"
+          :success="updateReload"
+          @test="updateReload= false"
+          :filter="filter"
+          @currentmonthyear="monthyear"
+        />
+      </div>
+      <div style="margin: 40px 0 0 0" v-else>
+        <planning-mois
+          :selected="selected"
+          :reqYear="currentReqyear"
+          :success="updateReload"
+          @test="updateReload= false"
+          :filter="filter"
+          @currentmonthyear="monthyear"
+        />
+      </div>
+    </template>
+     <!-- employee view -->
       <template v-else>
         <employee-view @openFilter="drawer = true"/>
       </template>
-    </div>
-    <div style="margin: 40px 0 0 0"  v-else-if="selected==2">
-      <planning-semaine
-        :selected="selected"
-        :reqWeek="currentReqweek"
-      />
-    </div>
-    <div style="margin: 40px 0 0 0" v-else-if="selected==3">
-      <planning-mois/>
-    </div>
-    <!-- filter -->
+    <menu-button v-if="menu" @success="reloadTable()"/>
     <filter-planning 
-      @filter="filter"
-      @changeView="changeView"
-      :employee_view="employee_view"
+      @filter="filter=$event"
+      @changeView="test"
       :drawer="drawer" 
-      @close="drawer = false"
-    />
-    <!-- plan or work -->
-    <create-plan 
-      v-if="dialog2" 
-      :dialog="dialog2" 
-      @close="closeDialog"
-      @success="forceReload"
-      :data="create_data"
-    />
-    <edit-plan
-      v-if="edit_plan_dialog"
-      :dialog="edit_plan_dialog"
-      @success="forceReload"
-      @close="edit_plan_dialog=false"
-      :data="edit_data"
-    />
-    <!-- rtt -->
-    <edit-rtt
-      v-if="edit_rtt_dialog"
-      :dialog="edit_rtt_dialog"
-      @close="edit_rtt_dialog=false"
-      @success="forceReload"
-      :data="edit_rtt_data"
-    />
-    <!-- holiday -->
-    <edit-holiday
-      v-if="edit_holiday_dialog"
-      :dialog="edit_holiday_dialog"
-      @close="edit_holiday_dialog=false"
-      :data="edit_holiday_data"
-    />
-    <!-- test menu -->
-    <v-menu v-model="right_menu.showMenu" :position-x="right_menu.x" :position-y="right_menu.y" absolute offset-y>
-      <v-list dense>
-        <v-list-item  @click="clickItem(item.value)" dense v-for="(item, index) in options" :key="index+'test'">
-          <v-list-item-title v-model="option_selects">{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
-    <menu-button v-if="menu" @success="forceReload"/>
-    <!-- addAbsence -->
-    <add-absence
-      v-if="option_selects == 1"
-      :dialog="absence_dialog"
-      @success="forceReload"
-      :data="right_menu"
-      @close="absence_dialog=false"
-    />
-    <!-- addRTT -->
-    <add-rtt
-      v-if="option_selects == 2"
-      :dialog="rtt_dialog"
-      :data="right_menu"
-      @close="rtt_dialog=false"
-      @success="forceReload"
-    />
-    <!-- addHoliday -->
-    <add-holiday
-      v-if="option_selects == 3"
-      :dialog="holiday_dialog"
-      :data="right_menu"
-      @close="holiday_dialog=false"
-      @success="forceReload"
+      @close="drawer=false"
     />
   </div>
 </template>
 <script>
-// import draggable from 'vuedraggable'
-import addRtt from "./includes/rtt/addRtt.vue"
-import addHoliday from "./includes/holiday/addHoliday.vue"
-import addAbsence from "./includes/absence/addAbsence.vue"
-import { GetAllHolidays } from "@/repositories/holidays.api"
-import filterPlanning from './includes/filter.vue';
+import planningJours from './includes/jours/jours.vue';
+import employeeView from './employee_view/index.vue'
 import planningSemaine from './includes/semaine/semaine.vue';
 import planningMois from './includes/mois/mois.vue';
-import menuButton from './includes/menu.vue';
-import createPlan from './create.vue';
-import editPlan from './edit.vue';
-import editRtt from './includes/rtt/editRtt.vue'
-import editHoliday from './includes/holiday/editHoliday.vue'
-import employeeView from './employee_view/index.vue'
+import filterPlanning from './includes/filter.vue';
 import moment from 'moment' 
-import { GetAllRegions } from "@/repositories/region.api"
+import menuButton from './includes/menu.vue';
+import tagsPlanning from './includes/tags/tags.vue';
   export default {
     components:{
-      filterPlanning,
-      createPlan,
-      menuButton,
-      editPlan,
-      editRtt,
-      editHoliday,
-      employeeView,
-      addRtt,
-      addHoliday,
-      addAbsence,
+      tagsPlanning,
+      planningJours,
       planningSemaine,
       planningMois,
-      // draggable
+      menuButton,
+      filterPlanning,
+      employeeView
     },
-      data() {
-        return {
-          absence_dialog:false,
-          rtt_dialog: false,
-          holiday_dialog: false,
-          right_menu:{
-            showMenu:false,
-            x:0,
-            y:0,
-            date:'',
-            user:{},
-            center:{}
-          },
-          drag:false,
-          employee_view:false,
-          edit_holiday_dialog: false,
-          edit_holiday_data:{},
-          edit_rtt_dialog: false,
-          edit_rtt_data:{},
-          edit_plan_dialog:false,
-          edit_data: {},
-          create_data:{
-            date:'',
-            employee:{},
-            center:{}
-          },
-          currentDay: moment().format('YYYY-MM-DD'),
-          currentReqweek: moment(),
-          month: moment().format('MMM YYYY'),
-          drawer: false,
-          dialog2: false,
-          dialog3: false,
-          menu: true,
-          monthIndex : this.month - 1,
-          year: moment(this.month).format('YYYY'),
-          monthly: moment(this.month).format('MMM'),
-          month_digit:moment(this.month).format('MM'),
-          date:[],
-          info:[],
-          datas: [
-            { title: 'Home', icon: 'mdi-view-dashboard' },
-            { title: 'About', icon: 'mdi-forum' },
-          ],
-          items: [
-            { title: 'Jours' },
-            { title: 'Semaine' },
-            { title: 'Mois' },
-          ],
-          options: [
-            {value:1, title: 'Absence' },
-            {value:2, title: 'Rtt' },
-            {value:3, title: 'Vacances' },
-          ],
-          regions:[],
-          loading: false,
-          selects: [
-            {value:1, title: 'Jours' },
-            {value:2, title: 'Semaine' },
-            {value:3, title: 'Mois' },
-          ],
-          selected:1,
-          national_holidays: [],
-          center_storage:[],
-          option_selects: '',
+    data() {
+      return {
+        emp_view:false,
+        currentReqweek: moment(),
+        currentReqyear: moment(),
+        drawer: false,
+        menu: true,
+        monthIndex : this.month - 1,
+        month: moment().format('MMM YYYY'),
+        year: moment(this.month).format('YYYY'),
+        updateReload: false,
+        date:[],
+        loading: false,
+        selects: [
+          {value:1, title: 'Jours' },
+          {value:2, title: 'Semaine' },
+          {value:3, title: 'Mois' },
+        ],
+        selected:1,
+        filter:[],
+        employee_view:false,
+        currentmonthyear:'',
       };
     },
     mounted() {
       this.initialize()
     },
     methods: {
-
-      testing(e,date, user, center){
-        if(!this.$canAccess()){
-          return
-        }
-        console.log(date,"value e")
-        this.right_menu.showMenu = false;
-        this.right_menu.x = e.clientX;
-        this.right_menu.y = e.clientY;
-        this.right_menu.date = date.date
-        this.right_menu.user = user
-        this.right_menu.center = center
-        console.log(this.right_menu.date,"date")
-        this.$nextTick(() => {
-          this.right_menu.showMenu = true;
-        });
-      },
-      clickItem(item){
-        this.option_selects = item
-        console.log(this.option_selects, "option")
-        if(this.option_selects==1) {
-          this.absence_dialog=true
-          this.forceReload()
-        }
-        else if(this.option_selects==2) {
-          this.rtt_dialog=true
-        }
-        else if(this.option_selects==3) {
-          this.holiday_dialog=true
-        }else{
-          alert("error")
-        }
-      },
       initialize(){
         this.getMonthyear();
-        this.getmonthly();
-        this.getNationalHoliday()
-        this.getData()
-        console.log(this.selected,"selected plan")
-      },
-
-      toggleNoWorkEmployees(){
-        this.regions.forEach(region => {
-          region.centers.forEach(center =>
-            this.test(center)
-          )
-        })
-      },
-      test(center){
-        let curr_center = this.center_storage.find(store => store.id === center.id);
-        console.log(curr_center, 'curr')
-
-        if(curr_center != undefined) {
-          center.users = curr_center.users
-          this.$arraysplicer(curr_center  , this.center_storage)
-          return
-        }
-        this.center_storage.push(JSON.parse(JSON.stringify(center)))
-        let start = moment(this.month).startOf('month').format("YYYY-MM-DD")
-        let end = moment(this.month).endOf('month').format("YYYY-MM-DD")
-        let data = []
-        center.users.forEach(user => {
-          user.planning.forEach(plan => {
-            if(this.$isBetween(start,end,plan.start_date)){
-              if(!data.some( u => u.id === user.id)){
-                data.push(user);
-              }
-            }
-          })
-        })
-        center.users = data
-      },
-      changeView(view) {
-        this.employee_view = view
-      },
-      forceReload(){
-        GetAllRegions().then(({data}) => {
-          this.regions = data
-        })
-      },
-      getNationalHoliday(){
-        GetAllHolidays().then(({data}) =>{
-          this.national_holidays = data
-          console.log(this.national_holidays, "holiday")
-        })
-      },
-      getData(){
-        this.loading = true
-        GetAllRegions().then(({data}) => {
-          console.log(data, 'regions')
-          this.regions = data
-          this.loading = false
-        })
       },
       getMonthyear(){
-        this.month;
-        this.year;
-        this.monthIndex;
+        if(this.selected==3){
+          this.month=moment().format('YYYY');
+        }else{
+          this.month;
+          this.year;
+          this.monthIndex;
+        }
       },
       increment() {
         if(this.selected==1) {
-          let updateIncrement = moment(this.month).add(1, 'M').format('MMM YYYY');
-          this.month = updateIncrement;
-          console.log(this.month,"current")
-          this.year=moment(this.month).format('YYYY');
-          this.monthly= moment(this.month).format('MMM');
-          this.month_digit =  moment(this.month).format('MM')
-          this.getmonthly()
+          let updateCurrentMonth = moment(this.month).add(1, 'M').format('MMM YYYY');
+          this.month = updateCurrentMonth;
         }else if(this.selected==2){
           let updateCurrentweek = moment(this.currentReqweek).add(1, 'weeks').startOf('isoWeek')
           this.currentReqweek = updateCurrentweek;
         }else{
-          console.log("sad2")
-          
+          let updateCurrentMonth = moment(this.currentReqyear).add(1, 'Y');
+          this.currentReqyear = updateCurrentMonth;
+          this.month=moment(this.currentReqyear).format('YYYY')
         }
       },
       decrement() {
         if(this.selected==1) {
-          let updateIncrement = moment(this.month).subtract(1, 'M').format('MMM YYYY');
-          this.month = updateIncrement;
-          console.log(this.month,"current")
-          this.year=moment(this.month).format('YYYY');
-          this.monthly= moment(this.month).format('MMM');
-          this.month_digit =  moment(this.month).format('MM')
-          this.getmonthly()
+          let updateCurrentMonth = moment(this.month).subtract(1, 'M').format('MMM YYYY');
+          this.month = updateCurrentMonth;
         }else if(this.selected==2) {
           let updateCurrentweek = moment(this.currentReqweek).subtract(1, 'weeks').startOf('isoWeek')
           this.currentReqweek = updateCurrentweek;
         }else {
-          console.log("sad2")
+          let updateCurrentMonth = moment(this.currentReqyear).subtract(1, 'Y');
+          this.currentReqyear = updateCurrentMonth;
+          this.month=moment(this.currentReqyear).format('YYYY')
         }
       },
-      getmonthly() { 
-        var monthDate = moment(moment(this.year+'-'+this.month_digit), 'YYYY-MM'); 
-        var daysInMonth = monthDate.daysInMonth() ; 
-        var arrDays = []; 
-        while(daysInMonth) {  
-          var current = moment(this.month).date(daysInMonth); 
-          arrDays.push({
-            number: current.format('DD'),
-            text: current.format('ddd'),
-            date: current.format('YYYY-MM-DD'),
-            // fr_text: current.locale('fr').format('ddd'),
-          }); 
-          daysInMonth--; 
-        } 
-        this.date = arrDays.reverse();
+      test(view){
+        this.emp_view = view
       },
-      editWork(employee, center, planning) {
-        this.edit_data = {
-          employee: employee,
-          center: center,
-          planning: planning
-        }
-        this.$nextTick(function () {
-          this.edit_plan_dialog = true
-        })
+      reloadTable() {
+        this.updateReload = true
       },
-      addWork(employee, center, date){
-        this.create_data = {
-          center:center,
-          employee:employee,
-          date:date
-        }
-        this.$nextTick(function () {
-          this.dialog2 = true
-        })
-      },
-      editRtt(rtt, employee){
-        this.edit_rtt_data = {
-          rtt:rtt,
-          employee:employee
-        }
-        this.$nextTick(function () {
-          this.edit_rtt_dialog = true
-        })
-      },
-      editHoliday(holiday, employee){
-        this.edit_holiday_data = {
-          holiday:holiday,
-          employee:employee
-        }
-        this.$nextTick(function () {
-          this.edit_holiday_dialog = true
-        })
-      },
-      closeDialog(){
-        this.dialog2 = false
-      },
-      showPendingApplication(){
-        this.dialog3=true
-      },
-      $isHoliday(date){
-        let flag = false
-        this.national_holidays.forEach(hol => {
-          if(this.$isSameDate(hol.date,date)){
-            flag = true
-          }
-        })
-        return flag
-      },
-      $isAbsence(date){
-        let flag = false
-
-        this.absences.forEach(absen => {
-          if(this.$isSameDate(absen.date,date)){
-            console.log(absen.date, date, "datasss")
-            flag = true
-          }
-        })
-        return flag
-      },
-      filter(filters){
-        if(filters.length){
-          this.loading = true
-          let storage =[]
-          GetAllRegions().then(({data}) => {
-            data.forEach(dat => {
-              filters.forEach(filter => {
-                if(filter === dat.id){
-                  storage.push(dat)
-                }
-              })
-            })
-            this.loading = false
-            this.regions = storage
-          })
-        }
-        else{
-          this.initialize()
-        }
+      monthyear(value) {
+       this.month= moment(value).format('MMM YYYY')
       }
     },
+    watch: {
+      'changeView' : {
+        handler(val) {
+          console.log(val, "changeView")
+        }
+      },
+      'drawer' : {
+        handler(val) {
+          console.log(val, "drawerIndex")
+        }
+      },
+      'currentmonthyear' : {
+        handler(val) {
+          console.log(val, "currentmonthyear")
+        }
+      },
+    }
   };
-   
 </script>
-
-<style scoped>
-#data2{
-  background-color: red;
-}
-</style>

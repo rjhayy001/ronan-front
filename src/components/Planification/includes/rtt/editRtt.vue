@@ -30,7 +30,7 @@
                         xs="12"
                     >
                         <div>
-                            <p class="text-label">Date de mise à jour</p>
+                            <p class="planning_text-label">Date de mise à jour</p>
                             <v-menu
                                 ref="date"
                                 v-model="date"
@@ -78,7 +78,7 @@
                             </v-menu>
                         </div>
                         <div>
-                            <p class="text-label">Heure de début</p>
+                            <p class="planning_text-label">Heure de début</p>
                             <v-menu
                                 ref="start_time"
                                 v-model="start_time"
@@ -113,7 +113,7 @@
                             </v-menu>
                         </div>
                         <div>
-                            <p class="text-label">Heure de fin</p>
+                            <p class="planning_text-label">Heure de fin</p>
                             <v-menu
                                 ref="end_time"
                                 v-model="end_time"
@@ -218,6 +218,7 @@ export default {
         },
         destroy(){
             DeleteRtt(this.rtt.id).then(() =>{
+                this.$store.commit('UPDATE_NEW',true)
                 this.$toast.success("Successfully removed!");
                 this.$emit('success')
                 this.close()
@@ -229,18 +230,14 @@ export default {
                 this.$emit('success')
                 this.close()
                 this.$toast.success('successfully updated')
+                this.$store.commit('UPDATE_NEW',true)
             })
         }
     }
 }
 </script>
 <style scoped>
-.text-label{
-    margin-bottom: 3px;
-    text-transform: capitalize;
-    letter-spacing:1.2px;
-    font-size: 15px;
-}
+
 .item-title{
   font-size:17px !important;
   text-transform: uppercase;

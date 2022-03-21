@@ -117,7 +117,6 @@ export default {
             }
 
             ResetPassword(payload).then(({data}) =>{
-                console.log(data, 'test')
                 this.$toast.success(data.message)
                 this.$router.push({ name: "login"})
             }).catch((response) =>{

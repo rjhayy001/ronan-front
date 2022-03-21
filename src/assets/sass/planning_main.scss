@@ -63,14 +63,14 @@
 
 .holiday-half-morning{
     z-index:1 !important;
-    position: relative;
+    position: absolute;
     background: 
         linear-gradient(to top right, #4caf50 49%, transparent 51%) !important;
 }
 
 .holiday-half-afternoon{
     z-index:1 !important;
-    position: relative;
+    position: absolute;
     background: 
         linear-gradient(to bottom left, #4caf50 49%, transparent 51%) !important;
 }

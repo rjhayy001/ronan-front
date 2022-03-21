@@ -224,7 +224,6 @@ import createPlan from './create.vue';
       getData(){
         this.is_loading = true
         GetAllRegions().then(({data}) => {
-          console.log(data, 'regions')
           this.regions = data
           this.is_loading = false
         })

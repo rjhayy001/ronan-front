@@ -1,6 +1,6 @@
 <template>
     <v-navigation-drawer
-      v-model="drawer"
+      v-model="drawerStatus"
       temporary
       fixed
       right
@@ -63,17 +63,20 @@
     props: ['drawer', 'employee_view'],
     data() {
       return {
-          // drawer: false,
           regions: [],
           selectedRegion:[],
           viewEmployee:false,
-          view:''
+          view:'',
+          drawerStatus: this.drawer
       }
     },
      watch:{
-        'selectedRegion': function(value) {
-            this.$emit('filter', value)
-        },
+      'selectedRegion': function(value) {
+          this.$emit('filter', value)
+      },
+      drawer: function() {
+        this.drawerStatus = this.drawer
+      },
     },
     created(){
       this.initialize()
@@ -85,13 +88,11 @@
       initialize(){
         GetRawRegions().then(({data}) => {
           this.regions = data
-          console.log(data,'test')
         })
         this.view = this.employee_view
       },
       test(payload){
         if(payload===false){
-          console.log(payload)
           this.$emit('close')
         }
       }

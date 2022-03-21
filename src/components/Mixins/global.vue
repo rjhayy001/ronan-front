@@ -81,7 +81,7 @@ export default {
         },
         $isSameDate(date1, date2){
             return moment(date1).isSame(moment(date2))
-        }
+        },
     }
 
 }

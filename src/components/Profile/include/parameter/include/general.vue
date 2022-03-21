@@ -502,7 +502,6 @@ export default {
         updateUser(hint = 'name'){
             this.$refs.form.validate()
             if(this.$refs.form.validate() == true) {
-                console.log(this.updated_user, 'test')
                 UpdateInfo(this.updated_user.id, this.updated_user).then(({data}) =>{
                     this.$store.state.user= this.updated_user
                     console.log(data, 'info')
