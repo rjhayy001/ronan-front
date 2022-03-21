@@ -260,7 +260,6 @@
 import moment from 'moment'
 import { GetAllRegions } from "@/repositories/region.api"
 import { GetAllHolidays } from "@/repositories/holidays.api"
-// import filterPlanning from '../filter.vue';
 import addHoliday from '../holiday/addHoliday.vue'
 import editHoliday from '../holiday/editHoliday.vue'
 import addRtt from "../rtt/addRtt.vue"
