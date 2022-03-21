@@ -32,13 +32,13 @@
                 </div>
                 <v-spacer></v-spacer>
                 <v-btn 
-                    class="parameter_btn" 
+                    class="parameter_btn mr-3" 
                     @click="removeRegions(region)" 
                     solo 
                     text 
                     icon
                 >
-                    <v-icon color="red" class=" add_padding">
+                    <v-icon color="red">
                         mdi-delete-outline
                     </v-icon>
                 </v-btn>

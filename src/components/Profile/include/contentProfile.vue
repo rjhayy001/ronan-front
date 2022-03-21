@@ -2,9 +2,21 @@
     <v-container style="margin: 70px auto auto auto; padding:0; max-width:99%; justify-content:center">
         <div style="width: 100%; margin:auto; text-align: center;">
             <div>
-                <v-avatar max-width="none" height="200px" width="200px">
-                    <img src="@/assets/images/logo-securauto-150.png" alt="">
+                <v-avatar max-width="none" height="200px" width="200px" @click="handleFileImport" class="pointer">
+                    <img v-if="!editing_profile" :src="user ? user.image : '@/assets/images/logo-securauto-150.png'" alt="">
+                    <img v-else :src="new_image" alt="">
                 </v-avatar>
+                <div v-if="editing_profile" class="mt-5">
+                    <v-btn dark color="primary" @click="changeProfile" class="mr-2">save</v-btn>
+                    <v-btn dark color="error" @click="cancel">cancel</v-btn>
+                </div>
+                <input 
+                    ref="uploader" 
+                    class="d-none" 
+                    type="file" 
+                    accept="image/png, image/gif, image/jpeg"
+                    @change="onFileChanged"
+                >
             </div>
             <div style="padding-top: 60px; line-height: 1.2">
                 <div>
@@ -100,6 +112,7 @@
 import tableAbout from './about.vue';
 import tableRtt from './all_RTT.vue';
 import tableLeave from './all_Leave.vue';
+import { changeProfile } from '@/repositories/employee.api'
 export default {
     components: {
         tableAbout,
@@ -110,6 +123,8 @@ export default {
         return{
             dialog:true,
             tab: null,
+            editing_profile:false,
+            new_image:''
         }
     },
     computed: {
@@ -117,8 +132,43 @@ export default {
             return this.$store.getters['user']
         },
     },
+    created(){
+        console.log(this.user, 'user')
+    },
     methods: {
+        handleFileImport(){
+            this.$refs.uploader.click();
+        },
+        onFileChanged(e) {
+            let file = e.target.files[0];
 
+            // Do whatever you need with the file, liek reading it with FileReader
+            this.createBase64Image(file);
+        },
+        cancel(){
+            this.new_image = ''
+            this.editing_profile = false
+        },
+        createBase64Image(fileObject) {
+            const reader = new FileReader();
+
+            let rawImg;
+            reader.onloadend = () => {
+                rawImg = reader.result;
+                this.new_image = rawImg;
+            }
+            reader.readAsDataURL(fileObject);
+            this.editing_profile = true
+        },
+        changeProfile(){
+            let payload = {
+                image: this.new_image
+            }
+            changeProfile(payload).then(({data}) => {
+                this.$store.state.user.image = data.data
+                this.editing_profile = false
+            })
+        }
     }
 }
 </script>
@@ -126,5 +176,8 @@ export default {
 <style scoped>
 #no-background-hover::before {
    background-color: transparent !important; 
+}
+.v-text-field{
+    width: 500px !important;
 }
 </style>

@@ -40,6 +40,16 @@ export default {
             return flag
         },
 
+        $isAdmin(){
+            let flag = false
+            let user = this.$store.getters['user']
+            if(user.role_id == 1){
+                 flag = true
+            }
+
+            return flag
+        },
+
         $notifColor(item){
             let colors = [
                 {value: 0, color: 'green', hint: 'Basse'},

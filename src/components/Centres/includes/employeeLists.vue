@@ -59,7 +59,7 @@
     </div>
 </template>
 <script>
-import { GetAllEmployees } from "@/repositories/employee.api";
+import { GetFilteredEmployee } from "@/repositories/employee.api";
 import { RemoveEmployee } from "@/repositories/center.api";
 import addEmployee from './dialogs/addToCenterDialog.vue'
 export default {
@@ -96,7 +96,7 @@ export default {
     methods: {
         initialize(){
             this.loading_employees = true
-            GetAllEmployees().then(({data}) => {
+            GetFilteredEmployee().then(({data}) => {
                 console.log(data)
                 this.employees = data
                 this.loading_employees = false
