@@ -32,7 +32,7 @@
         <v-text-field
             v-model="data.city"
             label="City"
-            
+            outlined
             clearable
             prepend-inner-icon="mdi-office-building"
         ></v-text-field>
@@ -58,12 +58,14 @@
             prepend-inner-icon="mdi-lock-outline"
         ></v-text-field> -->
     </v-col>
-    <v-col cols="12">
+    <v-col cols="12" class="mb-5">
         <v-btn
             @click="$emit('update', data)"
             elevation="3"
             color="primary"
             dark
+            class="mr-2 mb-2"
+            block
         >
             Save
         </v-btn>
@@ -72,6 +74,7 @@
             elevation="3"
             color="error"
             dark
+            block
         >
             Cancel
         </v-btn>

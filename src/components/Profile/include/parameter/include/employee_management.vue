@@ -92,9 +92,10 @@
                                 cols="12"
                             >
                                 <v-text-field
-                                style="width: 100%"
+                                    style="width: 100%"
                                     outlined
                                     label="Clé"
+                                    type="password"
                                     placeholder="Clé"
                                     prepend-inner-icon="mdi-key-outline"
                                     v-model="password"

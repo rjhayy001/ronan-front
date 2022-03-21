@@ -42,6 +42,7 @@
           rounded
           color="error"
           dark
+          v-if="$isAdmin()"
           @click="deleteCenter"
         >
           <v-icon left>mdi-delete</v-icon>
@@ -167,7 +168,7 @@
           </template>
         </v-list-item-content>
 
-        <v-list-item-action v-if="$canAccess()" style="align-self:start;">
+        <v-list-item-action v-if="$isAdmin()" style="align-self:start;">
           <v-btn icon>
           <v-icon color="primary" v-if="!editing_manager" @click="editing_manager=true">mdi-pencil</v-icon>
           <v-icon color="primary" v-else @click="editManager">mdi-download</v-icon>
