@@ -1,10 +1,10 @@
 <template>
     <div class="ma-2">
         <v-row class="row" v-if="!loading">
-            <v-flex sm2>
+            <v-flex sm2 style="height: 85vh">
               <center-details :center="center" @success="hardReload"></center-details>
             </v-flex>
-            <v-flex sm10>
+            <v-flex sm10 style="overflow-y:scroll; height: 85vh">
               <employee-lists :center="center"></employee-lists>
             </v-flex>
         </v-row>

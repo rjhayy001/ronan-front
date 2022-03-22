@@ -1,33 +1,35 @@
 <template>
-    <div class="px-4">
+    <div class="px-4" style="min-height:90vh" >
         <add-employee 
             :dialog="add_employee_dialog" 
             :employee="selected_employee"
             :center="center"
             @close="add_employee_dialog=false"
         />
-        <v-toolbar dense flat>
-            <v-toolbar-title class="center-employeelist-title">Liste des employés affectés</v-toolbar-title>
-        </v-toolbar>
+        <!-- style="position: sticky; top:0; z-index: 2; padding-right: 2px;" -->
+        <div>
+            <v-toolbar dense flat>
+                <v-toolbar-title class="center-employeelist-title">Liste des employés affectés</v-toolbar-title>
+            </v-toolbar>
 
-        <v-data-table
-            class="ml-2 no-stripe"
-            :headers="headers"
-            :items="center.users"
-            :items-per-page="50"
-            :hide-default-footer="true"
-        >
-            <template v-slot:item.action="{ item }">
-                <v-icon 
-                    v-if="$canAccess()"
-                    color="error"
-                    @click="removeEmployee(item)"
-                >
-                    mdi-close
-                </v-icon>
-            </template>
-        </v-data-table>
-
+            <v-data-table
+                class="ml-2 no-stripe scroll-bar-min"
+                :headers="headers"
+                :items="center.users"
+                :items-per-page="50"
+                :hide-default-footer="true"
+            >
+                <template v-slot:item.action="{ item }">
+                    <v-icon 
+                        v-if="$canAccess()"
+                        color="error"
+                        @click="removeEmployee(item)"
+                    >
+                        mdi-close
+                    </v-icon>
+                </template>
+            </v-data-table>
+        </div>
         <v-toolbar v-if="$canAccess()" dense flat>
             <v-toolbar-title class="center-employeelist-title">Liste de tous les employés</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -129,3 +131,28 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+/* .scroll-bar {
+    overflow-y:scroll; 
+    height: 50vh;
+}
+ */
+ /* .scroll-bar-min {
+    overflow:scroll; 
+    max-height: 30vh;
+} */
+
+/* hide scrollbar but allow scrolling */
+.scroll-bar-min {
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll; 
+    max-height: 30vh;
+
+}
+
+.scroll-bar-min::-webkit-scrollbar {
+    width: 10px;
+}
+</style>

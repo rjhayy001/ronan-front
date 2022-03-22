@@ -3,62 +3,62 @@
         <div>
             <template v-if="!employee_view">
                 <div class="table_scroll" v-if="!loading">
-                <div class="css_table css_table2">
-                    <div class="css_th"  style="border-bottom:none!important;"></div>
-                    <div class="css_thead">
-                        <div class="css_tr">
-                            <div style="position:relative">
-                                <v-tooltip bottom>
-                                    <template v-slot:activator="{ on }">
-                                        <v-icon 
-                                            style="position:absolute; right:10px; z-index:4; top: -6px"
-                                            @click="toggleNoWorkEmployees"
-                                            v-on="on"
-                                        >
-                                            mdi-filter
-                                        </v-icon>
-                                    </template>
-                                    <span>toggle no work employes</span>
-                                </v-tooltip>
-                            </div>
-                        <div v-for="date in date" :key="date.text + date.number"  class="css_th">{{date.text}}</div>
-                    </div>
-                    <div class="css_tr ">
-                        <div class="css_th sub_th border_table"></div>
-                            <div  v-for="date in date" :key="date.number" class="css_th sub_th" style="background-color:white;">
-                                <div v-if="$isSameDate(date.date,currentDay)" class="currentDay">
-                                    {{ date.numberStart }} - {{date.numberEnd}}
+                    <div class="css_table css_table2">
+                        <div class="css_th"  style="border-bottom:none!important;"></div>
+                        <div class="css_thead">
+                            <div class="css_tr">
+                                <div style="position:relative">
+                                    <v-tooltip bottom>
+                                        <template v-slot:activator="{ on }">
+                                            <v-icon 
+                                                style="position:absolute; right:10px; z-index:4; top: -6px"
+                                                @click="toggleNoWorkEmployees"
+                                                v-on="on"
+                                            >
+                                                mdi-filter
+                                            </v-icon>
+                                        </template>
+                                        <span>toggle no work employes</span>
+                                    </v-tooltip>
                                 </div>
-                                <div v-else-if="$isHoliday(date.date)" class="holiday">
-                                    {{ date.numberStart }} - {{date.numberEnd}}
-                                </div>
-                                <div v-else :class="[date.text=='Dim' ? 'sunday': '']">
-                                    {{ date.numberStart }} - {{date.numberEnd}}
+                            <div v-for="date in date" :key="date.text + date.number"  class="css_th">{{date.text}}</div>
+                        </div>
+                        <div class="css_tr ">
+                            <div class="css_th sub_th border_table"></div>
+                                <div  v-for="date in date" :key="date.number" class="css_th sub_th" style="background-color:white;">
+                                    <!-- <div v-if="$isSameDate(date.date,currentDay)" class="currentDay">
+                                        {{ date.numberStart }} - {{date.numberEnd}}
+                                    </div> -->
+                                    <div v-if="$isHoliday(date.date)" class="holiday">
+                                        {{ date.numberStart }} - {{date.numberEnd}}
+                                    </div>
+                                    <div v-else :class="[date.text=='Dim' ? 'sunday': '']">
+                                        {{ date.numberStart }} - {{date.numberEnd}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="css_tbody" v-for="(region, index) in regions" :key="index + region.id">
-                        <div class="css_tr">
-                            <div class="css_sd header_sd width_sd">
-                            {{region.name}}
+                        <div class="css_tbody" v-for="(region, index) in regions" :key="index + region.id">
+                            <div class="css_tr">
+                                <div class="css_sd header_sd width_sd">
+                                    {{region.name}}
+                                </div>
+                                <div class="css_td" v-for="date in date" :key="date.number">
+                                    <!-- <div id="data" v-if="$isSameDate(date.date,currentDay)" class="currentDay">
+                                        <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden position-absolute-fixed ">.</p>
+                                    </div> -->
+                                    <div v-if="$isHoliday(date.date)" class="holiday">
+                                        <p class="date-hidden">.</p>
+                                    </div>
+                                    <div id="data" v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97)" class="position-absolute-fixed">
+                                        <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden ">.</p>
+                                    </div>
+                                </div>
                             </div>
-                        <div class="css_td" v-for="date in date" :key="date.number">
-                        <div id="data" v-if="$isSameDate(date.date,currentDay)" class="currentDay">
-                            <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden position-absolute-fixed ">.</p>
-                        </div>
-                        <div v-else-if="$isHoliday(date.date)" class="holiday">
-                            <p class="date-hidden">.</p>
-                        </div>
-                        <div id="data" v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97)" class="position-absolute-fixed">
-                            <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden ">.</p>
-                        </div>
-                        </div>
-                        </div>
                             <template v-for="(center, center_index) in region.centers">
                                 <div class="css_tr"  :key="'center' + center_index">
                                     <div class="css_sd subheader_sd width_sd">
-                                            {{center.name}}
+                                        {{center.name}}
                                         <v-tooltip bottom>
                                             <template v-slot:activator="{ on }">
                                                 <v-icon 
@@ -77,10 +77,10 @@
                                         </v-tooltip>
                                     </div>
                                     <div class="css_td" v-for="date in date" :key="date.number">
-                                        <div id="data"  v-if="$isSameDate(date.date,currentDay)" class="currentDay">
+                                        <!-- <div id="data"  v-if="$isSameDate(date.date,currentDay)" class="currentDay">
                                             <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                                        </div>
-                                        <div v-else-if="$isHoliday(date.date)" class="holiday">
+                                        </div> -->
+                                        <div v-if="$isHoliday(date.date)" class="holiday">
                                             <p class="date-hidden">.</p>
                                         </div>
                                         <div id="data"  v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97); " class="position-absolute-fixed">
@@ -96,10 +96,11 @@
                                         <div id="data"  v-if="date.text=='Dim'" style="background-color:rgb(97 97 97)" class="position-absolute-fixed" >
                                             <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                                         </div>
-                                        <div id="data" v-else-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed pointer" @click="addWork(user,center,date.date)">
+                                        <!-- <div id="data" v-else-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed pointer" @click="addWork(user,center,date.date)">
                                             <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                                        </div>
-                                        <div v-else class="empty-day position-absolute-fixed" @click="addWork(user,center,date.date)" @contextmenu.prevent="testing($event,date,user,center)">
+                                        </div> -->
+
+                                        <div v-else class="empty-day position-absolute-fixed" @click="addWork(user,center,date.date)">
                                             <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                                         </div>
                                         <!-- for planning -->
@@ -109,7 +110,6 @@
                                                     v-if="$isBetween(date.start_date, date.end_date, planning.start_date)" 
                                                     :key="plann_index + 'asdplann'" 
                                                     :class="['work-full pointer', $checkWorkFullDate(planning, date)]"
-                                                    :style="planning.is_conflict == 1 ? 'background:#6a1b9a !important' : ''"
                                                     @click="editWork(user, center, planning)"
                                                 >
                                                     <p class="date-hidden" >test</p>
@@ -131,7 +131,7 @@
         <v-menu v-model="right_menu.showMenu" :position-x="right_menu.x" :position-y="right_menu.y" absolute offset-y>
             <v-list dense>
                 <v-list-item  @click="clickItem(item.value)" dense v-for="(item, index) in options" :key="index+'test'">
-                <v-list-item-title v-model="option_selects">{{ item.title }}</v-list-item-title>
+                    <v-list-item-title v-model="option_selects">{{ item.title }}</v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-menu>
@@ -283,20 +283,57 @@ export default {
             month: moment().format('MMM YYYY'),
         }
     },
+        watch:{
+        "reqYear": {
+            handler(val) {
+                this.currentMonth = val
+                console.log(this.currentMonth,"reqYear")
+                this.getmonthly()
+            },
+            deep: true,
+        },
+        "filter": {
+            handler(val) {
+                console.log(val,"filter")
+                this.filter2(val)
+            }
+        },
+        "employee_view2": {
+            handler(val) {
+                console.log(val,"filter")
+                this.changeView2(val)
+            }
+        },
+        'success': {
+            handler(val) {
+                if(val){
+                    console.log("sadsss")
+                    this.forceReload()
+                    this.$emit('test')
+                }
+            }
+        },
+        '$store.getters.newDataIndex'(newVal) {
+            if(newVal) {
+                console.log(newVal,"JoursStore")
+                this.$store.commit('UPDATE_NEW',false)
+                this.forceReload()
+            }
+        },
+    },
     created() {
         this.initialize()
     },
     methods: {
         initialize() {
             this.getmonthly()
-            // this.getweekly()
             this.getData()
             this.getNationalHoliday()
             console.log(this.selected,"selected")
         },
         testing(e,date, user, center){
             if(!this.$canAccess()){
-            return
+                return
             }
             console.log(date,"value e")
             this.right_menu.showMenu = false;
@@ -312,7 +349,6 @@ export default {
         },
         clickItem(item){
             this.option_selects = item
-            console.log(this.option_selects, "option")
             if(this.option_selects==1) {
                 this.absence_dialog=true
             }
@@ -353,38 +389,24 @@ export default {
                     }
                 })
             })
+                            console.log(data, "centerdata")
             center.users = data
         },
-        // getweekly() { 
-        //     var currentDate = this.currentWeek;
-        //     console.log(currentDate,"currentdate")
-        //     var weekStart = currentDate.clone().startOf('isoWeek');
-        //     console.log(moment(weekStart).add(i, 'days').format("YYYY-MM-DD"), "currendatefetch")
-        //     this.CurrentMonthYear=moment(weekStart).add(i, 'days').format("YYYY-MM-DD")
-        //     this.$emit('currentmonthyear', this.CurrentMonthYear)
-        //     var days = [];
-        //     for (var i = 0; i <= 6; i++) {
-        //         days.push({
-        //             number: moment(weekStart).add(i, 'days').format("DD"),
-        //             text: moment(weekStart).add(i, 'days').format("ddd"),
-        //             date: moment(weekStart).add(i, 'days').format("YYYY-MM-DD")
-        //         });
-        //     }
-        //     this.date = days;
-        // },
         getmonthly() { 
             var m = this.currentMonth;
             var monthly = [];
             for (var i = 0; i < 12; i++) {
                 monthly.push({
-                    numberStart: moment(m.months(i)).startOf('month').format('DD'),
-                    numberEnd: moment(m.months(i)).endOf('month').format('DD'),
-                    text: m.months(i).format('MMM'),
+                    numberStart: moment(m).startOf('month').format('DD'),
+                    numberEnd: moment(m).endOf('month').format('DD'),
+                    text: m.month(i).format('MMM'),
                     start_date: moment(m).startOf('month').format('YYYY-MM-DD'),
                     end_date: moment(m).endOf('month').format('YYYY-MM-DD'),
+                    date: moment(m).format('YYYY-MM-DD'),
                 });
             }
-                this.date = monthly
+            this.date = monthly
+            console.log(this.date,"DATE")
         },
         getData(){
             this.loading = true
@@ -416,8 +438,9 @@ export default {
             this.create_data = {
                 center:center,
                 employee:employee,
-                date:date
+                date: moment(date).format('YYYY-MM-01')
             }
+            console.log(this.create_data.date,"2022-03-24")
             this.$nextTick(function () {
                 this.add_plan_dialog = true
             })
@@ -459,6 +482,7 @@ export default {
                 center: center,
                 planning: planning
             }
+            console.log(this.edit_data.planning,"planning")
             this.$nextTick(function () {
                 this.edit_plan_dialog = true
             })
@@ -487,43 +511,5 @@ export default {
             this.employee_view = view
         },
     },
-    watch:{
-        "reqYear": {
-            handler(val) {
-                this.currentMonth = val
-                console.log(this.currentMonth,"reqYear")
-                this.getmonthly()
-            },
-            deep: true,
-        },
-        "filter": {
-            handler(val) {
-                console.log(val,"filter")
-                this.filter2(val)
-            }
-        },
-        "employee_view2": {
-            handler(val) {
-                console.log(val,"filter")
-                this.changeView2(val)
-            }
-        },
-        'success': {
-            handler(val) {
-                if(val){
-                    console.log("sadsss")
-                    this.forceReload()
-                    this.$emit('test')
-                }
-            }
-        },
-        '$store.getters.newDataIndex'(newVal) {
-            if(newVal) {
-                console.log(newVal,"JoursStore")
-                this.$store.commit('UPDATE_NEW',false)
-                this.forceReload()
-            }
-        },
-    }
 }
 </script>
