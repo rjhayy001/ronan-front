@@ -1,7 +1,7 @@
 <template>
   <v-sheet>
     <v-data-table
-      :headers="headers"
+      :headers="_headers"
       :items="pending_leaves"
       :items-per-page="50"
       class="elevation-1 index-table"
@@ -9,6 +9,12 @@
     >
       <template v-slot:item.start_date="{ item }">
         {{$DateWithMonthTextfr(item.start_date)}}
+      </template>
+      <template v-slot:item.status="{ item }">
+        <v-icon :color="$statusColor(item.status)">
+          mdi-checkbox-blank-circle
+        </v-icon>
+        <span class="font-italic"> ( {{item.status_text}} ) </span> 
       </template>
       <template v-slot:item.end_date="{ item }">
         {{$DateWithMonthTextfr(item.end_date)}}
@@ -88,15 +94,23 @@ import { GetPendingHolidays, DeclineHoliday, ApproveHoliday } from "@/repositori
             align: 'start',
             value: 'id',
             width:'10%'
+            , show: true 
           },
-          { text: 'Nom', align: 'start', value: 'user.full_name' },
-          { text: 'Date de debut', align: 'start', value: 'start_date' },
-          { text: 'Date de fin', align: 'start', value: 'end_date' },
-          { text: 'Actions', align: 'start', value: 'action',  width:'10%' },
+          { text: 'Nom', align: 'start', value: 'user.full_name', show: this.$isEmployee() ? false : true    },
+          { text: 'Nom de la demande', align: 'start', value: 'request_name', show: this.$isEmployee() ? true : false    },
+          { text: 'Date de debut', align: 'start', value: 'start_date', show: true  },
+          { text: 'Date de fin', align: 'start', value: 'end_date', show: true  },
+          { text: 'Status', align: 'start', value: 'status',width:'10%', show: this.$isEmployee() ? true : false },
+          { text: 'Actions', align: 'start', value: 'action',  width:'10%', show: this.$isEmployee() ? false : true   },
         ],
         selected_leave:{},
         pending_leaves:[],
         reject_comment:'developer test raison for rejecting holiday'
+      }
+    },
+    computed : {
+      _headers () {
+        return this.headers.filter(x=>x.show)
       }
     },
     created(){
@@ -106,6 +120,7 @@ import { GetPendingHolidays, DeclineHoliday, ApproveHoliday } from "@/repositori
       initialize(){
          GetPendingHolidays().then(({data}) => {
           this.pending_leaves = data
+          console.log(data,'sad')
         })
       },
       approve(item){
