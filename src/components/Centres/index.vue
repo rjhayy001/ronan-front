@@ -36,6 +36,7 @@
                 <v-btn depressed v-if="$canAccess()"  @click="dialog = true" icon class="mr-2">
                     <v-icon
                         color="black"
+                        v-if="$isAdmin()"
                     >
                         mdi-plus
                     </v-icon>          

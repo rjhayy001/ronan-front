@@ -24,7 +24,7 @@
                     </v-icon>
                 </v-btn>    
                 <h2 style="font-weight: 400; color: rgb(0, 80, 117); font-size: 25px;">
-                    TOUTES LES DEMANDES EN ATTENTE
+                    {{$canAccess() ? 'TOUTES LES DEMANDES EN ATTENTE' : 'MES DEMANDES'}}
                 </h2>
             </v-card-title>
             <v-tabs

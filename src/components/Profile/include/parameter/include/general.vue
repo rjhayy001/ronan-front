@@ -453,8 +453,10 @@
                                 <h4 class="current_status">
                                     Statut actuel :
                                 </h4>
-                                <h4 class="assets">
-                                    Actif {{updated_user.isSilent_onPush}}
+                                <h4 class="text-capitalize">
+                                    <span :style="{ color: updated_user.isSilent_onPush ? 'green' : 'red' }" >
+                                         {{updated_user.isSilent_onPush ? 'Actif' : 'Inactif'}}    
+                                    </span>  
                                 </h4>
                             </div>
                         </div>

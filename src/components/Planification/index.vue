@@ -157,6 +157,31 @@ import tagsPlanning from './includes/tags/tags.vue';
         currentmonthyear:'',
       };
     },
+    watch: {
+      'changeView' : {
+        handler(val) {
+          console.log(val, "changeView")
+        }
+      },
+      'drawer' : {
+        handler(val) {
+          console.log(val, "drawerIndex")
+        }
+      },
+      'currentmonthyear' : {
+        handler(val) {
+          console.log(val, "currentmonthyear")
+        }
+      },
+      'selected' : {
+        handler(val) {
+          if(val) {
+            console.log("changes")
+            this.getMonthyear()
+          }
+        }
+      }
+    },
     mounted() {
       this.initialize()
     },
@@ -168,7 +193,7 @@ import tagsPlanning from './includes/tags/tags.vue';
         if(this.selected==3){
           this.month=moment().format('YYYY');
         }else{
-          this.month;
+          this.month= moment().format('MMM YYYY');
           this.year;
           this.monthIndex;
         }
@@ -190,9 +215,11 @@ import tagsPlanning from './includes/tags/tags.vue';
         if(this.selected==1) {
           let updateCurrentMonth = moment(this.month).subtract(1, 'M').format('MMM YYYY');
           this.month = updateCurrentMonth;
+          this.month=moment(this.currentReqyear).format('MMM YYYY')
         }else if(this.selected==2) {
           let updateCurrentweek = moment(this.currentReqweek).subtract(1, 'weeks').startOf('isoWeek')
           this.currentReqweek = updateCurrentweek;
+          this.month=moment(this.currentReqyear).format('MMM YYYY')
         }else {
           let updateCurrentMonth = moment(this.currentReqyear).subtract(1, 'Y');
           this.currentReqyear = updateCurrentMonth;
@@ -206,25 +233,8 @@ import tagsPlanning from './includes/tags/tags.vue';
         this.updateReload = true
       },
       monthyear(value) {
-       this.month= moment(value).format('MMM YYYY')
+        this.month= moment(value).format('MMM YYYY')
       }
     },
-    watch: {
-      'changeView' : {
-        handler(val) {
-          console.log(val, "changeView")
-        }
-      },
-      'drawer' : {
-        handler(val) {
-          console.log(val, "drawerIndex")
-        }
-      },
-      'currentmonthyear' : {
-        handler(val) {
-          console.log(val, "currentmonthyear")
-        }
-      },
-    }
   };
 </script>
