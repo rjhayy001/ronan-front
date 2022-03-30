@@ -50,6 +50,27 @@ export default {
             return flag
         },
 
+        $isEmployee(){
+            let flag = false
+            let user = this.$store.getters['user']
+            if(user.role_id == 3){
+                 flag = true
+            }
+
+            return flag
+        },
+
+        $statusColor(status){
+            switch(status)
+            {
+            case 0:
+                return 'gray'
+            case 1:
+                return 'green'
+            case 2:
+                return 'red'
+            }
+        },
         $notifColor(item){
             let colors = [
                 {value: 0, color: 'green', hint: 'Basse'},

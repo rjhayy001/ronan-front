@@ -25,21 +25,16 @@
                 offset-y
             >
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn                 
-                        class="mx-2"
-                        fab
-                        dark
-                        small
-                        color="primary"
+                    <v-avatar 
                         v-bind="attrs"
                         v-on="on"
-                    >
-                        <v-icon
-                            color="white"
-                        >
-                            mdi-account
-                        </v-icon>          
-                    </v-btn>
+                        max-width="none" 
+                        height="42px" 
+                        width="42px" 
+                        class="pointer elevation-2 class
+                        mr-2">
+                    <img :src="user ? user.image : '@/assets/images/logo-securauto-150.png'" alt="">
+                    </v-avatar>
                 </template>
                 <v-list
                     dense
@@ -106,6 +101,11 @@ export default {
             notify:false,
             Profile:false,
         }
+    },
+    computed: {
+        user() {
+            return this.$store.getters['user']
+        },
     },
     methods: {
         profile(){

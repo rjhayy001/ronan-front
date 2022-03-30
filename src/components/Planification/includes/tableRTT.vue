@@ -1,7 +1,7 @@
 <template>
   <v-sheet>
     <v-data-table
-      :headers="headers"
+      :headers="_headers"
       :items="pending_rtts"
       :items-per-page="50"
       class="elevation-1 index-table"
@@ -9,6 +9,12 @@
     >
       <template v-slot:item.date="{ item }">
         {{$DateWithMonthTextfr(item.date)}}
+      </template>
+      <template v-slot:item.status="{ item }">
+        <v-icon :color="$statusColor(item.status)">
+          mdi-checkbox-blank-circle
+        </v-icon>
+        <span class="font-italic"> ( {{item.status_text}} ) </span> 
       </template>
       <template v-slot:item.action="{ item }" >
         <div v-if="$canAccess()">
@@ -85,11 +91,15 @@ import { GetPendingRtts, DeclineRtt, ApproveRtt } from "@/repositories/rtt.api"
             align: 'start',
             value: 'id',
             width:'10%'
+            , show:true
           },
-          { text: 'Nom', align: 'start', value: 'user.full_name', width:'30%' },
-          { text: 'date', align: 'start', value: 'date', width:'30%'},
-          { text: "Nombre d'heures", align: 'start', value: 'no_of_hrs', width:'20%'},
-          { text: 'actions', align: 'start', value: 'action',  width:'10%' },
+          { text: 'Nom', align: 'start', value: 'user.full_name', width:'30%', show: this.$isEmployee() ? false : true    },
+          { text: 'date', align: 'start', value: 'date', width:'30%', show:true},
+          { text: 'Start Time', align: 'start', value: 'start_time',show: this.$isEmployee() ? true : false },
+          { text: 'End Time', align: 'start', value: 'end_time',show: this.$isEmployee() ? true : false },
+          { text: "Nombre d'heures", align: 'start', value: 'no_of_hrs', width:'20%', show: this.$isEmployee() ? false : true  },
+          { text: 'Status', align: 'start', value: 'status',width:'10%', show: this.$isEmployee() ? true : false },
+          { text: 'actions', align: 'start', value: 'action',  width:'10%', show: this.$isEmployee() ? false : true   },
         ],
         selected_rtt:[],
         pending_rtts:[],
@@ -99,6 +109,11 @@ import { GetPendingRtts, DeclineRtt, ApproveRtt } from "@/repositories/rtt.api"
     },
     created(){
       this.initialize()
+    },
+    computed : {
+      _headers () {
+        return this.headers.filter(x=>x.show)
+      }
     },
     methods:{
       initialize(){
