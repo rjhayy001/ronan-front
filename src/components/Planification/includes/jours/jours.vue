@@ -392,7 +392,7 @@ export default {
   },
   methods: {
     multipleDelete(){
-      let message = `Are you sure you want to DELETE ${this.to_delete.length} WORKS ?`
+      let message = `Are you sure you want to DELETE ${this.to_delete.length} WORK ?`
         this.$root
           .$confirm(message,'#ff5252')
           .then(result => {
