@@ -2,7 +2,7 @@
  <v-dialog v-model="dialog" width="700" @click:outside="$emit('close')" class="card-radius">
     <v-card rounded>
         <v-toolbar dense flat class="py-4">
-            <v-toolbar-title>Create Planification</v-toolbar-title>
+            <v-toolbar-title>Créer Planification</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-icon @click="$emit('close')">mdi-close</v-icon>
         </v-toolbar>
@@ -57,7 +57,7 @@
                 >
                 <v-form ref="addForm">
                     <div>
-                        <p class="planning_text-label">start date</p>
+                        <p class="planning_text-label">Date de début</p>
                         <v-menu
                             ref="start_date"
                             v-model="start_menu"
@@ -118,7 +118,7 @@
                         ></v-select>
                     </div>
                      <div>
-                        <p class="planning_text-label">end date</p>
+                        <p class="planning_text-label">Date de fin</p>
                         <v-menu
                             ref="end_date"
                             v-model="end_menu"

@@ -43,6 +43,54 @@
                 >
                 <v-form ref="addForm">
                     <div>
+                        <p class="planning_text-label">Date Range</p>
+                        <v-menu
+                            ref="start_date"
+                            v-model="start_menu"
+                            :close-on-content-click="false"
+                            :return-value.sync="payload.start_date"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="auto"
+                        >
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-text-field
+                                    v-model="datesFormat"
+                                    dense
+                                    solo
+                                    prepend-inner-icon="mdi-calendar"
+                                    readonly
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    :hide-details="true"
+                                    class="mb-2"
+                                ></v-text-field>
+                            </template>
+                            <v-date-picker
+                                v-model="payload.dates"
+                                no-title
+                                range
+                                scrollable
+                            >
+                            <v-spacer></v-spacer>
+                            <v-btn
+                                text
+                                color="primary"
+                                @click="start_menu = false"
+                            >
+                                ANNULER
+                            </v-btn>
+                            <v-btn
+                                text
+                                color="primary"
+                                @click="$refs.start_date.save(payload.dates)"
+                            >
+                                OK
+                            </v-btn>
+                            </v-date-picker>
+                        </v-menu>
+                    </div>
+                    <!-- <div>
                         <p class="planning_text-label">Date de début</p>
                         <v-menu
                             ref="start_date"
@@ -54,17 +102,17 @@
                             min-width="auto"
                         >
                             <template v-slot:activator="{ on, attrs }">
-                            <v-text-field
-                                v-model="payload.start_date"
-                                dense
-                                solo
-                                prepend-inner-icon="mdi-calendar"
-                                readonly
-                                v-bind="attrs"
-                                v-on="on"
-                                :hide-details="true"
-                                class="mb-2"
-                            ></v-text-field>
+                                <v-text-field
+                                    v-model="payload.start_date"
+                                    dense
+                                    solo
+                                    prepend-inner-icon="mdi-calendar"
+                                    readonly
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    :hide-details="true"
+                                    class="mb-2"
+                                ></v-text-field>
                             </template>
                             <v-date-picker
                                 v-model="payload.start_date"
@@ -88,9 +136,9 @@
                             </v-btn>
                             </v-date-picker>
                         </v-menu>
-                    </div>
+                    </div> -->
                     <div>
-                        <p class="planning_text-label">taper</p>
+                        <p class="planning_text-label">taper start date</p>
                         <v-select
                             dense
                             :items="items"
@@ -103,7 +151,7 @@
                             class="text-capitalize mb-2"
                         ></v-select>
                     </div>
-                     <div>
+                    <!-- <div>
                         <p class="planning_text-label">Date de fin</p>
                         <v-menu
                             ref="end_date"
@@ -150,9 +198,9 @@
                             </v-btn>
                             </v-date-picker>
                         </v-menu>
-                    </div>
+                    </div> -->
                     <div>
-                        <p class="planning_text-label">taper</p>
+                        <p class="planning_text-label">taper end date</p>
                         <v-select
                             dense
                             :items="items"
@@ -185,6 +233,7 @@
 </template>
 <script>
 import { Insert } from "@/repositories/planning.api";
+import moment from "moment"
 export default {
     props:{
         data:{
@@ -203,6 +252,7 @@ export default {
             employee:{},
             center:{},
             payload:{
+                dates:[],
                 start_date:'',
                 end_date:'',
                 start_date_Type:1,
@@ -218,17 +268,38 @@ export default {
             ],
         }
     },
+    computed:{
+        datesFormat() {
+            let a = this.payload.dates[0]
+            let b = this.payload.dates[1] ? this.payload.dates[1] : moment()
+            let format = [a > b  ? b : a, b > a ? b : a]
+
+            return format.join(' ~ ')
+        }
+    },
     methods:{
         initialize(){
             console.log(this.data)
             this.payload.start_date = this.data.date
             this.payload.end_date = this.data.date
+            this.payload.dates = [this.data.date, this.data.date]
             this.employee = this.data.employee
             this.center = this.data.center
             this.payload.center_id = this.center.id
             this.payload.user_id = this.employee.id
         },
+        reformatPayload(){
+            let a = this.payload.dates[0]
+            let b = this.payload.dates[1] ? this.payload.dates[1] : moment()
+
+            this.payload.start_date = a > b  ? b : a
+            this.payload.end_date =  b > a ? b : a
+
+            console.log(this.payload, 'sad')
+        },
         save(){
+            this.reformatPayload()
+
             if(!this.checkForm()){
                 Insert(this.payload).then(({data}) =>{
                     this.$store.commit('UPDATE_NEW',true)
@@ -249,11 +320,11 @@ export default {
             return false
         }
     },
-    watch:{
-        "payload.start_date"(val){
-            this.payload.end_date = val
-        }
-    },
+    // watch:{
+    //     "payload.start_date"(val){
+    //         this.payload.end_date = val
+    //     }
+    // },
 }
 </script>
 <style scoped>

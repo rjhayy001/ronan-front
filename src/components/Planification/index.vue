@@ -215,11 +215,9 @@ import tagsPlanning from './includes/tags/tags.vue';
         if(this.selected==1) {
           let updateCurrentMonth = moment(this.month).subtract(1, 'M').format('MMM YYYY');
           this.month = updateCurrentMonth;
-          this.month=moment(this.currentReqyear).format('MMM YYYY')
         }else if(this.selected==2) {
           let updateCurrentweek = moment(this.currentReqweek).subtract(1, 'weeks').startOf('isoWeek')
           this.currentReqweek = updateCurrentweek;
-          this.month=moment(this.currentReqyear).format('MMM YYYY')
         }else {
           let updateCurrentMonth = moment(this.currentReqyear).subtract(1, 'Y');
           this.currentReqyear = updateCurrentMonth;
