@@ -1,96 +1,74 @@
-import Centres from '@/components/Centres/index'
-import Employès from '@/components/Employès/index'
-import Planification from '@/components/Planification/index'
-import Login from '@/components/Login/login'
-import Parameter from '@/components/Profile/parameter'
-import General from '@/components/Profile/include/parameter/include/general'
-import Security from '@/components/Profile/include/parameter/include/security_connection'
-import Management from '@/components/Profile/include/parameter/include/employee_management'
-import Advertise from '@/components/Profile/include/parameter/include/advertise'
-import Holidays from '@/components/Profile/include/parameter/include/public_holidays'
-import Regions from '@/components/Profile/include/parameter/include/regions'
-
-
-
-
-
 export default [{
         path: '/',
         name: 'Planification',
-        component: Planification
+        component: () => import(/* webpackChunkName: "planning" */'@/components/Planification/index'),
     },
 
     {
         path: '/centres',
         name: 'Centres',
-        component: Centres
+        component: () => import(/* webpackChunkName: "center" */'@/components/Centres/index'),
     },
     {
         path: '/employees',
         name: 'Employès',
-        component: Employès
+        component: () => import(/* webpackChunkName: "employee" */'@/components/Employès/index'),
+
     },
     {
         path: '/login',
         name: 'Login',
-        component: Login
+        component: () => import(/* webpackChunkName: "auth" */'@/components/Login/login'),
     },
     {
         path: '/parameter',
         name: 'Parameter',
-        component: Parameter,
+        component: () => import(/* webpackChunkName: "parameter" */'@/components/Profile/parameter'),
         meta: {layout: "Empty"},
     },
     {
         path: '/parameter',
         name: 'Parameter',
-        component: Parameter,
+        component: () => import(/* webpackChunkName: "parameter" */'@/components/Profile/parameter'),
         meta: {layout: "Empty"},
         
         children: [
             {
                 path: 'general',
                 name: 'General',
-                component: General,
+                component: () => import(/* webpackChunkName: "parameter" */'@/components/Profile/include/parameter/include/general'),
                 meta: {layout: "Empty"},
             },
             {
                 path: 'security',
                 name: 'Security',
-                component: Security,
+                component: () => import(/* webpackChunkName: "parameter" */'@/components/Profile/include/parameter/include/security_connection'),
                 meta: {layout: "Empty"},
             },
             {
                 path: 'management',
                 name: 'Management',
-                component: Management,
+                component: () => import(/* webpackChunkName: "parameter" */'@/components/Profile/include/parameter/include/employee_management'),
                 meta: {layout: "Empty"},
             },
             {
                 path: 'advertise',
                 name: 'Advertise',
-                component: Advertise,
+                component: () => import(/* webpackChunkName: "parameter" */'@/components/Profile/include/parameter/include/advertise'),
                 meta: {layout: "Empty"},
             },
             {
                 path: 'holidays',
                 name: 'Holidays',
-                component: Holidays,
+                component: () => import(/* webpackChunkName: "parameter" */'@/components/Profile/include/parameter/include/public_holidays'),
                 meta: {layout: "Empty"},
             },
             {
                 path: 'regions',
                 name: 'Regions',
-                component: Regions,
+                component: () => import(/* webpackChunkName: "parameter" */'@/components/Profile/include/parameter/include/regions'),
                 meta: {layout: "Empty"},
             },
         ]
     },
-    
-    // {
-    //     path: '/profile',
-    //     name: 'Profile',
-    //     component: Profile,
-    //     meta: {layout: "Empty"},
-    // }
 ]

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <template v-if="checkuser">
+        <template v-if="!$isManager()">
             <div style="position: fixed; z-index: 2; bottom: 10px; right: 10px;">
                 <v-btn class="mx-2" 
                     fab

@@ -60,6 +60,16 @@ export default {
             return flag
         },
 
+        $isManager(){
+            let flag = false
+            let user = this.$store.getters['user']
+            if(user.role_id == 2){
+                 flag = true
+            }
+
+            return flag
+        },
+
         $statusColor(status){
             switch(status)
             {

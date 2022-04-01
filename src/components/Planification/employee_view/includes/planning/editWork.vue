@@ -44,7 +44,7 @@
                     >
                     <v-form ref="addForm">
                         <div>
-                            <p class="planning_text-label">start date</p>
+                            <p class="planning_text-label">Date de début</p>
                             <v-menu
                                 ref="start_date"
                                 v-model="start_menu"
@@ -92,7 +92,7 @@
                             </v-menu>
                         </div>
                         <div>
-                            <p class="planning_text-label">end date</p>
+                            <p class="planning_text-label">Date de fin</p>
                             <v-menu
                                 ref="end_date"
                                 v-model="end_menu"

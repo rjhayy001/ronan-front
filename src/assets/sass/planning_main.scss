@@ -3,6 +3,13 @@
     visibility:hidden !important; 
 }
 
+.d-button{
+    position: fixed !important;
+    right: 19px !important;
+    z-index: 8 !important;
+    bottom: 80px !important;
+}
+
 
 .center_hint{
     font-size: 10px;
@@ -17,6 +24,11 @@
     position: relative;
     background: 
         linear-gradient(to top right, #2196f3 49%, transparent 51%) !important;
+}
+
+.border-selected{
+    border: 1px solid orange !important;
+    box-shadow: 5px 4px 5px 0px rgb(38 30 5 / 75%)
 }
 
 .pointer{

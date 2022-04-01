@@ -92,7 +92,12 @@
                 </div>
                 <div class="css_tr" v-for="(user, user_index) in center.users" :key="user.id+user_index+center.name+user_index+center.id">
                   <div class="css_sd content_sd width_sd">
-                    {{user.first_name}}, {{user.last_name}}
+                    {{user.first_name}}, {{user.last_name}} 
+                    <v-badge 
+                      v-if="workCountChecker(user.work_count) > 0"
+                      :content="workCountChecker(user.work_count)" color="orange" tile
+                      style="position:absolute; right: 30px; top: 65%;"
+                    ></v-badge>
                   </div>
                   <div class="css_td position-relative" v-for="date in date" :key="date.number">
                     <div id="data"  v-if="date.text=='Dim'" style="background-color:rgb(97 97 97)" class="position-absolute-fixed" >
@@ -113,8 +118,9 @@
                             planning.end_date, 
                             date.date
                           )" 
+                          @contextmenu.prevent="workHandler(planning)"
                           :key="plann_index + 'asdplann'" 
-                          :class="['work-full pointer', $checkWorkFullDate(planning, date)]"
+                          :class="['work-full pointer', $checkWorkFullDate(planning, date), $isOnArray(planning, to_delete) ?  'border-selected' : '']"
                           :style="planning.is_conflict == 1 ? 'background:#6a1b9a !important' : ''"
                           @click="editWork(user, center, planning)"
                         >
@@ -195,6 +201,24 @@
       <template v-else>
         <employee-view @openFilter="drawer = true"/>
       </template>
+    </div>
+    <div v-if="to_delete.length > 0">
+      <v-tooltip left >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn 
+            class="d-button" 
+            fab 
+            color="red" 
+            dark 
+            v-bind="attrs"
+            v-on="on"
+            @click="multipleDelete"
+          >
+            <v-icon >mdi-delete-outline</v-icon>
+          </v-btn>
+        </template>
+        <span>{{to_delete.length}} selected</span>
+      </v-tooltip>
     </div>
     <!-- plan or work -->
     <create-plan 
@@ -282,6 +306,7 @@ import createPlan from '../../create.vue';
 import editPlan from '../../edit.vue';
 import employeeView from '../../employee_view/index.vue'
 import addAbsence from "../absence/addAbsence.vue"
+import { Delete } from "@/repositories/planning.api";
 import deleteAbsence from "../absence/deleteAbsence.vue"
 export default {
   components:{
@@ -356,15 +381,54 @@ export default {
       national_holidays: [],
       menu: true,
       monthIndex : this.month - 1,
-      month: moment().format('MMM YYYY'),
+      month: moment().format('MMM DD YYYY'),
       year: moment(this.month).format('YYYY'),
       month_digit:moment(this.month).format('MM'),
+      to_delete:[]
     };
   },
   created() {
     this.initialize()
   },
   methods: {
+    multipleDelete(){
+      let message = `Are you sure you want to DELETE ${this.to_delete.length} WORKS ?`
+        this.$root
+          .$confirm(message,'#ff5252')
+          .then(result => {
+              if(result){
+                this.to_delete.forEach(del => {
+                  Delete(del.id).then(() =>{
+                    
+                  })
+                  .finally(() => {
+                    this.to_delete = []
+                    this.forceReload()
+                  })
+                })
+                this.$toast.success('success')
+              }
+          })
+    },
+    workCountChecker(works = []){
+      let ret = 0
+      if(works.length){
+        works.forEach(work => {
+          let work_data = moment(work.month+ '-01-'+work.year).format('MMM DD YYYY')
+          if(moment(work_data).isSame(moment(this.month), 'month')){
+            ret = work.data
+          }
+        })
+      }
+      return ret
+    },
+    workHandler(planning){
+      if(this.$isOnArray(planning, this.to_delete)){
+        this.$arraysplicer(planning, this.to_delete)
+        return
+      }
+      this.$arrayupdater(planning, this.to_delete)
+    },
     testing(e,date, user, center) {
       if(!this.$canAccess()) {
         return
@@ -448,6 +512,7 @@ export default {
       this.loading = true
       GetAllRegions().then(({data}) => {
         this.regions = data
+        console.log(data, 'test')
         this.loading = false
       })
     },
