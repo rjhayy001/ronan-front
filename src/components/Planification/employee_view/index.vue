@@ -152,6 +152,7 @@
                                         @click="editWork(employee, planning)"
                                     >
                                         <p class="date-hidden" >.</p>
+                                        <span class="tooltiptext">{{planning.center.name}}</span>
                                     </div>
                                 </template>
                             </template>
@@ -182,6 +183,7 @@
                                     :class="['rtt-full','pointer']"
                                 >
                                     <p class="date-hidden" >.</p>
+                                    <span class="tooltiptext">{{rtt.no_of_hrs}}</span>
                                 </div>
                                 </template>
                             </template>
@@ -406,4 +408,27 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+
+span.tooltiptext {
+    position: absolute;
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    z-index: 4;
+    top: 20px;
+    font-size: 10px;
+    left: 50%;
+    width: max-content;
+    transform: translateX(-50%);
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+</style>
 
