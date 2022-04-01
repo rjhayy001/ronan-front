@@ -7,19 +7,36 @@
             <div class="css_th"  style="border-bottom:none!important;"></div>
             <div class="css_thead">
               <div class="css_tr">
-                <div style="position:relative">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on }">
-                      <v-icon 
-                        style="position:absolute; right:10px; z-index:4; top: -6px"
-                        @click="toggleNoWorkEmployees"
-                        v-on="on"
-                      >
-                        mdi-filter
-                      </v-icon>
-                    </template>
-                    <span>toggle no work employes</span>
-                  </v-tooltip>
+                <div style="position:relative; width: 100%;">
+                  <div style="width: 80%; position:absolute; left:30px; z-index:4; top: -10px">
+                    <v-autocomplete
+                      deletable-chips
+                      class="user-option"
+                      :items="users"
+                      placeholder="Search Employee ..."
+                      dense
+                      solo
+                      hide-details="auto"
+                      prepend-inner-icon="mdi-plus"
+                      :item-text="getItemText"
+                      item-value="id"
+                      v-model="search"
+                    ></v-autocomplete>
+                  </div>
+                  <div style="width: 20%;position:absolute; right:-20px; z-index:4; top: 0px">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-icon 
+                          
+                          @click="toggleNoWorkEmployees"
+                          v-on="on"
+                        >
+                          mdi-filter
+                        </v-icon>
+                      </template>
+                      <span>toggle no work employes</span>
+                    </v-tooltip>
+                  </div>
                 </div>
                 <div v-for="date in date" :key="date.text + date.number"  class="css_th">{{date.text}}</div>
               </div>
@@ -58,138 +75,140 @@
 
               <!-- <draggable v-model="region.centers" group="centers" @start="drag=true" @end="drag=false"> -->
               <template v-for="(center, center_index) in region.centers">
-                <div class="css_tr"  :key="'center' + center_index">
-                  <div class="css_sd subheader_sd width_sd">
-                    {{center.name}}
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on }">
-                        <v-icon 
-                          style="position:absolute; right: 10px; top: 50%; bottom: 50%" 
-                          dark 
-                          v-on="on"
-                          small 
-                          @click="test(center)"
-                        >
-                          {{$isOnArray(center, center_storage) ? 'mdi-filter-off' : 'mdi-filter'}}
-                        </v-icon>
-                      </template>
-                      <span>
-                        {{$isOnArray(center, center_storage) ? 'show no work employee' : 'hide no work employee'}}
-                      </span>
-                    </v-tooltip>
-                  </div>
-                  <div class="css_td" v-for="date in date" :key="date.number">
-                    <div id="data"  v-if="$isSameDate(date.date,currentDay)" class="currentDay">
-                      <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                <template v-if="center.users.length">
+                  <div class="css_tr"  :key="'center' + center_index">
+                    <div class="css_sd subheader_sd width_sd">
+                      {{center.name}}
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                          <v-icon 
+                            style="position:absolute; right: 10px; top: 50%; bottom: 50%" 
+                            dark 
+                            v-on="on"
+                            small 
+                            @click="test(center)"
+                          >
+                            {{$isOnArray(center, center_storage) ? 'mdi-filter-off' : 'mdi-filter'}}
+                          </v-icon>
+                        </template>
+                        <span>
+                          {{$isOnArray(center, center_storage) ? 'show no work employee' : 'hide no work employee'}}
+                        </span>
+                      </v-tooltip>
                     </div>
-                    <div v-else-if="$isHoliday(date.date)" class="holiday">
-                      <p class="date-hidden">.</p>
-                    </div>
-                    <div id="data"  v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97); " class="position-absolute-fixed">
-                      <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="css_tr" v-for="(user, user_index) in center.users" :key="user.id+user_index+center.name+user_index+center.id">
-                  <div class="css_sd content_sd width_sd">
-                    {{user.first_name}}, {{user.last_name}} 
-                    <v-badge 
-                      v-if="workCountChecker(user.work_count) > 0"
-                      :content="workCountChecker(user.work_count)" color="orange" tile
-                      style="position:absolute; right: 30px; top: 65%;"
-                    ></v-badge>
-                  </div>
-                  <div class="css_td position-relative" v-for="date in date" :key="date.number">
-                    <div id="data"  v-if="date.text=='Dim'" style="background-color:rgb(97 97 97)" class="position-absolute-fixed" >
-                      <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                    </div>
-                    <div id="data" v-else-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed pointer" @click="addWork(user,center,date.date)">
-                      <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                    </div>
-                    <div v-else class="empty-day position-absolute-fixed" @click="addWork(user,center,date.date)" @contextmenu.prevent="testing($event,date,user,center)">
-                      <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                    </div>
-                    <!-- for planning -->
-                    <template v-if="user.planning && date.text !='Dim'">
-                      <template v-for="(planning, plann_index) in user.planning">
-                        <div 
-                          v-if="$isBetween(
-                            planning.start_date, 
-                            planning.end_date, 
-                            date.date
-                          )" 
-                          @contextmenu.prevent="workHandler(planning)"
-                          :key="plann_index + 'asdplann'" 
-                          :class="['work-full pointer', $checkWorkFullDate(planning, date), $isOnArray(planning, to_delete) ?  'border-selected' : '']"
-                          :style="planning.is_conflict == 1 ? 'background:#6a1b9a !important' : ''"
-                          @click="editWork(user, center, planning)"
-                        >
-                          <p class="date-hidden" >.</p>
-                        </div>
-                      </template>
-                    </template>
-                    <!-- for employee holidays -->
-                    <template v-if="user.holidays && date.text !='Dim'">
-                      <template v-for="(holiday, holi_index) in user.holidays">
-                        <div 
-                          @click="editHoliday(holiday, user)"
-                            v-if="$isBetween(
-                            holiday.start_date, 
-                            holiday.end_date, 
-                            date.date
-                          ) && holiday.status == 1" 
-                          :key="holi_index + 'holiasd'" 
-                          :class="['holiday-full pointer position-absolute-fixed',$checkHolidayFullDate(holiday, date) ]"
-                        >
-                          <p class="date-hidden" >.</p>
-                        </div>
-                      </template>
-                    </template>
-                    <!-- for rtts -->
-                    <template v-if="user.rtts && date.text !='Dim'">
-                      <template v-for="(rtt, rtt_index) in user.rtts">
-                        <div 
-                          @click="editRtt(rtt, user)"
-                          v-if="$isSameDate(date.date, rtt.date)&& rtt.status == 1" 
-                          :key="rtt_index + 'rttasd'" 
-                          :class="['rtt-full','pointer']"
-                        >
-                          <p class="date-hidden" >.</p>
-                        </div>
-                      </template>
-                    </template>
-                    <!-- for national holidays -->
-                    <template v-for="(nat_holiday, nat_index) in national_holidays">
-                      <div 
-                        v-if="$isSameDate(
-                          nat_holiday.date,
-                          date.date
-                        )" 
-                        :key="nat_index + 'nat_holiday'" 
-                        :class="['nat-holiday','pointer']"
-                      >
-                        <p class="date-hidden" >.</p>
+                    <div class="css_td" v-for="date in date" :key="date.number">
+                      <div id="data"  v-if="$isSameDate(date.date,currentDay)" class="currentDay">
+                        <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                       </div>
-                    </template>
-                    <!-- absents -->
-                    <template v-if="user.absents && date.text !='Dim'">
-                      <template v-for="(absent, absent_index) in user.absents">
+                      <div v-else-if="$isHoliday(date.date)" class="holiday">
+                        <p class="date-hidden">.</p>
+                      </div>
+                      <div id="data"  v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97); " class="position-absolute-fixed">
+                        <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="css_tr" v-for="(user, user_index) in center.users" :key="user.id+user_index+center.name+user_index+center.id">
+                    <div class="css_sd content_sd width_sd">
+                      {{user.first_name}}, {{user.last_name}} 
+                      <v-badge 
+                        v-if="workCountChecker(user.work_count) > 0"
+                        :content="workCountChecker(user.work_count)" color="orange" tile
+                        style="position:absolute; right: 30px; top: 65%;"
+                      ></v-badge>
+                    </div>
+                    <div class="css_td position-relative" v-for="date in date" :key="date.number">
+                      <div id="data"  v-if="date.text=='Dim'" style="background-color:rgb(97 97 97)" class="position-absolute-fixed" >
+                        <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                      </div>
+                      <div id="data" v-else-if="$isSameDate(date.date,currentDay)" class="currentDay position-absolute-fixed pointer" @click="addWork(user,center,date.date)">
+                        <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                      </div>
+                      <div v-else class="empty-day position-absolute-fixed" @click="addWork(user,center,date.date)" @contextmenu.prevent="testing($event,date,user,center)">
+                        <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                      </div>
+                      <!-- for planning -->
+                      <template v-if="user.planning && date.text !='Dim'">
+                        <template v-for="(planning, plann_index) in user.planning">
+                          <div 
+                            v-if="$isBetween(
+                              planning.start_date, 
+                              planning.end_date, 
+                              date.date
+                            )" 
+                            @contextmenu.prevent="workHandler(planning)"
+                            :key="plann_index + 'asdplann'" 
+                            :class="['work-full pointer', $checkWorkFullDate(planning, date), $isOnArray(planning, to_delete) ?  'border-selected' : '']"
+                            :style="planning.is_conflict == 1 ? 'background:#6a1b9a !important' : ''"
+                            @click="editWork(user, center, planning)"
+                          >
+                            <p class="date-hidden" >.</p>
+                          </div>
+                        </template>
+                      </template>
+                      <!-- for employee holidays -->
+                      <template v-if="user.holidays && date.text !='Dim'">
+                        <template v-for="(holiday, holi_index) in user.holidays">
+                          <div 
+                            @click="editHoliday(holiday, user)"
+                              v-if="$isBetween(
+                              holiday.start_date, 
+                              holiday.end_date, 
+                              date.date
+                            ) && holiday.status == 1" 
+                            :key="holi_index + 'holiasd'" 
+                            :class="['holiday-full pointer position-absolute-fixed',$checkHolidayFullDate(holiday, date) ]"
+                          >
+                            <p class="date-hidden" >.</p>
+                          </div>
+                        </template>
+                      </template>
+                      <!-- for rtts -->
+                      <template v-if="user.rtts && date.text !='Dim'">
+                        <template v-for="(rtt, rtt_index) in user.rtts">
+                          <div 
+                            @click="editRtt(rtt, user)"
+                            v-if="$isSameDate(date.date, rtt.date)&& rtt.status == 1" 
+                            :key="rtt_index + 'rttasd'" 
+                            :class="['rtt-full','pointer']"
+                          >
+                            <p class="date-hidden" >.</p>
+                          </div>
+                        </template>
+                      </template>
+                      <!-- for national holidays -->
+                      <template v-for="(nat_holiday, nat_index) in national_holidays">
                         <div 
                           v-if="$isSameDate(
-                            absent.date,
+                            nat_holiday.date,
                             date.date
                           )" 
-                          @click="absentClick(absent, user)"
-                          :key="absent_index + 'nat_holiday'" 
+                          :key="nat_index + 'nat_holiday'" 
                           :class="['nat-holiday','pointer']"
-                          style="background-color:red !important;"
                         >
                           <p class="date-hidden" >.</p>
                         </div>
                       </template>
-                    </template>
+                      <!-- absents -->
+                      <template v-if="user.absents && date.text !='Dim'">
+                        <template v-for="(absent, absent_index) in user.absents">
+                          <div 
+                            v-if="$isSameDate(
+                              absent.date,
+                              date.date
+                            )" 
+                            @click="absentClick(absent, user)"
+                            :key="absent_index + 'nat_holiday'" 
+                            :class="['nat-holiday','pointer']"
+                            style="background-color:red !important;"
+                          >
+                            <p class="date-hidden" >.</p>
+                          </div>
+                        </template>
+                      </template>
+                    </div>
                   </div>
-                </div>
+                </template>
               </template>
               <!-- </draggable> -->
             </div>
@@ -295,8 +314,9 @@
 <script>
 // import draggable from 'vuedraggable'
 import moment from 'moment' 
-import { GetAllRegions } from "@/repositories/region.api"
+import { GetAllRegions, SearchRegions } from "@/repositories/region.api"
 import { GetAllHolidays } from "@/repositories/holidays.api"
+import { GetAllEmployeesHasCenter } from "@/repositories/employee.api"
 // import filterPlanning from '../filter.vue';
 import addHoliday from "../holiday/addHoliday.vue"
 import editHoliday from '../holiday/editHoliday.vue'
@@ -384,7 +404,9 @@ export default {
       month: moment().format('MMM DD YYYY'),
       year: moment(this.month).format('YYYY'),
       month_digit:moment(this.month).format('MM'),
-      to_delete:[]
+      to_delete:[],
+      search:'',
+      users:[],
     };
   },
   created() {
@@ -392,7 +414,7 @@ export default {
   },
   methods: {
     multipleDelete(){
-      let message = `Are you sure you want to DELETE ${this.to_delete.length} WORK ?`
+      let message = `Are you sure you want to DELETE ${this.to_delete.length} WORKS ?`
         this.$root
           .$confirm(message,'#ff5252')
           .then(result => {
@@ -462,8 +484,19 @@ export default {
     },
     initialize() {
       this.getmonthly();
-      this.getData()
+      // this.getData()
       this.getNationalHoliday()
+      this.getAllUsers()
+      this.getDataSearch()
+    },
+    getAllUsers() {
+      GetAllEmployeesHasCenter().then(({data})=>{
+        this.users = data
+        console.log(this.users,"users")
+      })
+    },
+    getItemText(item) {
+      return `${item.first_name} ${item.last_name}`;
     },
     toggleNoWorkEmployees() {
       this.regions.forEach(region => {
@@ -515,6 +548,18 @@ export default {
         console.log(data, 'test')
         this.loading = false
       })
+    },
+    getDataSearch() {
+      if(!this.search=='' || !this.search==null){
+        this.loading = true
+        SearchRegions(this.search).then(({data}) => {
+          console.log(data,"searchSAS")
+          this.regions = data
+          this.loading = false 
+        })
+      }else{
+        this.getData()
+      }
     },
     getmonthly() { 
       var monthDate = moment(moment(this.year+'-'+this.month_digit), 'YYYY-MM'); 
@@ -644,6 +689,12 @@ export default {
         this.forceReload()
       }
     },
+    'search' : {
+      handler(val) {
+        console.log(val)
+        this.initialize ()
+      }
+    }
   }
 };
 </script>
