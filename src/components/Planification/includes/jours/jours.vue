@@ -532,6 +532,12 @@ export default {
       this.$emit('close')
     },
     forceReload(){
+      if(!this.search=='' || !this.search==null){
+          SearchRegions(this.search).then(({data}) => {
+            this.regions = data
+          })
+          return 
+      }
       GetAllRegions().then(({data}) => {
         this.regions = data
       })

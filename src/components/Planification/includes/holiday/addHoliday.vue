@@ -296,9 +296,9 @@ export default {
                     console.log(this.holiday.start_date, "holiday value")
                     createHoliday(this.holiday).then(() => {
                         this.$store.commit('UPDATE_NEW',true)
-                        this.$toast.success('successfully added holiday') 
                         this.$emit('success')
                         this.$emit('close')
+                        this.$toast.success('successfully added holiday') 
                     }).catch(({response}) => { 
                         this.$toast.error(response.data.message) 
                     })
@@ -306,9 +306,9 @@ export default {
                     alert('eampolouee')
                     RequestHoliday(this.holiday).then(({data}) => {
                         console.log(data)
-                        this.$toast.success('successfully added holiday')
                         this.$emit('success')
                         this.$emit('close')
+                        this.$toast.success('successfully added holiday')
                     })
                 }
             }
