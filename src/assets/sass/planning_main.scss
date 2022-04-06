@@ -26,6 +26,18 @@
         linear-gradient(to top right, #2196f3 49%, transparent 51%) !important;
 }
 
+.morning-conflict {
+    background: linear-gradient(to top right, #6a1b9a 49%, transparent 51%) !important;
+}
+
+.conflict {
+    background-color: #6a1b9a !important;
+}
+
+.afternoon-conflict {
+    background: linear-gradient(to bottom left, #6a1b9a 49%, transparent 51%) !important;
+}
+
 .border-selected{
     border: 1px solid orange !important;
     box-shadow: 5px 4px 5px 0px rgb(38 30 5 / 75%)
