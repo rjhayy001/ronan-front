@@ -6,10 +6,10 @@
             <v-card-actions class="pt-0">
                 <!-- <v-spacer></v-spacer> -->
                 <v-btn class="ma-2 px-5" tile large color="#c1c1c1" @click.native="cancel" dark width="48%">
-                    <v-icon left>mdi-cancel</v-icon> Cancel
+                    <v-icon left>mdi-cancel</v-icon> Non
                 </v-btn>
                 <v-btn class="ma-2 px-5" tile large :color="color" @click.native="agree" dark width="48%">
-                    <v-icon left>mdi-check</v-icon> OK 
+                    <v-icon left>mdi-check</v-icon> Oui 
                 </v-btn>
             </v-card-actions>
 		</v-card>
@@ -32,7 +32,7 @@
             color:'primary'
         }),
         methods: {
-            open( message , color='primary', title='Confirm this action!') {
+            open( message , color='primary', title='Confirmer') {
                 this.dialog = true
                 this.title = title
                 this.message = message

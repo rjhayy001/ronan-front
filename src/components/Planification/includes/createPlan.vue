@@ -279,7 +279,6 @@ export default {
     },
     methods:{
         initialize(){
-            console.log(this.data)
             this.payload.start_date = this.data.date
             this.payload.end_date = this.data.date
             this.payload.dates = [this.data.date, this.data.date]
@@ -303,11 +302,9 @@ export default {
             if(!this.checkForm()){
                 Insert(this.payload).then(({data}) =>{
                     this.$store.commit('UPDATE_NEW',true)
-                    // this.$arrayupdater(data.data, this.employee.planning)
                     this.$toast.success(data.message)
                     this.$emit('success')
                     this.$emit('close')
-                    // console.log(data.data)
                     console.log(data, 'plss work')
                 })
             }

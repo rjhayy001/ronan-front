@@ -8,7 +8,7 @@
             <div class="css_thead">
               <div class="css_tr">
                 <div style="position:relative; width: 100%;">
-                  <div style="width: 80%; position:absolute; left:30px; z-index:4; top: -10px">
+                  <div style="width: 80%; position:absolute; left:10px; z-index:4; top: -10px">
                     <v-autocomplete
                       deletable-chips
                       class="user-option"
@@ -23,19 +23,37 @@
                       v-model="search"
                     ></v-autocomplete>
                   </div>
-                  <div style="width: 20%;position:absolute; right:-20px; z-index:4; top: 0px">
+                  <div style="width: 20%;position:absolute; right:-6px; z-index:4; top: -3px">
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on }">
                         <v-icon 
-                          
                           @click="toggleNoWorkEmployees"
                           v-on="on"
                         >
-                          mdi-filter
+                          mdi-filter-outline
                         </v-icon>
                       </template>
                       <span>toggle no work employes</span>
                     </v-tooltip>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-icon
+                          @click="initialize()"
+                          v-on="on"
+                        >mdi-refresh</v-icon>
+                      </template>
+                      <span>refresh</span>
+                    </v-tooltip>
+                    <!-- <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-icon 
+                          v-on="on"
+                        >
+                          <v-icon>mdi-refresh</v-icon>
+                        </v-icon>
+                      </template>
+                      <span>toggle no work employes</span>
+                    </v-tooltip> -->
                   </div>
                 </div>
                 <div v-for="date in date" :key="date.text + date.number"  class="css_th">{{date.text}}</div>
@@ -96,7 +114,7 @@
                         </span>
                       </v-tooltip>
                     </div>
-                    <div class="css_td" v-for="date in date" :key="date.number">
+                    <div class="css_td" v-for="date in date" :key="date.number+'cs'">
                       <div id="data"  v-if="$isSameDate(date.date,currentDay)" class="currentDay">
                         <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
                       </div>
@@ -108,7 +126,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="css_tr" v-for="(user, user_index) in center.users" :key="user.id+user_index+center.name+user_index+center.id">
+                  <div class="css_tr" v-for="(user, user_index) in center.users" :key="user.id+user_index+center.name+user_index+center.id+'test'">
                     <div class="css_sd content_sd width_sd">
                       {{user.first_name}}, {{user.last_name}} 
                       <v-badge 
@@ -138,8 +156,7 @@
                             )" 
                             @contextmenu.prevent="workHandler(planning)"
                             :key="plann_index + 'asdplann'" 
-                            :class="['work-full pointer', $checkWorkFullDate(planning, date), $isOnArray(planning, to_delete) ?  'border-selected' : '']"
-                            :style="planning.is_conflict == 1 ? 'background:#6a1b9a !important' : ''"
+                            :class="['work-full','pointer', $checkWorkFullDate(planning, date), $isOnArray(planning, to_delete) ?  'border-selected' : '']"
                             @click="editWork(user, center, planning)"
                           >
                             <p class="date-hidden" >.</p>
@@ -414,7 +431,7 @@ export default {
   },
   methods: {
     multipleDelete(){
-      let message = `Are you sure you want to DELETE ${this.to_delete.length} WORKS ?`
+      let message = `AVoulez vous vraiment supprimer la sélection ?`
         this.$root
           .$confirm(message,'#ff5252')
           .then(result => {
@@ -559,9 +576,9 @@ export default {
       if(!this.search=='' || !this.search==null){
         this.loading = true
         SearchRegions(this.search).then(({data}) => {
-          console.log(data,"searchSAS")
           this.regions = data
           this.loading = false 
+          this.center_storage = []
         })
       }else{
         this.getData()

@@ -4,16 +4,31 @@ export default {
         $checkWorkFullDate(planning,date){
             // 1 = full 2 morning 3 afternoon
             if(this.$isSameDate(date.date, planning.start_date) && planning.start_Date_Type == 2){
+                if(planning.is_conflict == 1){
+                    return 'work-half-morning, morning-conflict'
+                }
                return 'work-half-morning'
             }
             if(this.$isSameDate(date.date, planning.start_date) && planning.start_Date_Type == 3){
+                if(planning.is_conflict == 1){
+                    return 'work-half-afternoon, afternoon-conflict'
+                }
                return 'work-half-afternoon'
             }
             if(this.$isSameDate(date.date, planning.end_date) && planning.end_Date_Type == 2){
+                if(planning.is_conflict == 1){
+                    return 'work-half-morning, morning-conflict'
+                }
                 return 'work-half-morning'
             }
             if(this.$isSameDate(date.date, planning.end_date) && planning.end_Date_Type == 3){
+                if(planning.is_conflict == 1){
+                    return 'work-half-afternoon, afternoon-conflict'
+                }
                 return 'work-half-afternoon'
+            }
+            else if(this.$isSameDate(date.date, planning.start_date) && planning.is_conflict == 1){
+               return 'conflict'
             }
         },
 
