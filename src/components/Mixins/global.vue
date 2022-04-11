@@ -3,7 +3,13 @@ import moment from "moment"
 export default {
 
     methods: {
-
+        $openSort(region){
+            let payload = {
+                id: region.id,
+                data: region
+            }
+            this.$emit('openSort', payload)
+        },
         $arraysplicer(item, array_given) {
             array_given.splice(array_given.indexOf(item), 1);
         },

@@ -29,10 +29,10 @@
                         <v-col
                             cols="12"
                         >
+                                <!-- :rules="centre.address" -->
                             <v-text-field
                                 label="Rue"
                                 placeholder="Rue"
-                                :rules="centre.address"
                                 dense
                                 v-model="center.address"
                                 prepend-inner-icon="mdi-google-street-view"
@@ -42,10 +42,10 @@
                         <v-col
                             cols="12"
                         >
+                                <!-- :rules="centre.citys" -->
                             <v-text-field
                                 label="Ville"
                                 placeholder="Ville"
-                                :rules="centre.citys"
                                 v-model="center.city"
                                 dense
                                 prepend-inner-icon="mdi-city"
@@ -55,10 +55,10 @@
                         <v-col
                             cols="12"
                         >
+                                <!-- :rules="centre.code_postal" -->
                             <v-text-field
                                 label="Code postal"
                                 placeholder="Code postal"
-                                :rules="centre.code_postal"
                                 v-model="center.zip_code"
                                 dense
                                 solo
@@ -73,10 +73,10 @@
                         <v-col
                             cols="12"
                         >
+                                <!-- :rules="centre.number" -->
                             <v-text-field
                                 label="Numéro de contact"
                                 placeholder="Numéro de contact"
-                                :rules="centre.number"
                                 v-model="center.mobile"
                                 solo
                                 dense
