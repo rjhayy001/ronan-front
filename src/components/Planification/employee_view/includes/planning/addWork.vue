@@ -230,9 +230,9 @@ export default {
 
             },
             items: [
-                {value: 1, text:'whole day'},
-                {value: 2, text:'half day morning'},
-                {value: 3, text:'half day afternoon'},
+                {value: 1, text:'Toute la journée'},
+                {value: 2, text:'Demi-journée-matin'},
+                {value: 3, text:'Demi-journée-après-midi'},
             ],
         }
     },

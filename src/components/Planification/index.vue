@@ -78,6 +78,7 @@
           :success="updateReload"
           @test="updateReload= false"
           :filter="filter"
+          @openSort="openSort"
         />
       </div>
       <div style="margin: 40px 0 0 0"  v-else-if="selected==2">
@@ -112,6 +113,13 @@
       :drawer="drawer" 
       @close="drawer=false"
     />
+    <center-sort 
+      :dialog="sort_dialog" 
+      :data="sort_data"
+      @close="sort_dialog=false"
+      @success="updateReload=true"
+    >
+    </center-sort>
   </div>
 </template>
 <script>
@@ -123,6 +131,7 @@ import filterPlanning from './includes/filter.vue';
 import moment from 'moment' 
 import menuButton from './includes/menu.vue';
 import tagsPlanning from './includes/tags/tags.vue';
+import centerSort from './includes/sort.vue'
   export default {
     components:{
       tagsPlanning,
@@ -131,11 +140,14 @@ import tagsPlanning from './includes/tags/tags.vue';
       planningMois,
       menuButton,
       filterPlanning,
-      employeeView
+      employeeView,
+      centerSort
     },
     data() {
       return {
         emp_view:false,
+        sort_dialog: false,
+        sort_data:{},
         currentReqweek: moment(),
         currentReqyear: moment(),
         drawer: false,
@@ -186,6 +198,10 @@ import tagsPlanning from './includes/tags/tags.vue';
       this.initialize()
     },
     methods: {
+      openSort(data){
+        this.sort_data = data
+        this.sort_dialog = true
+      },
       initialize(){
         this.getMonthyear();
       },

@@ -77,6 +77,22 @@
               <div class="css_tr">
                 <div class="css_sd header_sd width_sd">
                   {{region.name}}
+                  <span class="float-right mr-1">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon 
+                          dark
+                          small
+                          v-bind="attrs"
+                          v-on="on"
+                          @click="$openSort(region)"
+                        >
+                          mdi-sort
+                        </v-icon>
+                      </template>
+                      <span>Sort {{region.name}} Centers</span>
+                    </v-tooltip>
+                  </span>
                 </div>
                 <div class="css_td" v-for="date in date" :key="date.number">
                   <div id="data" v-if="$isSameDate(date.date,currentDay)" class="currentDay">
@@ -93,7 +109,7 @@
 
               <!-- <draggable v-model="region.centers" group="centers" @start="drag=true" @end="drag=false"> -->
               <template v-for="(center, center_index) in region.centers">
-                <template v-if="center.users.length">
+                <template >
                   <div class="css_tr"  :key="'center' + center_index">
                     <div class="css_sd subheader_sd width_sd">
                       {{center.name}}
@@ -543,6 +559,8 @@ export default {
         })
       })
       center.users = data
+
+      console.log(center, 'test')
     },
     changeView2(view) {
       this.employee_view = view
@@ -698,6 +716,7 @@ export default {
     'success': function(value) {
       if(value) {
         this.forceReload()
+        this.$emit('test')
       }
     },
     "filter": {
