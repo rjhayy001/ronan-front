@@ -46,8 +46,8 @@
                         <v-col
                             cols="12"
                         >
+                                <!-- :rules="centre.number" -->
                             <v-text-field
-                                :rules="centre.number"
                                 v-model="data.mobile"
                                 placeholder="Entrez nouveau numéro"
                                 dense
@@ -59,8 +59,8 @@
                         <v-col
                             cols="12"
                         >
+                                <!-- :rules="centre.address" -->
                             <v-text-field
-                                :rules="centre.address"
                                 v-model="data.address"
                                 placeholder="Entrez nouvelle addresse"
                                 dense
@@ -72,8 +72,8 @@
                         <v-col
                             cols="12"
                         >
+                                <!-- :rules="centre.citys" -->
                             <v-text-field
-                                :rules="centre.citys"
                                 v-model="data.city"
                                 placeholder="Entrez nouvelle ville"
                                 dense
@@ -85,8 +85,8 @@
                         <v-col
                             cols="12"
                         >
+                                <!-- :rules="centre.code_postal" -->
                             <v-text-field
-                                :rules="centre.code_postal"
                                 v-model="data.zip_code"
                                 placeholder="Entrez nouveau code postal"
                                 dense
