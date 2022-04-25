@@ -13,6 +13,12 @@ import styling_mixin from '@/components/Mixins/styling';
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import { ValidationProvider } from 'vee-validate';
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
+import { RecycleScroller } from 'vue-virtual-scroller'
+import VueVirtualScroller from 'vue-virtual-scroller'
+
+Vue.use(VueVirtualScroller)
+Vue.component('RecycleScroller', RecycleScroller)
 
 const options = {
   timeout: 3000,

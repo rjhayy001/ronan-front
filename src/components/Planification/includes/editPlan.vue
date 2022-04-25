@@ -139,6 +139,21 @@
                             </v-date-picker>
                         </v-menu>
                     </div>
+                      <div>
+                        <p class="planning_text-label">taper date</p>
+                        <v-select
+                            dense
+                            :items="items"
+                            label="Solo field"
+                            solo
+                             :disabled="!editing"
+                            v-model="planning.start_Date_Type"
+                            item-text="text"
+                            item-value="value"
+                            :hide-details="true"
+                            class="text-capitalize mb-2"
+                        ></v-select>
+                    </div>
                     <div class="mt-8">
                         <v-btn 
                             class="float-right mt-4" 
@@ -190,7 +205,12 @@ export default {
             end_menu:false,
             employee:{},
             planning:{},
-            center:{}
+            center:{},
+            items: [
+                {value: 1, text:'Toute la journée'},
+                {value: 2, text:'Demi-journée-matin'},
+                {value: 3, text:'Demi-journée-après-midi'},
+            ],
         }
     },
     computed: {
@@ -220,6 +240,7 @@ export default {
                 this.$arrayupdater(this.planning, this.employee.planning)
                 this.$toast.success(data.message)
                 this.$emit('close')
+                this.$emit('success')
             })
         },
         destroy(){

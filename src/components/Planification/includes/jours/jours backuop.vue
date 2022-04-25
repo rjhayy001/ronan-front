@@ -1,14 +1,6 @@
 <template>
   <div>
     <div>
-    <!-- plan or work -->
-    <create-plan 
-      v-if="add_plan_dialog" 
-      :dialog="add_plan_dialog" 
-      @close="add_plan_dialog = false"
-      @success="forceReload"
-      :data="create_data"
-    />
       <template v-if="!employee_view">
         <div class="table_scroll" v-if="!loading">
           <div class="css_table css_table2">
@@ -280,6 +272,14 @@
         <span>{{to_delete.length}} selected</span>
       </v-tooltip>
     </div>
+    <!-- plan or work -->
+    <create-plan 
+      v-if="add_plan_dialog" 
+      :dialog="add_plan_dialog" 
+      @close="add_plan_dialog = false"
+      @success="forceReload"
+      :data="create_data"
+    />
     <!-- edit plan or work -->
     <edit-plan
       v-if="edit_plan_dialog"
@@ -347,7 +347,7 @@
 <script>
 // import draggable from 'vuedraggable'
 import moment from 'moment' 
-import { GetAllRegions, GetAllRegions2, SearchRegions } from "@/repositories/region.api"
+import { GetAllRegions, SearchRegions } from "@/repositories/region.api"
 import { GetAllHolidays } from "@/repositories/holidays.api"
 import { GetAllEmployeesHasCenter } from "@/repositories/employee.api"
 // import filterPlanning from '../filter.vue';
@@ -568,22 +568,12 @@ export default {
     },
     forceReload(){
       if(!this.search=='' || !this.search==null){
-          let payload = {
-            id: this.search,
-            month : this.month_digit,
-            year : this.year
-          }
-          SearchRegions(payload).then(({data}) => {
+          SearchRegions(this.search).then(({data}) => {
             this.regions = data
-            console.log(payload, 'serarch')
           })
           return 
       }
-      let payload = {
-        month : this.month_digit,
-        year : this.year
-      }
-      GetAllRegions2(payload).then(({data}) => {
+      GetAllRegions().then(({data}) => {
         this.regions = data
       })
     },
@@ -594,11 +584,7 @@ export default {
     },
     getData() {
       this.loading = true
-      let payload = {
-        month : this.month_digit,
-        year : this.year
-      }
-      GetAllRegions2(payload).then(({data}) => {
+      GetAllRegions().then(({data}) => {
         this.regions = data
         console.log(data, 'test')
         this.loading = false
@@ -607,13 +593,7 @@ export default {
     getDataSearch() {
       if(!this.search=='' || !this.search==null){
         this.loading = true
-        let payload = {
-            id: this.search,
-            month : this.month_digit,
-            year : this.year
-          }
-        SearchRegions(payload).then(({data}) => {
-          console.log(data, 'search2222')
+        SearchRegions(this.search).then(({data}) => {
           this.regions = data
           this.loading = false 
           this.center_storage = []
@@ -730,7 +710,6 @@ export default {
         this.month_digit =moment(val).format('MM')
         this.month =moment(val).format('MMM YYYY')
         this.getmonthly()
-        this.getData()
       },
       deep: true,
     },
