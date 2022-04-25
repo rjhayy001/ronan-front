@@ -1,21 +1,13 @@
 <template>
   <div>
     <div>
-    <!-- plan or work -->
-    <create-plan 
-      v-if="add_plan_dialog" 
-      :dialog="add_plan_dialog" 
-      @close="add_plan_dialog = false"
-      @success="forceReload"
-      :data="create_data"
-    />
       <template v-if="!employee_view">
         <div class="table_scroll" v-if="!loading">
           <div class="css_table css_table2">
             <div class="css_th"  style="border-bottom:none!important;"></div>
             <div class="css_thead">
               <div class="css_tr">
-                <div style="position:relative; width: 100%;">
+                <div style="position:relative; width: 300px;">
                   <div style="width: 80%; position:absolute; left:10px; z-index:4; top: -10px">
                     <v-autocomplete
                       deletable-chips
@@ -81,76 +73,88 @@
                 </div>
               </div>
             </div>
-            <div class="css_tbody" v-for="(region, index) in regions" :key="index + region.id">
-              <div class="css_tr">
-                <div class="css_sd header_sd width_sd">
-                  {{region.name}}
-                  <span class="float-right mr-1">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-icon 
-                          dark
-                          small
-                          v-bind="attrs"
-                          v-on="on"
-                          @click="$openSort(region)"
-                        >
-                          mdi-sort
-                        </v-icon>
-                      </template>
-                      <span>Sort {{region.name}} Centers</span>
-                    </v-tooltip>
-                  </span>
-                </div>
-                <div class="css_td" v-for="date in date" :key="date.number">
-                  <div id="data" v-if="$isSameDate(date.date,currentDay)" class="currentDay">
-                    <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden position-absolute-fixed ">.</p>
-                  </div>
-                  <div v-else-if="$isHoliday(date.date)" class="holiday">
-                    <p class="date-hidden">.</p>
-                  </div>
-                  <div id="data" v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97)" class="position-absolute-fixed">
-                    <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden ">.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- <draggable v-model="region.centers" group="centers" @start="drag=true" @end="drag=false"> -->
-              <template v-for="(center, center_index) in region.centers">
-                <template >
-                  <div class="css_tr"  :key="'center' + center_index">
-                    <div class="css_sd subheader_sd width_sd">
-                      {{center.name}}
-                      <v-tooltip bottom>
-                        <template v-slot:activator="{ on }">
-                          <v-icon 
-                            style="position:absolute; right: 10px; top: 50%; bottom: 50%" 
-                            dark 
-                            v-on="on"
-                            small 
-                            @click="test(center)"
-                          >
-                            {{$isOnArray(center, center_storage) ? 'mdi-filter-off' : 'mdi-filter'}}
-                          </v-icon>
-                        </template>
-                        <span>
-                          {{$isOnArray(center, center_storage) ? 'show no work employee' : 'hide no work employee'}}
+            <div class="css_tbody">
+              <DynamicScroller
+                :items="regions"
+                :min-item-size="54"
+                class="scroller"
+              >
+                <template v-slot="{ item, index, active }">
+                  <DynamicScrollerItem
+                    :item="item"
+                    :active="active"
+                    :size-dependencies="[
+                      item.centers
+                    ]"
+                    :data-index="index"
+                  >
+                    <div class="css_tr">
+                      <div class="css_sd header_sd width_sd">
+                        {{item.name}}
+                        <span class="float-right mr-1">
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-icon 
+                                dark
+                                small
+                                v-bind="attrs"
+                                v-on="on"
+                                @click="$openSort(item)"
+                              >
+                                mdi-sort
+                              </v-icon>
+                            </template>
+                            <span>Sort {{item.name}} Centers</span>
+                          </v-tooltip>
                         </span>
-                      </v-tooltip>
+                      </div>
+                      <div class="css_td" v-for="date in date" :key="date.number">
+                        <div id="data" v-if="$isSameDate(date.date,currentDay)" class="currentDay">
+                          <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden position-absolute-fixed ">.</p>
+                        </div>
+                        <div v-else-if="$isHoliday(date.date)" class="holiday">
+                          <p class="date-hidden">.</p>
+                        </div>
+                        <div id="data" v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97)" class="position-absolute-fixed">
+                          <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden ">.</p>
+                        </div>
+                      </div>
                     </div>
-                    <div class="css_td" v-for="date in date" :key="date.number+'cs'">
-                      <div id="data"  v-if="$isSameDate(date.date,currentDay)" class="currentDay">
-                        <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                      </div>
-                      <div v-else-if="$isHoliday(date.date)" class="holiday">
-                        <p class="date-hidden">.</p>
-                      </div>
-                      <div id="data"  v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97); " class="position-absolute-fixed">
-                        <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="css_tr" v-for="(user, user_index) in center.users" :key="user.id+user_index+center.name+user_index+center.id+'test'">
+                    <template v-for="(center, center_index) in item.centers">
+                      <template>
+                        <div class="css_tr"  :key="'center' + center_index">
+                          <div class="css_sd subheader_sd width_sd">
+                            {{center.name}}
+                            <v-tooltip bottom>
+                              <template v-slot:activator="{ on }">
+                                <v-icon 
+                                  style="position:absolute; right: 10px; top: 50%; bottom: 50%" 
+                                  dark 
+                                  v-on="on"
+                                  small 
+                                  @click="test(center)"
+                                >
+                                  {{$isOnArray(center, center_storage) ? 'mdi-filter-off' : 'mdi-filter'}}
+                                </v-icon>
+                              </template>
+                              <span>
+                                {{$isOnArray(center, center_storage) ? 'show no work employee' : 'hide no work employee'}}
+                              </span>
+                            </v-tooltip>
+                          </div>
+                          <div class="css_td" v-for="date in date" :key="date.number+'cs'">
+                            <div id="data"  v-if="$isSameDate(date.date,currentDay)" class="currentDay">
+                              <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                            </div>
+                            <div v-else-if="$isHoliday(date.date)" class="holiday">
+                              <p class="date-hidden">.</p>
+                            </div>
+                            <div id="data"  v-else-if="date.text=='Dim'" style="background-color:rgb(97 97 97); " class="position-absolute-fixed">
+                              <p :style="date.text=='Dim' ? 'color:rgb(97 97 97)' : 'color:white'" class="date-hidden">.</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="css_tr" v-for="(user, user_index) in center.users" :key="user.id+user_index+center.name+user_index+center.id+'test'">
                     <div class="css_sd content_sd width_sd">
                       {{user.first_name}}, {{user.last_name}} 
                       <v-badge 
@@ -249,9 +253,11 @@
                       </template>
                     </div>
                   </div>
+                      </template>
+                    </template>
+                  </DynamicScrollerItem>
                 </template>
-              </template>
-              <!-- </draggable> -->
+              </DynamicScroller>
             </div>
           </div>
         </div>
@@ -280,6 +286,14 @@
         <span>{{to_delete.length}} selected</span>
       </v-tooltip>
     </div>
+    <!-- plan or work -->
+    <create-plan 
+      v-if="add_plan_dialog" 
+      :dialog="add_plan_dialog" 
+      @close="add_plan_dialog = false"
+      @success="forceReload"
+      :data="create_data"
+    />
     <!-- edit plan or work -->
     <edit-plan
       v-if="edit_plan_dialog"
@@ -347,7 +361,7 @@
 <script>
 // import draggable from 'vuedraggable'
 import moment from 'moment' 
-import { GetAllRegions, GetAllRegions2, SearchRegions } from "@/repositories/region.api"
+import { GetAllRegions, SearchRegions } from "@/repositories/region.api"
 import { GetAllHolidays } from "@/repositories/holidays.api"
 import { GetAllEmployeesHasCenter } from "@/repositories/employee.api"
 // import filterPlanning from '../filter.vue';
@@ -568,22 +582,12 @@ export default {
     },
     forceReload(){
       if(!this.search=='' || !this.search==null){
-          let payload = {
-            id: this.search,
-            month : this.month_digit,
-            year : this.year
-          }
-          SearchRegions(payload).then(({data}) => {
+          SearchRegions(this.search).then(({data}) => {
             this.regions = data
-            console.log(payload, 'serarch')
           })
           return 
       }
-      let payload = {
-        month : this.month_digit,
-        year : this.year
-      }
-      GetAllRegions2(payload).then(({data}) => {
+      GetAllRegions().then(({data}) => {
         this.regions = data
       })
     },
@@ -594,11 +598,7 @@ export default {
     },
     getData() {
       this.loading = true
-      let payload = {
-        month : this.month_digit,
-        year : this.year
-      }
-      GetAllRegions2(payload).then(({data}) => {
+      GetAllRegions().then(({data}) => {
         this.regions = data
         console.log(data, 'test')
         this.loading = false
@@ -607,13 +607,7 @@ export default {
     getDataSearch() {
       if(!this.search=='' || !this.search==null){
         this.loading = true
-        let payload = {
-            id: this.search,
-            month : this.month_digit,
-            year : this.year
-          }
-        SearchRegions(payload).then(({data}) => {
-          console.log(data, 'search2222')
+        SearchRegions(this.search).then(({data}) => {
           this.regions = data
           this.loading = false 
           this.center_storage = []
@@ -730,7 +724,6 @@ export default {
         this.month_digit =moment(val).format('MM')
         this.month =moment(val).format('MMM YYYY')
         this.getmonthly()
-        this.getData()
       },
       deep: true,
     },

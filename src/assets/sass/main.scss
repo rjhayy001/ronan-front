@@ -61,6 +61,7 @@
 ::-webkit-scrollbar {
   width: 15px;
   height: 15px;
+  display: none;
   }
   ::-webkit-scrollbar-track-piece  {
   background-color: transparent;
@@ -70,4 +71,8 @@
   -webkit-border-radius: 1ex;
   background-color: orange;
   }
+
+  body::-webkit-scrollbar {
+    display: none;
+}
 

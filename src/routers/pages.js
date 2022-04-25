@@ -2,6 +2,7 @@ export default [{
         path: '/',
         name: 'Planification',
         component: () => import(/* webpackChunkName: "planning" */'@/components/Planification/index'),
+        // component: () => import(/* webpackChunkName: "planning" */'@/components/v2/planning/index'),
     },
 
     {

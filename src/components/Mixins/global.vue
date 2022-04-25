@@ -26,8 +26,20 @@ export default {
 
             return flag
         },
+        $isHoliday(date){
+            let flag = false
+            this.national_holidays.forEach(hol => {
+                if(this.$isSameDate(hol.date,date)) {
+                flag = true
+                }
+            })
+            return flag
+        },
         $defaultDate(date){
             return moment(date).format('DD-MM-YYYY');
+        },
+        $today(){
+            return moment().format('DD-MM-YYYY');
         },
         $datePickerDate(date){
             return moment(date).format('YYYY-MM-DD');
