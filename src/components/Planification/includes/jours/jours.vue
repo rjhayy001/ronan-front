@@ -613,7 +613,7 @@ export default {
             year : this.year
           }
         SearchRegions(payload).then(({data}) => {
-          console.log(data, 'search2222')
+          console.log(data, 'search')
           this.regions = data
           this.loading = false 
           this.center_storage = []
@@ -706,7 +706,11 @@ export default {
       if(filters.length) {
         this.loading = true
         let storage =[]
-        GetAllRegions().then(({data}) => {
+         let payload = {
+          month : this.month_digit,
+          year : this.year
+        }
+        GetAllRegions2(payload).then(({data}) => {
           data.forEach(dat => {
             filters.forEach(filter => {
               if(filter === dat.id) {
